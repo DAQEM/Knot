@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "frame-test",
+  "version": "1.0.0",
+  "name": "Frame Test",
+  "description": "A test mod for the Frame library.",
+  "authors": [
+    "DAQEM"
+  ],
+  "license": "LGPL-3.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.daqem.frame.test.Test::init"
+    ]
+  }
+}

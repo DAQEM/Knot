@@ -1,0 +1,20 @@
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+    mixin { useLegacyMixinAp = true }
+}
+
+apply from: rootProject.file("gradle/scripts/platform.gradle")
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+    implementation project(path: ":fabric", configuration: "namedElements")
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
+}

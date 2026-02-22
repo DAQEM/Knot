@@ -1,0 +1,33 @@
+architectury {
+    platformSetupLoomIde()
+    neoForge {
+        platformPackage = "neoforge"
+    }
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+    mods {
+        forge {
+            sourceSet project(":neoforge").sourceSets.main
+        }
+    }
+}
+
+configurations {
+    forgeLike
+    common
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentNeoForge.extendsFrom common
+}
+
+apply from: rootProject.file("gradle/scripts/platform.gradle")
+
+dependencies {
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+
+    implementation(project(path: ":neoforge", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
+}
