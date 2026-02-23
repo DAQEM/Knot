@@ -3,10 +3,10 @@ loaderVersion = "[1,)"
 license = "LGPL-3.0"
 
 [[mods]]
-modId = "frame_test"
+modId = "knot_test"
 version = "1.0.0"
-displayName = "Frame Test"
+displayName = "Knot Test"
 authors = "DAQEM"
 description = '''
-A test mod for the Frame library.
+A test mod for the Knot library.
 '''

@@ -17,4 +17,4 @@ include("testmod-common")
 include("testmod-fabric")
 include("testmod-neoforge")
 
-rootProject.name = "Frame 1.21.11"
+rootProject.name = "Knot 1.21.11"

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "frame-test",
+  "id": "knot-test",
   "version": "1.0.0",
-  "name": "Frame Test",
-  "description": "A test mod for the Frame library.",
+  "name": "Knot Test",
+  "description": "A test mod for the Knot library.",
   "authors": [
     "DAQEM"
   ],
@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.daqem.frame.test.Test::init"
+      "com.daqem.knot.test.Test::init"
     ]
   }
 }
