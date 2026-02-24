@@ -1,0 +1,9 @@
+{
+  "test_sound": {
+    "category": "player",
+    "subtitle": "subtitles.knot_test.test_sound",
+    "sounds": [
+      "knot_test:test_sound"
+    ]
+  }
+}
