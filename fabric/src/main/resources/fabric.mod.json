@@ -16,12 +16,12 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.daqem.frame.fabric.FrameFabric"
+      "com.daqem.knot.fabric.KnotFabric"
     ]
   },
   "mixins": [
-    "frame.mixins.json",
-    "frame-common.mixins.json"
+    "knot.mixins.json",
+    "knot-common.mixins.json"
   ],
   "depends": {
     "fabric": ">=${fabric_api_version}",

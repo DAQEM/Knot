@@ -27,7 +27,7 @@ ordering = "NONE"
 side = "BOTH"
 
 [[mixins]]
-config = "frame-common.mixins.json"
+config = "knot-common.mixins.json"
 
 [[mixins]]
-config = "frame.mixins.json"
+config = "knot.mixins.json"

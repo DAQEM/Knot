@@ -34,12 +34,11 @@ processResources {
             "minecraft_version": project.minecraft_version,
             "fabric_loader_version": project.fabric_loader_version,
             "fabric_api_version": project.fabric_api_version,
-            "neoforge_version": project.neoforge_version,
-            "architectury_version": project.architectury_version
+            "neoforge_version": project.neoforge_version
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml', 'META-INF/mods.toml']) {
+    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
 }
