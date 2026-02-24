@@ -1,17 +1,22 @@
 package com.daqem.knot.fabric.registry;
 
 import com.daqem.knot.registry.RegistryEntry;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+
 import java.util.function.Supplier;
 
 public class FabricRegistryEntry<T> implements RegistryEntry<T> {
 
     private final Identifier id;
+    private final ResourceKey<T> key;
     private final Supplier<T> factory;
     private T value;
 
-    public FabricRegistryEntry(Identifier id, Supplier<T> factory) {
+    public FabricRegistryEntry(ResourceKey<? extends Registry<T>> registryKey, Identifier id, Supplier<T> factory) {
         this.id = id;
+        this.key = ResourceKey.create(registryKey, id); // Create key immediately
         this.factory = factory;
     }
 
@@ -26,6 +31,11 @@ public class FabricRegistryEntry<T> implements RegistryEntry<T> {
     @Override
     public Identifier getId() {
         return id;
+    }
+
+    @Override
+    public ResourceKey<T> getKey() {
+        return key;
     }
 
     @Override

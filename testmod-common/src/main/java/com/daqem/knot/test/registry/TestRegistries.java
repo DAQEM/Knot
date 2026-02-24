@@ -8,5 +8,6 @@ public interface TestRegistries {
         TestSoundEvents.register();
         TestItems.register();
         TestEntityTypes.register();
+        TestCreativeTabs.register();
     }
 }

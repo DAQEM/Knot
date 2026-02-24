@@ -4,8 +4,8 @@
   "package": "com.daqem.knot.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "client.MixinIntegratedServer",
     "client.MixinClientLevel",
+    "client.MixinIntegratedServer",
     "client.MixinLocalPlayer",
     "client.MixinMinecraft"
   ],
@@ -23,6 +23,8 @@
     "MixinFishingRodHookedTrigger",
     "MixinGrindstoneMenu",
     "MixinIngredient",
+    "MixinItem",
+    "MixinItemProperties",
     "MixinItemStack",
     "MixinLivingEntity",
     "MixinMerchantResultSlot",

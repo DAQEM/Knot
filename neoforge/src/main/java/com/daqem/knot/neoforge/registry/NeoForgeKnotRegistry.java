@@ -26,7 +26,8 @@ public class NeoForgeKnotRegistry<T> implements KnotRegistry<T> {
     @SuppressWarnings("unchecked")
     public <I extends T> RegistryEntry<I> register(String name, Supplier<I> factory) {
         Identifier id = Identifier.fromNamespaceAndPath(modId, name);
-        NeoForgeRegistryEntry<I> entry = new NeoForgeRegistryEntry<>(id, factory);
+        ResourceKey<? extends Registry<I>> specificRegistryKey = (ResourceKey<? extends Registry<I>>) this.registryKey;
+        NeoForgeRegistryEntry<I> entry = new NeoForgeRegistryEntry<>(specificRegistryKey, id, factory);
         entries.put(id, (NeoForgeRegistryEntry<T>) entry);
         return entry;
     }

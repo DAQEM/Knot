@@ -23,7 +23,7 @@ public interface TestItems {
     KnotRegistry<Item> ITEMS = KnotRegistry.create(BuiltInRegistries.ITEM, Test.MOD_ID);
 
     RegistryEntry<Item> TEST_ITEM = ITEMS.register("test_item",
-            key -> new Item(new Item.Properties().setId(key))
+            key -> new Item(new Item.Properties().setId(key).knot$tab(TestCreativeTabs.TEST_TAB.getKey()))
     );
 
     RegistryEntry<Item> TEST_BLOCK_ITEM = ITEMS.register("test_block",

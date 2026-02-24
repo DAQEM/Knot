@@ -1,6 +1,8 @@
 package com.daqem.knot.registry;
 
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+
 import java.util.function.Supplier;
 
 public interface RegistryEntry<T> extends Supplier<T> {
@@ -9,6 +11,11 @@ public interface RegistryEntry<T> extends Supplier<T> {
      * @return The identifier this entry is registered under.
      */
     Identifier getId();
+
+    /**
+     * @return The specific ResourceKey for this entry (e.g. key for "knot:test_item" in minecraft:item).
+     */
+    ResourceKey<T> getKey();
 
     /**
      * @return The registered object. Throws an exception if called before the object is fully registered.

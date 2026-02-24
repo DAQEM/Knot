@@ -29,7 +29,8 @@ public class FabricKnotRegistry<T> implements KnotRegistry<T> {
             throw new IllegalStateException("Cannot register new entries after registry has been initialized.");
         }
         Identifier id = Identifier.fromNamespaceAndPath(modId, name);
-        FabricRegistryEntry<I> entry = new FabricRegistryEntry<>(id, factory);
+        ResourceKey<? extends Registry<I>> specificRegistryKey = (ResourceKey<? extends Registry<I>>) this.registry.key();
+        FabricRegistryEntry<I> entry = new FabricRegistryEntry<>(specificRegistryKey, id, factory);
         entries.put(id, (FabricRegistryEntry<T>) entry);
         return entry;
     }
