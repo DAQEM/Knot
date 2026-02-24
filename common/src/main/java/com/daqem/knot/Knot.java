@@ -1,6 +1,7 @@
 package com.daqem.knot;
 
 import com.daqem.knot.network.Networking;
+import com.daqem.knot.platform.PlatformInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
@@ -29,6 +30,13 @@ public class Knot {
     public static final Networking NETWORKING = ServiceLoader.load(Networking.class)
             .findFirst()
             .orElseThrow(() -> new RuntimeException("No Knot Networking implementation found!"));
+
+    /**
+     * The platform utility service for checking loaded mods, environments, and configuration paths.
+     */
+    public static final PlatformInfo PLATFORM = ServiceLoader.load(PlatformInfo.class)
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("No Knot PlatformInfo implementation found!"));
 
     private final String modId;
 
