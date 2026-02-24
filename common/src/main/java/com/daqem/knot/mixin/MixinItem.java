@@ -1,6 +1,6 @@
 package com.daqem.knot.mixin;
 
-import com.daqem.knot.item.creativetab.KnotCreativeTabs;
+import com.daqem.knot.Knot;
 import com.daqem.knot.item.creativetab.KnotItemPropertiesExtension;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +21,7 @@ public abstract class MixinItem {
         if (tabKey != null) {
             // Because our modify() method safely queues modifications for both Fabric and NeoForge,
             // we can just directly call it right here in the constructor!
-            KnotCreativeTabs.modify(tabKey, populator -> populator.add((Item) (Object) this));
+            Knot.CREATIVE_TABS.modifyTab(tabKey, populator -> populator.add((Item) (Object) this));
         }
     }
 }

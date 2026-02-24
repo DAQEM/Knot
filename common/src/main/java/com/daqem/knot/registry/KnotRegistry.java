@@ -1,5 +1,6 @@
 package com.daqem.knot.registry;
 
+import com.daqem.knot.Knot;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -7,11 +8,15 @@ import net.minecraft.resources.ResourceKey;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * A wrapper around a Vanilla Registry that handles cross-platform registration logic.
+ * <p>
+ * Use {@link Knot#register(Registry)} to create an instance.
+ * </p>
+ *
+ * @param <T> The type of objects in this registry.
+ */
 public interface KnotRegistry<T> {
-
-    static <T> KnotRegistry<T> create(Registry<T> registry, String modId) {
-        return KnotRegistrar.PROVIDER.createRegistry(registry, modId);
-    }
 
     /**
      * @return The Mod ID bound to this registry.
@@ -19,19 +24,29 @@ public interface KnotRegistry<T> {
     String getModId();
 
     /**
-     * @return The vanilla ResourceKey for this specific registry (e.g., Registries.ITEM)
+     * @return The vanilla ResourceKey for this specific registry (e.g., Registries.ITEM).
      */
     ResourceKey<? extends Registry<T>> getRegistryKey();
 
     /**
      * Registers an entry using a standard supplier.
      * Useful for objects that do not require an ID during instantiation.
+     *
+     * @param name    The path for the identifier.
+     * @param factory A supplier creating the object.
+     * @param <I>     The specific type of the object.
+     * @return A {@link RegistryEntry} holding the registered object.
      */
     <I extends T> RegistryEntry<I> register(String name, Supplier<I> factory);
 
     /**
      * Registers an entry using a function that provides the generated ResourceKey.
-     * Perfect for 1.21.2+ Items and Blocks which require `.setId(key)`.
+     * Perfect for 1.21.2+ Items and Blocks which require {@code .setId(key)}.
+     *
+     * @param name    The path for the identifier.
+     * @param factory A function creating the object, accepting its assigned ResourceKey.
+     * @param <I>     The specific type of the object.
+     * @return A {@link RegistryEntry} holding the registered object.
      */
     default <I extends T> RegistryEntry<I> register(String name, Function<ResourceKey<T>, I> factory) {
         Identifier id = Identifier.fromNamespaceAndPath(getModId(), name);
@@ -39,5 +54,9 @@ public interface KnotRegistry<T> {
         return register(name, () -> factory.apply(key));
     }
 
+    /**
+     * Finalizes registration.
+     * This should be called during your mod's initialization phase.
+     */
     void register();
 }
