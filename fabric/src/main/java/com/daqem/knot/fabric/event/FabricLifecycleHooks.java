@@ -2,10 +2,14 @@ package com.daqem.knot.fabric.event;
 
 import com.daqem.knot.event.EventResult;
 import com.daqem.knot.event.KnotChatEvent;
+import com.daqem.knot.event.KnotLootEvent;
+import com.daqem.knot.event.common.KnotCommandEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.daqem.knot.event.lifecycle.KnotServerLifecycleEvent;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.network.chat.Component;
@@ -42,6 +46,20 @@ public final class FabricLifecycleHooks {
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register((message, sender, params) -> {
             EventResult result = KnotChatEvent.RECEIVED.invoker().onReceiveChat(sender, message.decoratedContent());
             return !result.cancelsEvent();
+        });
+
+        // Loot Table Modification
+        LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
+            KnotLootEvent.MODIFY_LOOT_TABLE.invoker().onModifyLootTable(
+                    key,
+                    tableBuilder::withPool,
+                    source.isBuiltin()
+            );
+        });
+
+        // Command Registration
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            KnotCommandEvent.REGISTER.invoker().onRegister(dispatcher, registryAccess, environment);
         });
     }
 }

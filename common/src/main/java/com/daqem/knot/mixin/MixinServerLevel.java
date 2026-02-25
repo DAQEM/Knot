@@ -1,12 +1,13 @@
 package com.daqem.knot.mixin;
 
-import com.daqem.knot.Knot;
 import com.daqem.knot.KnotMod;
+import com.daqem.knot.event.KnotExplosionEvent;
 import com.daqem.knot.event.common.KnotTickEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.daqem.knot.event.server.KnotServersideTickEvent;
-import com.daqem.knot.world.level.KnotScheduledTask;
 import com.daqem.knot.world.level.IServerLevel;
+import com.daqem.knot.world.level.KnotScheduledTask;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
@@ -14,11 +15,10 @@ import net.minecraft.server.level.ServerEntityGetter;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProgressListener;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -93,5 +93,16 @@ public abstract class MixinServerLevel extends Level implements ServerEntityGett
     @Inject(method = "save", at = @At("HEAD"))
     private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean skipSave, CallbackInfo ci) {
         KnotLevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
+    }
+
+    @Inject(
+            method = "explode",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerExplosion;explode()I"),
+            cancellable = true
+    )
+    private void knot$onExplodePre(CallbackInfo ci, @Local ServerExplosion explosion) {
+        if (KnotExplosionEvent.PRE.invoker().onPreExplosion((ServerLevel) (Object) this, explosion).cancelsEvent()) {
+            ci.cancel();
+        }
     }
 }

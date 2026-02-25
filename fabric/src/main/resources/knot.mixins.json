@@ -12,6 +12,7 @@
     "MixinAxeItem",
     "MixinBlockBehaviour",
     "MixinBuiltInPackSource",
+    "MixinCommands",
     "MixinHoeItem",
     "MixinPackRepositoryAccessor",
     "MixinWorldLoader",
