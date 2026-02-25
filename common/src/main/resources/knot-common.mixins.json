@@ -21,6 +21,7 @@
     "MixinDedicatedServer",
     "MixinFishingHook",
     "MixinFishingRodHookedTrigger",
+    "MixinFolderRepositorySource",
     "MixinGrindstoneMenu",
     "MixinIngredient",
     "MixinItem",

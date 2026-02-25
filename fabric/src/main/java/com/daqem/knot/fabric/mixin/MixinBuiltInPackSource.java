@@ -1,0 +1,32 @@
+package com.daqem.knot.fabric.mixin;
+
+import com.daqem.knot.pack.GlobalPackPaths;
+import com.daqem.knot.pack.KnotGlobalPackRepository;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.BuiltInPackSource;
+import net.minecraft.server.packs.repository.Pack;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.function.Consumer;
+
+@Mixin(BuiltInPackSource.class)
+public abstract class MixinBuiltInPackSource {
+
+    @Shadow @Final private PackType packType;
+
+    @Inject(method = "loadPacks", at = @At("RETURN"))
+    private void knot$loadGlobalResourcePacks(Consumer<Pack> consumer, CallbackInfo ci) {
+        if (this.packType == PackType.CLIENT_RESOURCES) {
+            new KnotGlobalPackRepository(
+                    GlobalPackPaths.RESOURCE_PACKS,
+                    PackType.CLIENT_RESOURCES,
+                    GlobalPackPaths.KNOT_PACK_SOURCE
+            ).loadPacks(consumer);
+        }
+    }
+}

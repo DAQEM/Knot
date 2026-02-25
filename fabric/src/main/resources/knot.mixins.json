@@ -10,7 +10,10 @@
     "LivingEntityFabricMixin",
     "MixinAxeItem",
     "MixinBlockBehaviour",
+    "MixinBuiltInPackSource",
     "MixinHoeItem",
+    "MixinPackRepositoryAccessor",
+    "MixinWorldLoader",
     "PlayerMixin",
     "ServerPlayerMixin"
   ],
