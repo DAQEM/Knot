@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "com.daqem.knot.fabric.KnotFabric"
+    ],
+    "client": [
+      "com.daqem.knot.fabric.client.KnotFabricClient"
     ]
   },
   "mixins": [

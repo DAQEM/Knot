@@ -3,6 +3,7 @@ package com.daqem.knot.mixin;
 import com.daqem.knot.Knot;
 import com.daqem.knot.KnotMod;
 import com.daqem.knot.event.common.KnotTickEvent;
+import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.daqem.knot.event.server.KnotServersideTickEvent;
 import com.daqem.knot.world.level.KnotScheduledTask;
 import com.daqem.knot.world.level.IServerLevel;
@@ -11,6 +12,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerEntityGetter;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProgressListener;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -86,5 +88,10 @@ public abstract class MixinServerLevel extends Level implements ServerEntityGett
     private void knot$postTick(CallbackInfo ci) {
         KnotServersideTickEvent.SERVER_LEVEL_POST.invoker().tick((ServerLevel) (Object) this);
         KnotTickEvent.LEVEL_POST.invoker().tick(this);
+    }
+
+    @Inject(method = "save", at = @At("HEAD"))
+    private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean skipSave, CallbackInfo ci) {
+        KnotLevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
     }
 }

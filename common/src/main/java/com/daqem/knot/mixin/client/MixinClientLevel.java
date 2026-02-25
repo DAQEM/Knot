@@ -2,6 +2,7 @@ package com.daqem.knot.mixin.client;
 
 import com.daqem.knot.event.client.KnotClientsideTickEvent;
 import com.daqem.knot.event.common.KnotTickEvent;
+import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.daqem.knot.world.level.IClientLevel;
 import net.minecraft.client.multiplayer.CacheSlot;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -22,6 +23,14 @@ public abstract class MixinClientLevel extends Level implements CacheSlot.Cleane
 
     protected MixinClientLevel(WritableLevelData levelData, ResourceKey<Level> dimension, RegistryAccess registryAccess, Holder<DimensionType> dimensionTypeRegistration, boolean isClientSide, boolean isDebug, long biomeZoomSeed, int maxChainedNeighborUpdates) {
         super(levelData, dimension, registryAccess, dimensionTypeRegistration, isClientSide, isDebug, biomeZoomSeed, maxChainedNeighborUpdates);
+    }
+
+    @Inject(
+            method = "<init>",
+            at = @At("RETURN")
+    )
+    private void knot$onInit(CallbackInfo ci) {
+        KnotLevelLifecycleEvent.CLIENT_LEVEL_LOAD.invoker().onClientLevelLoad((ClientLevel) (Object) this);
     }
 
     @Inject(
