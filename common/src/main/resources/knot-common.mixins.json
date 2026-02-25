@@ -4,10 +4,14 @@
   "package": "com.daqem.knot.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "client.MixinAbstractContainerScreen",
     "client.MixinClientLevel",
+    "client.MixinGui",
+    "client.MixinGuiGraphics",
     "client.MixinIntegratedServer",
     "client.MixinLocalPlayer",
-    "client.MixinMinecraft"
+    "client.MixinMinecraft",
+    "client.MixinScreen"
   ],
   "mixins": [
     "MixinAbstractArrow",

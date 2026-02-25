@@ -1,17 +1,25 @@
 package com.daqem.knot.mixin.client;
 
+import com.daqem.knot.event.EventResult;
 import com.daqem.knot.event.client.KnotClientsideTickEvent;
+import com.daqem.knot.event.client.KnotScreenEvent;
 import com.daqem.knot.event.lifecycle.KnotClientLifecycleEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,7 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft extends ReentrantBlockableEventLoop<@NotNull Runnable> implements WindowEventHandler {
 
-    @Shadow @Nullable public ClientLevel level;
+    @Shadow
+    @Nullable
+    public ClientLevel level;
+
+    @Shadow @Nullable public Screen screen;
+    @Unique
+    private boolean knot$cancelScreenSwap = false;
 
     public MixinMinecraft(String string) {
         super(string);
@@ -75,5 +89,35 @@ public abstract class MixinMinecraft extends ReentrantBlockableEventLoop<@NotNul
     private void knot$onClientStopping(CallbackInfo ci) {
         // This triggers as soon as the shutdown sequence is initiated.
         KnotClientLifecycleEvent.STOPPING.invoker().onClientStopping((Minecraft) (Object) this);
+    }
+
+    @WrapOperation(
+            method = "setScreen",
+            at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", opcode = Opcodes.PUTFIELD)
+    )
+    private void knot$wrapScreenChange(Minecraft instance, Screen newScreen, Operation<Void> original) {
+        MutableObject<Screen> screenWrapper = new MutableObject<>(newScreen);
+
+        EventResult result = KnotScreenEvent.BEFORE_OPEN.invoker().onBeforeOpen(this.screen, screenWrapper);
+
+        // If canceled, we simply don't call original.call(), so the field is never updated.
+        if (result.cancelsEvent()) {
+            return;
+        }
+
+        // Proceed with the wrapped (potentially replaced) screen
+        original.call(instance, screenWrapper.get());
+    }
+
+    @Inject(
+            method = "setScreen",
+            at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", shift = At.Shift.BEFORE),
+            cancellable = true
+    )
+    private void knot$cancelSetScreen(Screen screen, CallbackInfo ci) {
+        if (this.knot$cancelScreenSwap) {
+            this.knot$cancelScreenSwap = false;
+            ci.cancel();
+        }
     }
 }
