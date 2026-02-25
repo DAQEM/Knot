@@ -1,8 +1,10 @@
 package com.daqem.knot;
 
 import com.daqem.knot.client.registry.KnotEntityRendererRegistry;
+import com.daqem.knot.client.screen.KnotScreenRegistry;
 import com.daqem.knot.item.creativetab.KnotCreativeTabsProvider;
 import com.daqem.knot.item.creativetab.TabPopulator;
+import com.daqem.knot.menu.KnotMenuRegistry;
 import com.daqem.knot.network.Networking;
 import com.daqem.knot.platform.PlatformInfo;
 import com.daqem.knot.registry.KnotRegistrar;
@@ -70,6 +72,16 @@ public class Knot {
      * The internal service for creating and modifying creative tabs.
      */
     public static final KnotCreativeTabsProvider CREATIVE_TABS = loadService(KnotCreativeTabsProvider.class);
+
+    /**
+     * The internal service for creating menu types and opening menus.
+     */
+    public static final KnotMenuRegistry MENUS = loadService(KnotMenuRegistry.class);
+
+    /**
+     * The internal service for binding screens to menu types on the client.
+     */
+    public static final KnotScreenRegistry SCREENS = loadService(KnotScreenRegistry.class);
 
     private final String modId;
 

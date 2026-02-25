@@ -9,5 +9,6 @@ public interface TestRegistries {
         TestItems.register();
         TestEntityTypes.register();
         TestCreativeTabs.register();
+        TestMenus.register();
     }
 }

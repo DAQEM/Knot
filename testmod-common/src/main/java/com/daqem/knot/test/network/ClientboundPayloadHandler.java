@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public final class ClientboundPayloadHandler {
 
     public static void handle(@NotNull ClientboundPayload clientboundPayload, ClientboundContext clientboundContext) {
-        Test.API.info("Received clientbound payload with data: {}", clientboundPayload.data());
+//        Test.API.info("Received clientbound payload with data: {}", clientboundPayload.data());
     }
 
     private ClientboundPayloadHandler() {}

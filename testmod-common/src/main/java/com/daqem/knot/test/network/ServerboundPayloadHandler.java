@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public final class ServerboundPayloadHandler {
 
     public static void handle(@NotNull ServerboundPayload serverboundPayload, ServerboundContext serverboundContext) {
-        Test.API.info("Received serverbound payload with data: {}", serverboundPayload.data());
+//        Test.API.info("Received serverbound payload with data: {}", serverboundPayload.data());
     }
 
     private ServerboundPayloadHandler() {}
