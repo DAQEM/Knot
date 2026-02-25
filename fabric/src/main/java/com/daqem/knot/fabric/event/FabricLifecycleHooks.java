@@ -1,6 +1,7 @@
 package com.daqem.knot.fabric.event;
 
 import com.daqem.knot.event.EventResult;
+import com.daqem.knot.event.KnotBlockEvent;
 import com.daqem.knot.event.KnotChatEvent;
 import com.daqem.knot.event.KnotLootEvent;
 import com.daqem.knot.event.common.KnotCommandEvent;
@@ -9,10 +10,12 @@ import com.daqem.knot.event.lifecycle.KnotServerLifecycleEvent;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 public final class FabricLifecycleHooks {
@@ -60,6 +63,12 @@ public final class FabricLifecycleHooks {
         // Command Registration
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             KnotCommandEvent.REGISTER.invoker().onRegister(dispatcher, registryAccess, environment);
+        });
+
+        // Block Clicks
+        AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
+            EventResult result = KnotBlockEvent.LEFT_CLICK_BLOCK.invoker().onLeftClickBlock(player, hand, pos, direction);
+            return result.cancelsEvent() ? InteractionResult.FAIL : InteractionResult.PASS;
         });
     }
 }

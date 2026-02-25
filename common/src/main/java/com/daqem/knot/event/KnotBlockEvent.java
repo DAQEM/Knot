@@ -1,10 +1,12 @@
 package com.daqem.knot.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,6 +29,8 @@ public interface KnotBlockEvent {
     Event<TillSoil> TILL_SOIL = EventFactory.createLoop(TillSoil.class);
     Event<FarmlandTrample> FARMLAND_TRAMPLE = EventFactory.createEventResult(FarmlandTrample.class);
 
+    Event<FallingLand> FALLING_LAND = EventFactory.createLoop(FallingLand.class);
+    Event<LeftClickBlock> LEFT_CLICK_BLOCK = EventFactory.createEventResult(LeftClickBlock.class);
 
     interface BreakBlock {
         EventResult onBreakBlock(ServerLevel level, BlockPos blockPos, BlockState blockState, ServerPlayer serverPlayer, Supplier<Integer> xp);
@@ -58,5 +62,19 @@ public interface KnotBlockEvent {
 
     interface FarmlandTrample {
         EventResult onFarmlandTrample(Level level, BlockPos pos, BlockState state, double fallDistance, Entity entity);
+    }
+
+    interface FallingLand {
+        /**
+         * Fired when a gravity-affected block (sand, gravel) finishes falling and solidifies into a block.
+         */
+        void onFallingLand(Level level, BlockPos pos, BlockState fallState, BlockState landState, FallingBlockEntity entity);
+    }
+
+    interface LeftClickBlock {
+        /**
+         * Fired when a player left-clicks a block, before any breaking logic executes.
+         */
+        EventResult onLeftClickBlock(Player player, InteractionHand hand, BlockPos pos, Direction face);
     }
 }

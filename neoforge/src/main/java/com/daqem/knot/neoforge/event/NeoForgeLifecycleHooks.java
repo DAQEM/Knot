@@ -1,9 +1,7 @@
 package com.daqem.knot.neoforge.event;
 
 import com.daqem.knot.KnotMod;
-import com.daqem.knot.event.EventResult;
-import com.daqem.knot.event.KnotChatEvent;
-import com.daqem.knot.event.KnotLootEvent;
+import com.daqem.knot.event.*;
 import com.daqem.knot.event.common.KnotCommandEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.daqem.knot.event.lifecycle.KnotServerLifecycleEvent;
@@ -21,6 +19,9 @@ import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.ServerChatEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.*;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -124,5 +125,12 @@ public class NeoForgeLifecycleHooks {
 
         event.setParseResults(resultsRef.get());
         event.setException(exceptionRef.get());
+    }
+
+    @SubscribeEvent
+    public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        if (KnotBlockEvent.LEFT_CLICK_BLOCK.invoker().onLeftClickBlock(event.getEntity(), event.getHand(), event.getPos(), event.getFace()).cancelsEvent()) {
+            event.setCanceled(true);
+        }
     }
 }

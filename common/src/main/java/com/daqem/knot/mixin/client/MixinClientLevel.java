@@ -1,5 +1,6 @@
 package com.daqem.knot.mixin.client;
 
+import com.daqem.knot.event.KnotEntityEvent;
 import com.daqem.knot.event.client.KnotClientsideTickEvent;
 import com.daqem.knot.event.common.KnotTickEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
@@ -9,6 +10,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
@@ -49,5 +51,12 @@ public abstract class MixinClientLevel extends Level implements CacheSlot.Cleane
     private void knot$postTick(CallbackInfo ci) {
         KnotClientsideTickEvent.CLIENT_LEVEL_POST.invoker().tick((ClientLevel) (Object) this);
         KnotTickEvent.LEVEL_POST.invoker().tick(this);
+    }
+
+    @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
+    private void knot$onAddEntity(Entity entity, CallbackInfo ci) {
+        if (KnotEntityEvent.ADD.invoker().onAddEntity(entity, (ClientLevel) (Object) this).cancelsEvent()) {
+            ci.cancel();
+        }
     }
 }

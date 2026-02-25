@@ -5,12 +5,16 @@ import com.daqem.knot.event.EventFactory;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 
+import java.util.List;
+
 /**
  * Events related to the In-Game Heads Up Display (HUD) overlay.
  */
 public interface KnotHudEvent {
 
     Event<Render> RENDER = EventFactory.createLoop(Render.class);
+    Event<DebugText> DEBUG_TEXT_LEFT = EventFactory.createLoop(DebugText.class);
+    Event<DebugText> DEBUG_TEXT_RIGHT = EventFactory.createLoop(DebugText.class);
 
     interface Render {
         /**
@@ -21,5 +25,12 @@ public interface KnotHudEvent {
          * @param deltaTracker Tracker for partial ticks and frame time.
          */
         void onRenderHud(GuiGraphics graphics, DeltaTracker deltaTracker);
+    }
+
+    interface DebugText {
+        /**
+         * Fired when the F3 debug screen is gathering text, allowing you to add custom info.
+         */
+        void onGatherDebugText(List<String> textList);
     }
 }

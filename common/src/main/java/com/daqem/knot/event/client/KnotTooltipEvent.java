@@ -30,6 +30,11 @@ public interface KnotTooltipEvent {
      */
     Event<AdjustPosition> ADJUST_POSITION = EventFactory.createLoop(AdjustPosition.class);
 
+    /**
+     * Fired to modify the background and border colors of the tooltip box.
+     */
+    Event<ModifyColor> MODIFY_COLOR = EventFactory.createLoop(ModifyColor.class);
+
     interface GatherComponents {
         void onGatherTooltipComponents(ItemStack stack, Item.TooltipContext context, TooltipFlag flag, List<Component> lines);
     }
@@ -40,5 +45,9 @@ public interface KnotTooltipEvent {
 
     interface AdjustPosition {
         void onAdjustTooltipPosition(GuiGraphics graphics, int mouseX, int mouseY, MutableInt targetX, MutableInt targetY);
+    }
+
+    interface ModifyColor {
+        void onModifyTooltipColor(ItemStack stack, MutableInt background, MutableInt borderStart, MutableInt borderEnd);
     }
 }

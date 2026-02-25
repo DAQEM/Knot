@@ -1,6 +1,7 @@
 package com.daqem.knot.mixin;
 
 import com.daqem.knot.KnotMod;
+import com.daqem.knot.event.KnotEntityEvent;
 import com.daqem.knot.event.KnotExplosionEvent;
 import com.daqem.knot.event.common.KnotTickEvent;
 import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
@@ -14,6 +15,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerEntityGetter;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProgressListener;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.WorldGenLevel;
@@ -24,6 +26,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -103,6 +106,13 @@ public abstract class MixinServerLevel extends Level implements ServerEntityGett
     private void knot$onExplodePre(CallbackInfo ci, @Local ServerExplosion explosion) {
         if (KnotExplosionEvent.PRE.invoker().onPreExplosion((ServerLevel) (Object) this, explosion).cancelsEvent()) {
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
+    private void knot$onAddEntity(Entity entity, CallbackInfoReturnable<Boolean> cir) {
+        if (KnotEntityEvent.ADD.invoker().onAddEntity(entity, (ServerLevel) (Object) this).cancelsEvent()) {
+            cir.setReturnValue(false);
         }
     }
 }
