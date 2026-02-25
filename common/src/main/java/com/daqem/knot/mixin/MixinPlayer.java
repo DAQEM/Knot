@@ -1,10 +1,17 @@
 package com.daqem.knot.mixin;
 
+import com.daqem.knot.event.KnotEntityEvent;
+import com.daqem.knot.event.KnotItemEvent;
 import com.daqem.knot.event.KnotPlayerEvent;
 import com.daqem.knot.event.EventResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,6 +41,14 @@ public abstract class MixinPlayer extends LivingEntity {
             cir.setReturnValue(0F);
         } else if (!Objects.equals(speed.floatValue(), cir.getReturnValue())) {
             cir.setReturnValue(speed.floatValue());
+        }
+    }
+
+    @Inject(method = "interactOn", at = @At("HEAD"), cancellable = true)
+    private void knot$onInteractOn(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        EventResult result = KnotEntityEvent.INTERACT_WITH_ENTITY.invoker().onInteractWithEntity((Player) (Object) this, entity, hand);
+        if (result.cancelsEvent()) {
+            cir.setReturnValue(InteractionResult.FAIL);
         }
     }
 }

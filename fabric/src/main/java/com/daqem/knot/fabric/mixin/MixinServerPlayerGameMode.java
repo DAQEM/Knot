@@ -1,0 +1,43 @@
+package com.daqem.knot.fabric.mixin;
+
+import com.daqem.knot.event.EventResult;
+import com.daqem.knot.event.KnotBlockEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerPlayerGameMode;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(ServerPlayerGameMode.class)
+public class MixinServerPlayerGameMode {
+
+    @Shadow
+    @Final
+    protected ServerPlayer player;
+
+    @Shadow
+    protected ServerLevel level;
+
+    @Inject(at = @At("HEAD"), method = "destroyBlock", cancellable = true)
+    private void knot$onDestroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
+        BlockState state = this.level.getBlockState(blockPos);
+        EventResult result = KnotBlockEvent.BREAK_BLOCK.invoker().onBreakBlock(this.level, blockPos, state, this.player);
+        if (result.cancelsEvent()) {
+            cir.setReturnValue(false);
+        } else {
+            if (state.getBlock() instanceof CropBlock) {
+                EventResult result1 = KnotBlockEvent.HARVEST_CROP.invoker().onHarvestCrop(this.level, blockPos, state, this.player);
+                if (result1.cancelsEvent()) {
+                    cir.setReturnValue(false);
+                }
+            }
+        }
+    }
+}

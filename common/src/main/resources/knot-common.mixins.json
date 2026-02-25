@@ -24,7 +24,6 @@
     "MixinAbstractFurnaceBlockEntity",
     "MixinAnimal",
     "MixinAnvilMenu",
-    "MixinBaseSpawner",
     "MixinBlockStateBase",
     "MixinBucketItem",
     "MixinChunkMap",
@@ -52,7 +51,8 @@
     "MixinServerExplosion",
     "MixinServerLevel",
     "MixinServerPlayer",
-    "MixinSmithingMenu"
+    "MixinSmithingMenu",
+    "MixinTamableAnimal"
   ],
   "injectors": {
     "defaultRequire": 1

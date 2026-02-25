@@ -33,7 +33,7 @@ public interface KnotBlockEvent {
     Event<LeftClickBlock> LEFT_CLICK_BLOCK = EventFactory.createEventResult(LeftClickBlock.class);
 
     interface BreakBlock {
-        EventResult onBreakBlock(ServerLevel level, BlockPos blockPos, BlockState blockState, ServerPlayer serverPlayer, Supplier<Integer> xp);
+        EventResult onBreakBlock(ServerLevel level, BlockPos blockPos, BlockState blockState, ServerPlayer serverPlayer);
     }
 
     interface PlaceBlock {
@@ -49,7 +49,7 @@ public interface KnotBlockEvent {
     }
 
     interface HarvestCrop {
-        EventResult onHarvestCrop(ServerLevel level, BlockPos blockPos, BlockState blockState, ServerPlayer serverPlayer, Supplier<Integer> xp);
+        EventResult onHarvestCrop(ServerLevel level, BlockPos blockPos, BlockState blockState, ServerPlayer serverPlayer);
     }
 
     interface GetDestroySpeed {

@@ -1,5 +1,6 @@
 package com.daqem.knot.mixin;
 
+import com.daqem.knot.event.KnotEntityEvent;
 import com.daqem.knot.event.KnotPlayerEvent;
 import com.daqem.knot.event.EventResult;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,6 +52,26 @@ public abstract class MixinLivingEntity extends Entity {
             EventResult eventResult = KnotPlayerEvent.LAND_ON_GROUND.invoker().onLandOnGround(player, this.fallDistance);
             if (eventResult.cancelsEvent()) {
                 cir.setReturnValue(false);
+            }
+        }
+    }
+
+    @Inject(method = "die", at = @At("HEAD"), cancellable = true)
+    private void knot$onDie(DamageSource source, CallbackInfo ci) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+
+        if (entity instanceof ServerPlayer player) {
+            EventResult result = KnotEntityEvent.PLAYER_DEATH.invoker().onPlayerDeath(player, source);
+            if (result.cancelsEvent()) {
+                ci.cancel();
+                return;
+            }
+        }
+
+        if (source.getEntity() instanceof ServerPlayer player) {
+            EventResult result = KnotEntityEvent.PLAYER_KILL_ENTITY.invoker().onPlayerKillEntity(player, entity, source);
+            if (result.cancelsEvent()) {
+                ci.cancel();
             }
         }
     }

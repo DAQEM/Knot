@@ -2,7 +2,6 @@ package com.daqem.knot.event.lifecycle;
 
 import com.daqem.knot.event.Event;
 import com.daqem.knot.event.EventFactory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 

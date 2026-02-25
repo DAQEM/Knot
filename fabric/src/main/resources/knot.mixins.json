@@ -11,10 +11,13 @@
     "LivingEntityFabricMixin",
     "MixinAxeItem",
     "MixinBlockBehaviour",
+    "MixinBlockItem",
     "MixinBuiltInPackSource",
     "MixinCommands",
     "MixinHoeItem",
     "MixinPackRepositoryAccessor",
+    "MixinPlayerAdvancements",
+    "MixinServerPlayerGameMode",
     "MixinWorldLoader",
     "PlayerMixin",
     "ServerPlayerMixin"

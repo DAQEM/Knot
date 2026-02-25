@@ -8,6 +8,7 @@ import com.daqem.knot.event.KnotMovementEvent;
 import com.daqem.knot.event.KnotPlayerEvent;
 import com.daqem.knot.world.entity.player.KnotServerPlayer;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -231,5 +232,11 @@ public abstract class MixinServerPlayer extends Player implements KnotServerPlay
     private void knot$postTick(CallbackInfo ci) {
         KnotServersideTickEvent.SERVER_PLAYER_POST.invoker().tick(this.knot$getServerPlayer());
         KnotTickEvent.PLAYER_POST.invoker().tick(this.knot$getServerPlayer());
+    }
+
+    @Inject(method = "triggerDimensionChangeTriggers", at = @At("HEAD"))
+    private void knot$onChangeDimension(ServerLevel origin, CallbackInfo ci) {
+        ServerPlayer player = (ServerPlayer) (Object) this;
+        KnotPlayerEvent.CHANGE_DIMENSION.invoker().onChangeDimension(player, origin.dimension(), player.level().dimension());
     }
 }
