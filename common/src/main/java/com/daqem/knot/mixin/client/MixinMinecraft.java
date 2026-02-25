@@ -1,6 +1,7 @@
 package com.daqem.knot.mixin.client;
 
 import com.daqem.knot.event.EventResult;
+import com.daqem.knot.event.client.KnotClientInteractionEvent;
 import com.daqem.knot.event.client.KnotClientsideTickEvent;
 import com.daqem.knot.event.client.KnotScreenEvent;
 import com.daqem.knot.event.lifecycle.KnotClientLifecycleEvent;
@@ -8,11 +9,16 @@ import com.daqem.knot.event.lifecycle.KnotLevelLifecycleEvent;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.HitResult;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
@@ -23,6 +29,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft extends ReentrantBlockableEventLoop<@NotNull Runnable> implements WindowEventHandler {
@@ -32,6 +39,8 @@ public abstract class MixinMinecraft extends ReentrantBlockableEventLoop<@NotNul
     public ClientLevel level;
 
     @Shadow @Nullable public Screen screen;
+    @Shadow @Nullable public HitResult hitResult;
+    @Shadow @Nullable public LocalPlayer player;
     @Unique
     private boolean knot$cancelScreenSwap = false;
 
@@ -118,6 +127,20 @@ public abstract class MixinMinecraft extends ReentrantBlockableEventLoop<@NotNul
         if (this.knot$cancelScreenSwap) {
             this.knot$cancelScreenSwap = false;
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1))
+    private void knot$onRightClickAir(CallbackInfo ci, @Local(ordinal = 0) InteractionHand hand, @Local(ordinal = 0) ItemStack itemStack) {
+        if (itemStack.isEmpty() && (this.hitResult == null || this.hitResult.getType() == HitResult.Type.MISS)) {
+            KnotClientInteractionEvent.RIGHT_CLICK_AIR.invoker().onRightClickAir(this.player, hand);
+        }
+    }
+
+    @Inject(method = "startAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;resetAttackStrengthTicker()V"))
+    private void knot$onLeftClickAir(CallbackInfoReturnable<Boolean> cir) {
+        if (this.hitResult == null || this.hitResult.getType() == HitResult.Type.MISS) {
+            KnotClientInteractionEvent.LEFT_CLICK_AIR.invoker().onLeftClickAir(this.player, InteractionHand.MAIN_HAND);
         }
     }
 }
