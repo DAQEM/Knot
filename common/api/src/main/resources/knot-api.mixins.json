@@ -7,8 +7,10 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "MixinAbstractArrow",
-    "MixinAbstractCookingRecipe",
-    "MixinIngredient"
+    "AbstractArrowMixin",
+    "AbstractCookingRecipeMixin",
+    "AxeItemAccessor",
+    "IngredientMixin",
+    "ShovelItemAccessor"
   ]
 }

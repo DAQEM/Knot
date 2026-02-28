@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(AbstractArrow.class)
-public abstract class MixinAbstractArrow implements IAbstractArrow {
+public abstract class AbstractArrowMixin implements IAbstractArrow {
 
     @Shadow protected abstract ItemStack getPickupItem();
 

@@ -112,6 +112,10 @@ public interface EventsService {
         Event<ClientTooltipEvent.GatherComponents> TOOLTIP_GATHER_COMPONENTS = ClientTooltipEvent.GATHER_COMPONENTS;
         Event<ClientTooltipEvent.BeforeRender> TOOLTIP_BEFORE_RENDER = ClientTooltipEvent.BEFORE_RENDER;
         Event<ClientTooltipEvent.AdjustPosition> TOOLTIP_ADJUST_POSITION = ClientTooltipEvent.ADJUST_POSITION;
+        Event<ClientPlayerEvent.Join> PLAYER_JOIN = ClientPlayerEvent.JOIN;
+        Event<ClientPlayerEvent.Quit> PLAYER_QUIT = ClientPlayerEvent.QUIT;
+        Event<ClientPlayerEvent.Respawn> PLAYER_RESPAWN = ClientPlayerEvent.RESPAWN;
+        Event<ClientCommandEvent.Register> COMMAND_REGISTER = ClientCommandEvent.REGISTER;
     }
 
     interface Server {

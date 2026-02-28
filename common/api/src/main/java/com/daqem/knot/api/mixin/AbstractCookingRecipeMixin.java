@@ -9,9 +9,9 @@ import net.minecraft.world.item.crafting.SingleItemRecipe;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(AbstractCookingRecipe.class)
-public abstract class MixinAbstractCookingRecipe extends SingleItemRecipe implements IAbstractCookingRecipe {
+public abstract class AbstractCookingRecipeMixin extends SingleItemRecipe implements IAbstractCookingRecipe {
 
-    public MixinAbstractCookingRecipe(String string, Ingredient ingredient, ItemStack itemStack) {
+    public AbstractCookingRecipeMixin(String string, Ingredient ingredient, ItemStack itemStack) {
         super(string, ingredient, itemStack);
     }
 

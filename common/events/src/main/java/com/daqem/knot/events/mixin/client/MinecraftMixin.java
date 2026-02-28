@@ -1,10 +1,7 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
-import com.daqem.knot.events.client.ClientInteractionEvent;
-import com.daqem.knot.events.client.ClientLifecycleEvent;
-import com.daqem.knot.events.client.ClientTickEvent;
-import com.daqem.knot.events.client.ClientScreenEvent;
+import com.daqem.knot.events.client.*;
 import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -149,6 +146,13 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
     private void knot$onLeftClickAir(CallbackInfoReturnable<Boolean> cir) {
         if (this.hitResult == null || this.hitResult.getType() == HitResult.Type.MISS) {
             ClientInteractionEvent.LEFT_CLICK_AIR.invoker().onLeftClickAir(this.player, InteractionHand.MAIN_HAND);
+        }
+    }
+
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;clear()V"))
+    private void knot$onClientQuit(Screen screen, boolean bl, boolean bl2, CallbackInfo ci) {
+        if (this.player != null) {
+            ClientPlayerEvent.QUIT.invoker().onQuit(this.player);
         }
     }
 }

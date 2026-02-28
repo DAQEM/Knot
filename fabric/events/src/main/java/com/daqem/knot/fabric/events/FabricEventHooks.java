@@ -7,6 +7,7 @@ import com.daqem.knot.events.common.loot.LootEvent;
 import com.daqem.knot.events.server.ServerChatEvent;
 import com.daqem.knot.events.server.ServerCommandEvent;
 import com.daqem.knot.events.server.ServerLifecycleEvent;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
@@ -14,9 +15,12 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import org.apache.commons.lang3.mutable.MutableObject;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import com.daqem.knot.events.client.ClientCommandEvent;
 
 public final class FabricEventHooks {
 
@@ -70,5 +74,11 @@ public final class FabricEventHooks {
             EventResult result = BlockEvent.LEFT_CLICK_BLOCK.invoker().onLeftClickBlock(player, hand, pos, direction);
             return result.cancelsEvent() ? InteractionResult.FAIL : InteractionResult.PASS;
         });
+
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+                ClientCommandEvent.REGISTER.invoker().onRegister(dispatcher);
+            });
+        }
     }
 }

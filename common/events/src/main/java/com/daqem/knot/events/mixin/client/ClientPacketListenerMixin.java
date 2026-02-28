@@ -2,9 +2,12 @@ package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
 import com.daqem.knot.events.client.ClientChatEvent;
+import com.daqem.knot.events.client.ClientPlayerEvent;
 import com.daqem.knot.events.client.ClientRecipeEvent;
 import net.minecraft.client.multiplayer.ClientCommonPacketListenerImpl;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.protocol.game.ClientboundLoginPacket;
+import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.world.item.crafting.RecipeAccess;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -49,5 +52,15 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
     @Inject(method = "handleUpdateRecipes", at = @At("RETURN"))
     private void knot$onUpdateRecipes(ClientboundUpdateRecipesPacket packet, CallbackInfo ci) {
         ClientRecipeEvent.UPDATE.invoker().onRecipeUpdate(this.recipes());
+    }
+
+    @Inject(method = "handleLogin", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;setServerRenderDistance(I)V", shift = At.Shift.AFTER))
+    private void knot$onClientJoin(ClientboundLoginPacket packet, CallbackInfo ci) {
+        ClientPlayerEvent.JOIN.invoker().onJoin(this.minecraft.player);
+    }
+
+    @Inject(method = "handleRespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;addEntity(Lnet/minecraft/world/entity/Entity;)V"))
+    private void knot$onClientRespawn(ClientboundRespawnPacket packet, CallbackInfo ci) {
+        ClientPlayerEvent.RESPAWN.invoker().onRespawn(this.minecraft.player);
     }
 }

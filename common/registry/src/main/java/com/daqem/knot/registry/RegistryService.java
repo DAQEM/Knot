@@ -1,12 +1,12 @@
 package com.daqem.knot.registry;
 
-import com.daqem.knot.registry.client.BlockEntityRendererRegistry;
-import com.daqem.knot.registry.client.EntityRendererRegistry;
-import com.daqem.knot.registry.client.ScreenRegistry;
+import com.daqem.knot.registry.client.*;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
 import com.daqem.knot.registry.entity.EntityAttributesRegistry;
+import com.daqem.knot.registry.fuel.FuelRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import com.daqem.knot.registry.resource.ReloadRegistry;
+import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 
 public interface RegistryService {
 
@@ -25,4 +25,20 @@ public interface RegistryService {
     ScreenRegistry getScreenRegistry();
 
     ReloadRegistry getReloadRegistry();
+
+    KeyMappingRegistry getKeyMappingRegistry();
+
+    ColorHandlerRegistry getColorHandlerRegistry();
+
+    RenderTypeRegistry getRenderTypeRegistry();
+
+    EntityModelLayerRegistry getEntityModelLayerRegistry();
+
+    ParticleProviderRegistry getParticleProviderRegistry();
+
+    ConfigScreenRegistry getConfigScreenRegistry();
+
+    FuelRegistry getFuelRegistry();
+
+    VillagerTradeRegistry getVillagerTradeRegistry();
 }
