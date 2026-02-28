@@ -46,7 +46,7 @@ processResources {
 shadowJar {
     exclude "architectury.common.json"
     configurations = [project.configurations.shadowBundle]
-    archiveClassifier = project.name + "-dev-shadow"
+    archiveClassifier = platform + "-dev-shadow"
 }
 
 remapJar {
@@ -62,8 +62,9 @@ sourcesJar {
     from commonSources.archiveFile.map { zipTree(it) }
 }
 
+// Automatically uses "fabric-sources" or "neoforge-sources"
 remapSourcesJar {
-    archiveClassifier = project.name + "-sources"
+    archiveClassifier = "${platform}-sources"
 }
 
 components.java {

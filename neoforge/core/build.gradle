@@ -11,14 +11,6 @@ base {
     archivesName = rootProject.archives_base_name
 }
 
-tasks.named("renameJarForPublication").configure {
-    archiveClassifier = "neoforge"
-}
-
-tasks.named("remapSourcesJar").configure {
-    archiveClassifier = "neoforge-sources"
-}
-
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
