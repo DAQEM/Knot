@@ -1,6 +1,7 @@
 package com.daqem.knot.test.registry;
 
-import com.daqem.knot.registry.KnotRegistry;
+import com.daqem.knot.Knot;
+import com.daqem.knot.registry.Registry;
 import com.daqem.knot.registry.RegistryEntry;
 import com.daqem.knot.test.Test;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public interface TestItems {
-    KnotRegistry<Item> ITEMS = KnotRegistry.create(BuiltInRegistries.ITEM, Test.MOD_ID);
+    Registry<Item> ITEMS = Knot.REGISTRAR.createRegistry(BuiltInRegistries.ITEM, Test.MOD_ID);
 
     RegistryEntry<Item> TEST_ITEM = ITEMS.register("test_item",
             key -> new Item(new Item.Properties().setId(key).knot$tab(TestCreativeTabs.TEST_TAB.getKey()))

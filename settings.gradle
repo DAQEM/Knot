@@ -9,12 +9,47 @@ pluginManagement {
     }
 }
 
-include("common")
-include("fabric")
-include("neoforge")
+rootProject.name = "Knot 1.21.11"
+
+include("common-api")
+project(":common-api").projectDir = file("common/api")
+
+include("common-core")
+project(":common-core").projectDir = file("common/core")
+
+include("common-networking")
+project(":common-networking").projectDir = file("common/networking")
+
+include("common-events")
+project(":common-events").projectDir = file("common/events")
+
+include("common-registry")
+project(":common-registry").projectDir = file("common/registry")
+
+include("fabric-core")
+project(":fabric-core").projectDir = file("fabric/core")
+
+include("fabric-networking")
+project(":fabric-networking").projectDir = file("fabric/networking")
+
+include("fabric-events")
+project(":fabric-events").projectDir = file("fabric/events")
+
+include("fabric-registry")
+project(":fabric-registry").projectDir = file("fabric/registry")
+
+include("neoforge-core")
+project(":neoforge-core").projectDir = file("neoforge/core")
+
+include("neoforge-networking")
+project(":neoforge-networking").projectDir = file("neoforge/networking")
+
+include("neoforge-events")
+project(":neoforge-events").projectDir = file("neoforge/events")
+
+include("neoforge-registry")
+project(":neoforge-registry").projectDir = file("neoforge/registry")
 
 include("testmod-common")
 include("testmod-fabric")
 include("testmod-neoforge")
-
-rootProject.name = "Knot 1.21.11"

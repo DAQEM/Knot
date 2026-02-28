@@ -61,13 +61,12 @@ task renameJarForPublication(type: Zip, dependsOn: remapJar) {
     archiveExtension = "jar"
     metadataCharset "UTF-8"
     destinationDirectory = base.libsDirectory
-    archiveClassifier = project.name
 }
 
 assemble.dependsOn renameJarForPublication
 
 sourcesJar {
-    def commonSources = project(":common").sourcesJar
+    def commonSources = project(":common-core").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
 }

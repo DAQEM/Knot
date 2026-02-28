@@ -1,0 +1,7 @@
+architectury {
+    common(rootProject.enabled_platforms.split(","))
+}
+
+dependencies {
+    implementation project(path: ":common-api", configuration: "namedElements")
+}

@@ -1,0 +1,57 @@
+architectury {
+    platformSetupLoomIde()
+    neoForge()
+}
+
+apply from: rootProject.file("gradle/scripts/platform.gradle")
+apply from: rootProject.file("gradle/scripts/publishing.gradle")
+apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
+
+// Merge all subproject resources into neoforge-core so NeoForge's ModLocator can find every mixin config.
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from project(":common-api").file("src/main/resources")
+    from project(":common-core").file("src/main/resources")
+    from project(":common-networking").file("src/main/resources")
+    from project(":common-events").file("src/main/resources")
+    from project(":common-registry").file("src/main/resources")
+    from project(":neoforge-networking").file("src/main/resources")
+    from project(":neoforge-events").file("src/main/resources")
+    from project(":neoforge-registry").file("src/main/resources")
+}
+
+base {
+    archivesName = rootProject.archives_base_name
+}
+
+tasks.named("renameJarForPublication").configure {
+    archiveClassifier = "neoforge"
+}
+
+dependencies {
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+
+    common(project(path: ':common-api', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-api', configuration: 'transformProductionNeoForge')
+
+    common(project(path: ':common-core', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-core', configuration: 'transformProductionNeoForge')
+
+    common(project(path: ':common-networking', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-networking', configuration: 'transformProductionNeoForge')
+
+    common(project(path: ':common-events', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-events', configuration: 'transformProductionNeoForge')
+
+    common(project(path: ':common-registry', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-registry', configuration: 'transformProductionNeoForge')
+
+    common(project(path: ':neoforge-networking', configuration: 'namedElements')) { transitive = false }
+    shadowBundle(project(path: ':neoforge-networking', configuration: 'namedElements')) { transitive = false }
+
+    common(project(path: ':neoforge-events', configuration: 'namedElements')) { transitive = false }
+    shadowBundle(project(path: ':neoforge-events', configuration: 'namedElements')) { transitive = false }
+
+    common(project(path: ':neoforge-registry', configuration: 'namedElements')) { transitive = false }
+    shadowBundle(project(path: ':neoforge-registry', configuration: 'namedElements')) { transitive = false }
+}

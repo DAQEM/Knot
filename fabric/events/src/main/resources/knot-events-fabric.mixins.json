@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "com.daqem.knot.fabric.events.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "client.GuiGraphicsMixin"
+  ],
+  "mixins": [
+    "BucketItemMixin",
+    "ItemStackMixin",
+    "LivingEntityFabricMixin",
+    "AxeItemMixin",
+    "BlockBehaviourMixin",
+    "BlockItemMixin",
+    "CommandsMixin",
+    "HoeItemMixin",
+    "PlayerAdvancementsMixin",
+    "ServerPlayerGameModeMixin",
+    "MixinMixin",
+    "ServerPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

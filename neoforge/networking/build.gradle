@@ -1,0 +1,12 @@
+architectury {
+    platformSetupLoomIde()
+    neoForge()
+}
+
+dependencies {
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+
+    implementation project(path: ":common-api", configuration: "namedElements")
+    implementation project(path: ":common-core", configuration: "namedElements")
+    implementation project(path: ":common-networking", configuration: "namedElements")
+}
