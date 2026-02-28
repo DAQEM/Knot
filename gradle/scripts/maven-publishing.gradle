@@ -4,7 +4,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = rootProject.maven_group
-            artifactId = "${rootProject.archives_base_name}-${project.name}"
+            artifactId = "${rootProject.archives_base_name}-${platform}"
             from components.java
         }
     }

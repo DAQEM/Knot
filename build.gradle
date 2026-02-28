@@ -13,6 +13,8 @@ architectury {
 subprojects {
     if (project.name in ["common", "fabric", "neoforge"]) return
 
+    ext.platform = project.name.contains("fabric") ? "fabric" : (project.name.contains("neoforge") ? "neoforge" : "common")
+
     apply plugin: "dev.architectury.loom"
     apply plugin: "architectury-plugin"
 
@@ -20,7 +22,7 @@ subprojects {
     apply from: rootProject.file("gradle/scripts/dependencies.gradle")
 
     base {
-        archivesName = "${rootProject.archives_base_name}-${project.name}"
+        archivesName = "${rootProject.archives_base_name}-${platform}"
     }
 
     loom {
