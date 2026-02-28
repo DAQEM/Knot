@@ -8,6 +8,7 @@ import com.daqem.knot.registry.client.ScreenRegistry;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
 import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
+import com.daqem.knot.registry.resource.ReloadRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
@@ -40,6 +41,7 @@ public class Knot {
     public static final EntityAttributesRegistry ENTITY_ATTRIBUTES_REGISTRY = SERVICES.getRegistry().getEntityAttributesRegistry();
     public static final EntityRendererRegistry ENTITY_RENDERER_REGISTRY = SERVICES.getRegistry().getEntityRendererRegistry();
     public static final ScreenRegistry SCREEN_REGISTRY = SERVICES.getRegistry().getScreenRegistry();
+    public static final ReloadRegistry RELOAD_REGISTRY = SERVICES.getRegistry().getReloadRegistry();
 
     private final String modId;
     public final Logger LOGGER;

@@ -5,6 +5,7 @@ import com.daqem.knot.registry.client.ScreenRegistry;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
 import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
+import com.daqem.knot.registry.resource.ReloadRegistry;
 
 public interface RegistryService {
 
@@ -19,4 +20,6 @@ public interface RegistryService {
     EntityRendererRegistry getEntityRendererRegistry();
 
     ScreenRegistry getScreenRegistry();
+
+    ReloadRegistry getReloadRegistry();
 }

@@ -5,6 +5,7 @@ import com.daqem.knot.fabric.registry.client.FabricScreenRegistry;
 import com.daqem.knot.fabric.registry.creativetab.FabricCreativeTabsRegistry;
 import com.daqem.knot.fabric.registry.entity.FabricEntityAttributesRegistry;
 import com.daqem.knot.fabric.registry.menu.FabricMenuRegistry;
+import com.daqem.knot.fabric.registry.resource.FabricReloadRegistry;
 import com.daqem.knot.registry.Registrar;
 import com.daqem.knot.registry.RegistryService;
 import com.daqem.knot.registry.client.EntityRendererRegistry;
@@ -12,6 +13,7 @@ import com.daqem.knot.registry.client.ScreenRegistry;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
 import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
+import com.daqem.knot.registry.resource.ReloadRegistry;
 
 public class FabricRegistryService implements RegistryService {
 
@@ -21,6 +23,7 @@ public class FabricRegistryService implements RegistryService {
     public static final EntityAttributesRegistry ENTITY_ATTRIBUTES_REGISTRY = new FabricEntityAttributesRegistry();
     public static final EntityRendererRegistry ENTITY_RENDERER_REGISTRY = new FabricEntityRendererRegistry();
     public static final ScreenRegistry SCREEN_REGISTRY = new FabricScreenRegistry();
+    public static final ReloadRegistry RELOAD_REGISTRY = new FabricReloadRegistry();
 
     @Override
     public Registrar getRegistrar() {
@@ -50,5 +53,10 @@ public class FabricRegistryService implements RegistryService {
     @Override
     public ScreenRegistry getScreenRegistry() {
         return SCREEN_REGISTRY;
+    }
+
+    @Override
+    public ReloadRegistry getReloadRegistry() {
+        return RELOAD_REGISTRY;
     }
 }
