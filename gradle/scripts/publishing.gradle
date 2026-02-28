@@ -1,5 +1,14 @@
 apply plugin: "me.shedaniel.unified-publishing"
 
+task renameJarForPublication(type: Zip, dependsOn: remapJar) {
+    from remapJar.archiveFile.map { zipTree(it) }
+    archiveExtension = "jar"
+    metadataCharset "UTF-8"
+    destinationDirectory = base.libsDirectory
+}
+
+assemble.dependsOn renameJarForPublication
+
 unifiedPublishing {
     var capitalizedProjectName = project.name == "fabric" ? "Fabric" : "NeoForge"
 

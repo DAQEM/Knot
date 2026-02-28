@@ -16,5 +16,6 @@ dependencies {
 
     implementation(files(project(":fabric-core").tasks.named("shadowJar")))
 
-    common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":testmod-common", configuration: "namedElements")) { transitive = false }
+    shadowBundle project(path: ":testmod-common", configuration: "transformProductionFabric")
 }

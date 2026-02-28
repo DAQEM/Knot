@@ -7,25 +7,16 @@ apply from: rootProject.file("gradle/scripts/platform.gradle")
 apply from: rootProject.file("gradle/scripts/publishing.gradle")
 apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
 
-// Merge all subproject resources into neoforge-core so NeoForge's ModLocator can find every mixin config.
-processResources {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from project(":common-api").file("src/main/resources")
-    from project(":common-core").file("src/main/resources")
-    from project(":common-networking").file("src/main/resources")
-    from project(":common-events").file("src/main/resources")
-    from project(":common-registry").file("src/main/resources")
-    from project(":neoforge-networking").file("src/main/resources")
-    from project(":neoforge-events").file("src/main/resources")
-    from project(":neoforge-registry").file("src/main/resources")
-}
-
 base {
     archivesName = rootProject.archives_base_name
 }
 
 tasks.named("renameJarForPublication").configure {
     archiveClassifier = "neoforge"
+}
+
+tasks.named("remapSourcesJar").configure {
+    archiveClassifier = "neoforge-sources"
 }
 
 dependencies {

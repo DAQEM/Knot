@@ -15,6 +15,10 @@ tasks.named("renameJarForPublication").configure {
     archiveClassifier = "fabric"
 }
 
+tasks.named("remapSourcesJar").configure {
+    archiveClassifier = "fabric-sources"
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
