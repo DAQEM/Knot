@@ -16,10 +16,10 @@
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
-    "client.ScreenMixin"
+    "client.ScreenMixin",
+    "client.ItemStackMixin"
   ],
   "mixins": [
-    "client.ItemStackMixin",
     "common.block.BlockStateBaseMixin",
     "common.block.FallingBlockEntityMixin",
     "common.block.FarmBlockMixin",

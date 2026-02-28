@@ -31,5 +31,6 @@ public class NeoForgeEntityRendererRegistry implements EntityRendererRegistry {
         RENDERERS.forEach((typeSupplier, provider) -> {
             event.registerEntityRenderer(typeSupplier.get(), (EntityRendererProvider<@NotNull Entity>) provider);
         });
+        RENDERERS.clear();
     }
 }

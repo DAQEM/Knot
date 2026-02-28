@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 
 public class NeoForgeCreativeTabsRegistry implements CreativeTabsRegistry {
 
-    // Package-private queue mapped safely for our event listener to consume later
     static final Map<ResourceKey<CreativeModeTab>, List<Consumer<TabPopulator>>> MODIFIERS = new HashMap<>();
 
     @Override

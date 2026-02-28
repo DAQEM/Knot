@@ -33,5 +33,6 @@ public class NeoForgeScreenRegistry implements ScreenRegistry {
     public static void onRegisterScreens(RegisterMenuScreensEvent event) {
         BINDINGS.forEach((type, binder) ->
                 event.register((MenuType) type.get(), binder::create));
+        BINDINGS.clear();
     }
 }

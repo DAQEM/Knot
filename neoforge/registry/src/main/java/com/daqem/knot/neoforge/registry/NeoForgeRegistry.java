@@ -44,6 +44,7 @@ public class NeoForgeRegistry<T> implements com.daqem.knot.registry.Registry<T> 
                 helper.register(id, instance);
                 entry.resolve(instance);
             });
+            entries.clear();
         });
     }
 

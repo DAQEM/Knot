@@ -28,5 +28,6 @@ public class NeoForgeEntityAttributesRegistry implements EntityAttributesRegistr
         ATTRIBUTES.forEach((typeSupplier, attributeSupplier) -> {
             event.put(typeSupplier.get(), attributeSupplier.get().build());
         });
+        ATTRIBUTES.clear();
     }
 }

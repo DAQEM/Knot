@@ -3,6 +3,7 @@ package com.daqem.knot;
 import com.daqem.knot.events.EventsService;
 import com.daqem.knot.networking.NetworkingService;
 import com.daqem.knot.registry.Registrar;
+import com.daqem.knot.registry.client.BlockEntityRendererRegistry;
 import com.daqem.knot.registry.client.EntityRendererRegistry;
 import com.daqem.knot.registry.client.ScreenRegistry;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
@@ -33,13 +34,16 @@ public class Knot {
 
     private static final Services SERVICES = ServiceLoader.load(Services.class).findFirst().orElseThrow();
 
-    public interface Events extends EventsService {}
+    public interface Events extends EventsService {
+    }
+
     public static final NetworkingService NETWORKING = SERVICES.getNetworking();
     public static final Registrar REGISTRAR = SERVICES.getRegistry().getRegistrar();
     public static final MenuRegistry MENU_REGISTRY = SERVICES.getRegistry().getMenuRegistry();
     public static final CreativeTabsRegistry CREATIVE_TABS_REGISTRY = SERVICES.getRegistry().getCreativeTabsRegistry();
     public static final EntityAttributesRegistry ENTITY_ATTRIBUTES_REGISTRY = SERVICES.getRegistry().getEntityAttributesRegistry();
     public static final EntityRendererRegistry ENTITY_RENDERER_REGISTRY = SERVICES.getRegistry().getEntityRendererRegistry();
+    public static final BlockEntityRendererRegistry BLOCK_ENTITY_RENDERER_REGISTRY = SERVICES.getRegistry().getBlockEntityRendererRegistry();
     public static final ScreenRegistry SCREEN_REGISTRY = SERVICES.getRegistry().getScreenRegistry();
     public static final ReloadRegistry RELOAD_REGISTRY = SERVICES.getRegistry().getReloadRegistry();
 

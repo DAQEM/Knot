@@ -40,6 +40,7 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
                 event.addDependency(dependency, id);
             }
         }
+        DATA_LISTENERS.clear();
     }
 
     @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
@@ -54,6 +55,7 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
                     event.addDependency(dependency, id);
                 }
             }
+            ASSET_LISTENERS.clear();
         }
     }
 
