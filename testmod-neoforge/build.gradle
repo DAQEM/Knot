@@ -6,20 +6,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-    mods {
-        forge {
-            sourceSet project(":neoforge").sourceSets.main
-        }
-    }
-}
-
-configurations {
-    forgeLike
-    common
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentNeoForge.extendsFrom common
+    accessWidenerPath = rootProject.project(":common-core").file("src/main/resources/${rootProject.mod_id}.accesswidener")
 }
 
 apply from: rootProject.file("gradle/scripts/platform.gradle")
@@ -27,7 +14,12 @@ apply from: rootProject.file("gradle/scripts/platform.gradle")
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    implementation(project(path: ":neoforge", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    implementation project(path: ":neoforge-core", configuration: "namedElements")
+    implementation project(path: ":neoforge-networking", configuration: "namedElements")
+
+    common(project(path: ":common-api", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common-core", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common-networking", configuration: "namedElements")) { transitive false }
+
     common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
 }

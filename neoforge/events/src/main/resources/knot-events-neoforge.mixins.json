@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "com.daqem.knot.neoforge.events.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8",
+  "client": [
+    "client.GuiGraphicsMixin"
+  ],
+  "mixins": [
+    "BucketItemMixin",
+    "ItemStackMixin",
+    "AxeItemMixin",
+    "BlockBehaviourMixin",
+    "HoeItemMixin"
+  ]
+}

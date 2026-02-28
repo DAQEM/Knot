@@ -11,6 +11,8 @@ architectury {
 }
 
 subprojects {
+    if (project.name in ["common", "fabric", "neoforge"]) return
+
     apply plugin: "dev.architectury.loom"
     apply plugin: "architectury-plugin"
 
@@ -18,11 +20,12 @@ subprojects {
     apply from: rootProject.file("gradle/scripts/dependencies.gradle")
 
     base {
-        archivesName = rootProject.archives_base_name
+        archivesName = "${rootProject.archives_base_name}-${project.name}"
     }
 
     loom {
         silentMojangMappingsLicense()
+        accessWidenerPath = rootProject.project(":common-core").file("src/main/resources/${rootProject.mod_id}.accesswidener")
     }
 
     dependencies {

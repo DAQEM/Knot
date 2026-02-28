@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.daqem.knot.registry.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinItemProperties"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -43,7 +43,7 @@ public class BoxOfSecretsBlock extends Block {
             };
 
             // Use Knot to open the menu and tell the client about the position
-            Knot.MENUS.open(serverPlayer, containerProvider, buf -> buf.writeBlockPos(pos));
+            Knot.MENU_REGISTRY.open(serverPlayer, containerProvider, buf -> buf.writeBlockPos(pos));
         }
         return InteractionResult.SUCCESS;
     }

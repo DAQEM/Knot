@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.PigRenderer;
 public class TestClient {
 
     public static void init() {
-        Knot.ENTITY_RENDERER.registerRenderer(TestEntityTypes.TEST_ENTITY, PigRenderer::new);
-        Knot.SCREENS.bind(TestMenus.BOX_OF_SECRETS, BoxOfSecretsScreen::new);
+        Knot.ENTITY_RENDERER_REGISTRY.register(TestEntityTypes.TEST_ENTITY, PigRenderer::new);
+        Knot.SCREEN_REGISTRY.bind(TestMenus.BOX_OF_SECRETS, BoxOfSecretsScreen::new);
     }
 }

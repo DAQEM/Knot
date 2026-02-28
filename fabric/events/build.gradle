@@ -1,0 +1,13 @@
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+    implementation project(path: ":common-api", configuration: "namedElements")
+    implementation project(path: ":common-core", configuration: "namedElements")
+    implementation project(path: ":common-events", configuration: "namedElements")
+}

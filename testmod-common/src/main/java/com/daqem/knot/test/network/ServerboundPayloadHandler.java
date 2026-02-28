@@ -1,7 +1,6 @@
 package com.daqem.knot.test.network;
 
-import com.daqem.knot.network.ServerboundContext;
-import com.daqem.knot.test.Test;
+import com.daqem.knot.networking.ServerboundContext;
 import org.jetbrains.annotations.NotNull;
 
 public final class ServerboundPayloadHandler {

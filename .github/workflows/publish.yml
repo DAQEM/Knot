@@ -37,7 +37,7 @@ jobs:
       - name: Retrieve Version
         id: gradle_version
         run: |
-          echo "::set-output name=VERSION_NAME::$(./gradlew -q :common:printVersionName)"
+          echo "::set-output name=VERSION_NAME::$(./gradlew -q :common-core:printVersionName)"
 
       - name: Check if tag exists
         uses: mukunku/tag-exists-action@v1.5.0
