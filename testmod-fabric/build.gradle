@@ -14,16 +14,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    implementation project(path: ":fabric-core", configuration: "namedElements")
-    implementation project(path: ":fabric-networking", configuration: "namedElements")
-    implementation project(path: ":fabric-events", configuration: "namedElements")
-    implementation project(path: ":fabric-registry", configuration: "namedElements")
-
-    common(project(path: ":common-api", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-core", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-networking", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-events", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-registry", configuration: "namedElements")) { transitive false }
+    implementation(files(project(":fabric-core").tasks.named("shadowJar")))
 
     common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
 }

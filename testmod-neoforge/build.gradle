@@ -14,16 +14,7 @@ apply from: rootProject.file("gradle/scripts/platform.gradle")
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    implementation project(path: ":neoforge-core", configuration: "namedElements")
-    implementation project(path: ":neoforge-networking", configuration: "namedElements")
-    implementation project(path: ":neoforge-events", configuration: "namedElements")
-    implementation project(path: ":neoforge-registry", configuration: "namedElements")
-
-    common(project(path: ":common-api", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-core", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-networking", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-events", configuration: "namedElements")) { transitive false }
-    common(project(path: ":common-registry", configuration: "namedElements")) { transitive false }
+    implementation(files(project(":neoforge-core").tasks.named("shadowJar")))
 
     common(project(path: ":testmod-common", configuration: "namedElements")) { transitive false }
 }
