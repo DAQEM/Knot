@@ -30,17 +30,10 @@ import java.util.ServiceLoader;
  */
 public class Knot {
 
-    /**
-     * The global service loader for all Knot services.
-     * This is used internally by the static fields below, but can also be used directly if needed.
-     */
-    public static final Services SERVICES = ServiceLoader.load(Services.class).findFirst().orElseThrow();
+    private static final Services SERVICES = ServiceLoader.load(Services.class).findFirst().orElseThrow();
 
-    /**
-     * The unified networking service for registering and sending packets.
-     */
+    public interface Events extends EventsService {}
     public static final NetworkingService NETWORKING = SERVICES.getNetworking();
-    public static final EventsService EVENTS = SERVICES.getEvents();
     public static final Registrar REGISTRAR = SERVICES.getRegistry().getRegistrar();
     public static final MenuRegistry MENU_REGISTRY = SERVICES.getRegistry().getMenuRegistry();
     public static final CreativeTabsRegistry CREATIVE_TABS_REGISTRY = SERVICES.getRegistry().getCreativeTabsRegistry();
