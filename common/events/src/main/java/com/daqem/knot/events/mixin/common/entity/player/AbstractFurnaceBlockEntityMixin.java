@@ -18,9 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractFurnaceBlockEntity.class)
 public abstract class AbstractFurnaceBlockEntityMixin {
 
-    @Shadow
-    @Final
-    private Reference2IntOpenHashMap<ResourceKey<Recipe<?>>> recipesUsed;
+    @Shadow @Final private Reference2IntOpenHashMap<ResourceKey<Recipe<?>>> recipesUsed;
 
     @Inject(at = @At("HEAD"), method = "awardUsedRecipesAndPopExperience")
     private void awardUsedRecipesAndPopExperience(ServerPlayer serverPlayer, CallbackInfo ci) {

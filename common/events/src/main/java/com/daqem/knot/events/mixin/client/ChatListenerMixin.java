@@ -1,13 +1,13 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import com.daqem.knot.events.client.ClientChatEvent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.multiplayer.chat.ChatListener;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.PlayerChatMessage;
-import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,7 +42,7 @@ public abstract class ChatListenerMixin {
         if (result.cancelsEvent()) {
             this.knot$cancelNextChat.set(value);
         }
-        return mutable.get();
+        return mutable.getValue();
     }
 
     @Inject(
@@ -67,7 +67,7 @@ public abstract class ChatListenerMixin {
         if (result.cancelsEvent()) {
             this.knot$cancelNextSystem.set(message);
         }
-        return mutable.get();
+        return mutable.getValue();
     }
 
     @Inject(

@@ -12,7 +12,7 @@ public interface TestSoundEvents {
     Registry<SoundEvent> SOUNDS = Knot.REGISTRAR.createRegistry(BuiltInRegistries.SOUND_EVENT, Test.MOD_ID);
 
     RegistryEntry<SoundEvent> TEST_SOUND = SOUNDS.register("test_sound",
-            key -> SoundEvent.createVariableRangeEvent(key.identifier())
+            key -> SoundEvent.createVariableRangeEvent(key.location())
     );
 
     static void register() {

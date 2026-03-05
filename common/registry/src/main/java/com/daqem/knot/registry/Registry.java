@@ -1,6 +1,6 @@
 package com.daqem.knot.registry;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 
 import java.util.function.Function;
@@ -39,7 +39,7 @@ public interface Registry<T> {
      * @return A {@link RegistryEntry} holding the registered object.
      */
     default <I extends T> RegistryEntry<I> register(String name, Function<ResourceKey<T>, I> factory) {
-        Identifier id = Identifier.fromNamespaceAndPath(getModId(), name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(getModId(), name);
         ResourceKey<T> key = ResourceKey.create(getRegistryKey(), id);
         return register(name, () -> factory.apply(key));
     }

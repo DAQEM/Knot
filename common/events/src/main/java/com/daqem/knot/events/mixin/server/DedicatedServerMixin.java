@@ -2,7 +2,6 @@ package com.daqem.knot.events.mixin.server;
 
 import com.daqem.knot.events.common.TickEvent;
 import com.daqem.knot.events.server.ServerTickEvent;
-import com.mojang.datafixers.DataFixer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerInterface;
 import net.minecraft.server.Services;
@@ -21,7 +20,7 @@ import java.net.Proxy;
 @Mixin(DedicatedServer.class)
 public abstract class DedicatedServerMixin extends MinecraftServer implements ServerInterface {
 
-    public DedicatedServerMixin(Thread serverThread, LevelStorageSource.LevelStorageAccess storageSource, PackRepository packRepository, WorldStem worldStem, Proxy proxy, DataFixer fixerUpper, Services services, LevelLoadListener levelLoadListener) {
+    public DedicatedServerMixin(Thread serverThread, LevelStorageSource.LevelStorageAccess storageSource, PackRepository packRepository, WorldStem worldStem, Proxy proxy, com.mojang.datafixers.DataFixer fixerUpper, Services services, LevelLoadListener levelLoadListener) {
         super(serverThread, storageSource, packRepository, worldStem, proxy, fixerUpper, services, levelLoadListener);
     }
 

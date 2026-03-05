@@ -12,10 +12,11 @@ import com.daqem.knot.registry.resource.ReloadRegistry;
 import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import java.util.ServiceLoader;
 
@@ -67,8 +68,8 @@ public class Knot {
         return modId;
     }
 
-    public Identifier getId(String path) {
-        return Identifier.fromNamespaceAndPath(this.modId, path);
+    public ResourceLocation getId(String path) {
+        return ResourceLocation.fromNamespaceAndPath(this.modId, path);
     }
 
     public MutableComponent translatable(String key) {

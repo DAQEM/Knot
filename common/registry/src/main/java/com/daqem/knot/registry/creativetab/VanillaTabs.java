@@ -1,7 +1,7 @@
 package com.daqem.knot.registry.creativetab;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 
@@ -30,6 +30,6 @@ public final class VanillaTabs {
     private VanillaTabs() {}
 
     private static ResourceKey<CreativeModeTab> create(String name) {
-        return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace(name));
+        return ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.withDefaultNamespace(name));
     }
 }

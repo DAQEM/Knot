@@ -1,6 +1,7 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import com.daqem.knot.events.client.*;
 import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -15,9 +16,8 @@ import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
-import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -80,7 +80,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
     }
 
     @Inject(
-            method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V",
+            method = "disconnect",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/Gui;onDisconnected()V",
@@ -120,7 +120,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
         }
 
         // Proceed with the wrapped (potentially replaced) screen
-        original.call(instance, screenWrapper.get());
+        original.call(instance, screenWrapper.getValue());
     }
 
     @Inject(
@@ -149,8 +149,8 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
         }
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;clear()V"))
-    private void knot$onClientQuit(Screen screen, boolean bl, boolean bl2, CallbackInfo ci) {
+    @Inject(method = "disconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;clear()V"))
+    private void knot$onClientQuit(Screen nextScreen, boolean keepResourcePacks, CallbackInfo ci) {
         if (this.player != null) {
             ClientPlayerEvent.QUIT.invoker().onQuit(this.player);
         }

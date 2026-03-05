@@ -1,7 +1,7 @@
 package com.daqem.knot.events.mixin.common.entity.player;
 
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
-import net.minecraft.advancements.criterion.FishingRodHookedTrigger;
+import net.minecraft.advancements.critereon.FishingRodHookedTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;

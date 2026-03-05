@@ -1,7 +1,7 @@
 package com.daqem.knot.api.mixin;
 
 import com.daqem.knot.api.world.entity.IAbstractArrow;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

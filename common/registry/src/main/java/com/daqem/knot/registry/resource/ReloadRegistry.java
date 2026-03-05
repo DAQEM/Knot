@@ -1,6 +1,6 @@
 package com.daqem.knot.registry.resource;
 
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +20,7 @@ public interface ReloadRegistry {
      * @param listener     The listener implementation.
      * @param dependencies Optional IDs of other listeners that must run *before* this one.
      */
-    void registerData(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies);
+    void registerData(@NotNull ResourceLocation id, @NotNull PreparableReloadListener listener, @NotNull ResourceLocation... dependencies);
 
     /**
      * Registers a listener for the **Client Resource Pack** reload cycle.
@@ -37,5 +37,5 @@ public interface ReloadRegistry {
      * @param listener     The listener implementation.
      * @param dependencies Optional IDs of other listeners that must run *before* this one.
      */
-    void registerAssets(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies);
+    void registerAssets(@NotNull ResourceLocation id, @NotNull PreparableReloadListener listener, @NotNull ResourceLocation... dependencies);
 }

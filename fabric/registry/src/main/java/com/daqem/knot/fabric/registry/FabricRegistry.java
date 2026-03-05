@@ -2,7 +2,7 @@ package com.daqem.knot.fabric.registry;
 
 import com.daqem.knot.registry.RegistryEntry;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
 
 import java.util.LinkedHashMap;
@@ -13,7 +13,7 @@ public class FabricRegistry<T> implements com.daqem.knot.registry.Registry<T> {
 
     private final Registry<T> registry;
     private final String modId;
-    private final Map<Identifier, FabricRegistryEntry<T>> entries = new LinkedHashMap<>();
+    private final Map<ResourceLocation, FabricRegistryEntry<T>> entries = new LinkedHashMap<>();
     private boolean registered = false;
 
     public FabricRegistry(Registry<T> registry, String modId) {
@@ -27,7 +27,7 @@ public class FabricRegistry<T> implements com.daqem.knot.registry.Registry<T> {
         if (registered) {
             throw new IllegalStateException("Cannot register new entries after registry has been initialized.");
         }
-        Identifier id = Identifier.fromNamespaceAndPath(modId, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(modId, name);
         ResourceKey<? extends Registry<I>> specificRegistryKey = (ResourceKey<? extends Registry<I>>) this.registry.key();
         FabricRegistryEntry<I> entry = new FabricRegistryEntry<>(specificRegistryKey, id, factory);
         entries.put(id, (FabricRegistryEntry<T>) entry);

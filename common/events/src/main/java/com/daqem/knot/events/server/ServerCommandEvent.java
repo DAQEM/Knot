@@ -3,12 +3,12 @@ package com.daqem.knot.events.server;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import org.apache.commons.lang3.mutable.MutableObject;
 
 public interface ServerCommandEvent {
 

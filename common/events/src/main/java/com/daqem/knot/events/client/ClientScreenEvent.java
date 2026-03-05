@@ -3,10 +3,10 @@ package com.daqem.knot.events.client;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import org.apache.commons.lang3.mutable.MutableObject;
 
 /**
  * Events related to the lifecycle, rendering, and management of GUI Screens.

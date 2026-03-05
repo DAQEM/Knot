@@ -90,7 +90,7 @@ public class NeoForgeEventHooks {
     public static void onServerChat(net.neoforged.neoforge.event.ServerChatEvent event) {
         MutableObject<Component> mutable = new MutableObject<>(event.getMessage());
         ServerChatEvent.DECORATE.invoker().onDecorateChat(event.getPlayer(), mutable);
-        event.setMessage(mutable.get());
+        event.setMessage(mutable.getValue());
 
         EventResult result = ServerChatEvent.RECEIVED.invoker().onReceiveChat(event.getPlayer(), event.getMessage());
         if (result.cancelsEvent()) {
@@ -138,8 +138,8 @@ public class NeoForgeEventHooks {
             event.setCanceled(true);
         }
 
-        event.setParseResults(resultsRef.get());
-        event.setException(exceptionRef.get());
+        event.setParseResults(resultsRef.getValue());
+        event.setException(exceptionRef.getValue());
     }
 
     @SubscribeEvent

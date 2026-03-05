@@ -1,6 +1,7 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import com.daqem.knot.events.client.ClientChatEvent;
 import com.daqem.knot.events.client.ClientPlayerEvent;
 import com.daqem.knot.events.client.ClientRecipeEvent;
@@ -10,7 +11,6 @@ import net.minecraft.network.protocol.game.ClientboundLoginPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.world.item.crafting.RecipeAccess;
-import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,7 +38,7 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
         if (result.cancelsEvent()) {
             this.knot$cancelNextChat = true;
         }
-        return mutable.get();
+        return mutable.getValue();
     }
 
     @Inject(method = "sendChat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)

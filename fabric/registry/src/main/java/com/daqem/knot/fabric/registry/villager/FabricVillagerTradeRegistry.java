@@ -3,8 +3,8 @@ package com.daqem.knot.fabric.registry.villager;
 import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.npc.villager.VillagerProfession;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerTrades;
 
 import java.util.Collections;
 

@@ -2,7 +2,7 @@ package com.daqem.knot.neoforge.registry.resource;
 
 import com.daqem.knot.api.Constants;
 import com.daqem.knot.registry.resource.ReloadRegistry;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,26 +17,26 @@ import java.util.Map;
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class NeoForgeReloadRegistry implements ReloadRegistry {
 
-    private static final Map<Identifier, ReloadListener> DATA_LISTENERS = new HashMap<>();
-    private static final Map<Identifier, ReloadListener> ASSET_LISTENERS = new HashMap<>();
+    private static final Map<ResourceLocation, ReloadListener> DATA_LISTENERS = new HashMap<>();
+    private static final Map<ResourceLocation, ReloadListener> ASSET_LISTENERS = new HashMap<>();
 
     @Override
-    public void registerData(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies) {
+    public void registerData(@NotNull ResourceLocation id, @NotNull PreparableReloadListener listener, @NotNull ResourceLocation... dependencies) {
         DATA_LISTENERS.put(id, new ReloadListener(listener, dependencies));
     }
 
     @Override
-    public void registerAssets(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies) {
+    public void registerAssets(@NotNull ResourceLocation id, @NotNull PreparableReloadListener listener, @NotNull ResourceLocation... dependencies) {
         ASSET_LISTENERS.put(id, new ReloadListener(listener, dependencies));
     }
 
     @SubscribeEvent
     public static void onAddReloadListeners(AddServerReloadListenersEvent event) {
-        for (Map.Entry<Identifier, ReloadListener> entry : DATA_LISTENERS.entrySet()) {
-            Identifier id = entry.getKey();
+        for (Map.Entry<ResourceLocation, ReloadListener> entry : DATA_LISTENERS.entrySet()) {
+            ResourceLocation id = entry.getKey();
             ReloadListener reloadListener = entry.getValue();
             event.addListener(id, reloadListener.listener());
-            for (Identifier dependency : reloadListener.dependencies()) {
+            for (ResourceLocation dependency : reloadListener.dependencies()) {
                 event.addDependency(dependency, id);
             }
         }
@@ -47,11 +47,11 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
     public static class ClientEvents {
         @SubscribeEvent
         public static void onRegisterClientReloadListeners(AddClientReloadListenersEvent event) {
-            for (Map.Entry<Identifier, ReloadListener> entry : ASSET_LISTENERS.entrySet()) {
-                Identifier id = entry.getKey();
+            for (Map.Entry<ResourceLocation, ReloadListener> entry : ASSET_LISTENERS.entrySet()) {
+                ResourceLocation id = entry.getKey();
                 ReloadListener reloadListener = entry.getValue();
                 event.addListener(id, reloadListener.listener());
-                for (Identifier dependency : reloadListener.dependencies()) {
+                for (ResourceLocation dependency : reloadListener.dependencies()) {
                     event.addDependency(dependency, id);
                 }
             }
@@ -59,6 +59,6 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
         }
     }
 
-    private record ReloadListener(PreparableReloadListener listener, Identifier[] dependencies) {
+    private record ReloadListener(PreparableReloadListener listener, ResourceLocation[] dependencies) {
     }
 }

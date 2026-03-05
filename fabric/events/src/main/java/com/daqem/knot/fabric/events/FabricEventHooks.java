@@ -47,7 +47,7 @@ public final class FabricEventHooks {
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.CONTENT_PHASE, (sender, message) -> {
             MutableObject<Component> mutable = new MutableObject<>(message);
             ServerChatEvent.DECORATE.invoker().onDecorateChat(sender, mutable);
-            return mutable.get();
+            return mutable.getValue();
         });
 
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register((message, sender, params) -> {

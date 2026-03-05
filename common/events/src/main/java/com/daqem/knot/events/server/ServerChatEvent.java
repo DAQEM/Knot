@@ -3,9 +3,9 @@ package com.daqem.knot.events.server;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import com.daqem.knot.events.EventResult;
+import org.apache.commons.lang3.mutable.MutableObject;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import org.apache.commons.lang3.mutable.MutableObject;
 
 /**
  * Events related to server-side chat processing and decoration.

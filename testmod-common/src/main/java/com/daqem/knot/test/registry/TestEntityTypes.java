@@ -7,7 +7,7 @@ import com.daqem.knot.test.Test;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.pig.Pig;
+import net.minecraft.world.entity.animal.Pig;
 import org.jetbrains.annotations.NotNull;
 
 public interface TestEntityTypes {

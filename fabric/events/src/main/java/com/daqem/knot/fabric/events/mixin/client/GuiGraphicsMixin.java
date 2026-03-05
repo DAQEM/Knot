@@ -19,7 +19,7 @@ public abstract class GuiGraphicsMixin {
      * and then pass the results back into the 'original' operation chain.
      */
     @WrapOperation(
-            method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;)V",
+            method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/ResourceLocation;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;positionTooltip(IIIIII)Lorg/joml/Vector2ic;")
     )
     private Vector2ic knot$wrapTooltipPositioning(
@@ -42,6 +42,6 @@ public abstract class GuiGraphicsMixin {
 
         // Call the original method (or the next mod in the Mixin chain)
         // with the potentially modified X and Y values.
-        return original.call(positioner, guiWidth, guiHeight, (int) targetX.get(), (int) targetY.get(), tooltipWidth, tooltipHeight);
+        return original.call(positioner, guiWidth, guiHeight, (int) targetX.getValue(), (int) targetY.getValue(), tooltipWidth, tooltipHeight);
     }
 }

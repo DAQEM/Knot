@@ -1,6 +1,7 @@
 package com.daqem.knot.registry.pack;
 
 import com.daqem.knot.api.Logger;
+import net.minecraft.FileUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
@@ -8,7 +9,6 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.FolderRepositorySource;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.util.FileUtil;
 import net.minecraft.world.level.validation.DirectoryValidator;
 import org.jetbrains.annotations.NotNull;
 
