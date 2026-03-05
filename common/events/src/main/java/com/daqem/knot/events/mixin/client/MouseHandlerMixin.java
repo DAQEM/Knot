@@ -7,8 +7,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.input.MouseButtonInfo;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,44 +19,44 @@ public abstract class MouseHandlerMixin {
 
     @Shadow @Final private Minecraft minecraft;
 
-    @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
-    private void knot$onRawMouseClicked(long window, MouseButtonInfo buttonInfo, int action, CallbackInfo ci) {
-        if (window == this.minecraft.getWindow().handle()) {
-            if (ClientRawInputEvent.MOUSE_CLICKED_PRE.invoker().onMouseClicked(minecraft, buttonInfo.button(), action, buttonInfo.modifiers()).cancelsEvent()) {
+    @Inject(method = "onPress", at = @At("HEAD"), cancellable = true)
+    private void knot$onRawMouseClicked(long window, int button, int action, int modifiers, CallbackInfo ci) {
+        if (window == this.minecraft.getWindow().getWindow()) {
+            if (ClientRawInputEvent.MOUSE_CLICKED_PRE.invoker().onMouseClicked(minecraft, button, action, modifiers).cancelsEvent()) {
                 ci.cancel();
             }
         }
     }
 
-    @Inject(method = "onButton", at = @At("RETURN"))
-    private void knot$onRawMouseClickedPost(long window, MouseButtonInfo buttonInfo, int action, CallbackInfo ci) {
-        if (window == this.minecraft.getWindow().handle()) {
-            ClientRawInputEvent.MOUSE_CLICKED_POST.invoker().onMouseClicked(minecraft, buttonInfo.button(), action, buttonInfo.modifiers());
+    @Inject(method = "onPress", at = @At("RETURN"))
+    private void knot$onRawMouseClickedPost(long window, int button, int action, int modifiers, CallbackInfo ci) {
+        if (window == this.minecraft.getWindow().getWindow()) {
+            ClientRawInputEvent.MOUSE_CLICKED_POST.invoker().onMouseClicked(minecraft, button, action, modifiers);
         }
     }
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
     private void knot$onRawMouseScroll(long windowPointer, double xOffset, double yOffset, CallbackInfo ci) {
-        if (windowPointer == this.minecraft.getWindow().handle()) {
+        if (windowPointer == this.minecraft.getWindow().getWindow()) {
             if (ClientRawInputEvent.MOUSE_SCROLLED.invoker().onMouseScrolled(minecraft, xOffset, yOffset).cancelsEvent()) {
                 ci.cancel();
             }
         }
     }
 
-    @WrapOperation(method = "onButton", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseClicked(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z"))
-    private boolean knot$onScreenMouseClicked(Screen screen, MouseButtonEvent event, boolean doubleClick, Operation<Boolean> original) {
-        if (ClientScreenInputEvent.MOUSE_CLICKED_PRE.invoker().onMouseClicked(minecraft, screen, event.x(), event.y(), event.button()).cancelsEvent()) return true;
-        boolean result = original.call(screen, event, doubleClick);
-        ClientScreenInputEvent.MOUSE_CLICKED_POST.invoker().onMouseClicked(minecraft, screen, event.x(), event.y(), event.button());
+    @WrapOperation(method = "onPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseClicked(DDI)Z"))
+    private boolean knot$onScreenMouseClicked(Screen screen, double mouseX, double mouseY, int button, Operation<Boolean> original) {
+        if (ClientScreenInputEvent.MOUSE_CLICKED_PRE.invoker().onMouseClicked(minecraft, screen, mouseX, mouseY, button).cancelsEvent()) return true;
+        boolean result = original.call(screen, mouseX, mouseY, button);
+        ClientScreenInputEvent.MOUSE_CLICKED_POST.invoker().onMouseClicked(minecraft, screen, mouseX, mouseY, button);
         return result;
     }
 
-    @WrapOperation(method = "onButton", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseReleased(Lnet/minecraft/client/input/MouseButtonEvent;)Z"))
-    private boolean knot$onScreenMouseReleased(Screen screen, MouseButtonEvent event, Operation<Boolean> original) {
-        if (ClientScreenInputEvent.MOUSE_RELEASED_PRE.invoker().onMouseReleased(minecraft, screen, event.x(), event.y(), event.button()).cancelsEvent()) return true;
-        boolean result = original.call(screen, event);
-        ClientScreenInputEvent.MOUSE_RELEASED_POST.invoker().onMouseReleased(minecraft, screen, event.x(), event.y(), event.button());
+    @WrapOperation(method = "onPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseReleased(DDI)Z"))
+    private boolean knot$onScreenMouseReleased(Screen screen, double mouseX, double mouseY, int button, Operation<Boolean> original) {
+        if (ClientScreenInputEvent.MOUSE_RELEASED_PRE.invoker().onMouseReleased(minecraft, screen, mouseX, mouseY, button).cancelsEvent()) return true;
+        boolean result = original.call(screen, mouseX, mouseY, button);
+        ClientScreenInputEvent.MOUSE_RELEASED_POST.invoker().onMouseReleased(minecraft, screen, mouseX, mouseY, button);
         return result;
     }
 
@@ -70,11 +68,11 @@ public abstract class MouseHandlerMixin {
         return result;
     }
 
-    @WrapOperation(method = "handleAccumulatedMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseDragged(Lnet/minecraft/client/input/MouseButtonEvent;DD)Z"))
-    private boolean knot$onScreenMouseDragged(Screen screen, MouseButtonEvent event, double dx, double dy, Operation<Boolean> original) {
-        if (ClientScreenInputEvent.MOUSE_DRAGGED_PRE.invoker().onMouseDragged(minecraft, screen, event.x(), event.y(), event.button(), dx, dy).cancelsEvent()) return true;
-        boolean result = original.call(screen, event, dx, dy);
-        ClientScreenInputEvent.MOUSE_DRAGGED_POST.invoker().onMouseDragged(minecraft, screen, event.x(), event.y(), event.button(), dx, dy);
+    @WrapOperation(method = "handleAccumulatedMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;mouseDragged(DDIDD)Z"))
+    private boolean knot$onScreenMouseDragged(Screen screen, double mouseX, double mouseY, int button, double dragX, double dragY, Operation<Boolean> original) {
+        if (ClientScreenInputEvent.MOUSE_DRAGGED_PRE.invoker().onMouseDragged(minecraft, screen, mouseX, mouseY, button, dragX, dragY).cancelsEvent()) return true;
+        boolean result = original.call(screen, mouseX, mouseY, button, dragX, dragY);
+        ClientScreenInputEvent.MOUSE_DRAGGED_POST.invoker().onMouseDragged(minecraft, screen, mouseX, mouseY, button, dragX, dragY);
         return result;
     }
 }

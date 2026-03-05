@@ -7,8 +7,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.CharacterEvent;
-import net.minecraft.client.input.KeyEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,9 +23,9 @@ public abstract class KeyboardHandlerMixin {
      * Intercepts the raw key press right at the beginning of the handler.
      */
     @Inject(method = "keyPress", at = @At("HEAD"), cancellable = true)
-    private void knot$onRawKeyPress(long windowPointer, int action, KeyEvent event, CallbackInfo ci) {
-        if (windowPointer == this.minecraft.getWindow().handle()) {
-            if (ClientRawInputEvent.KEY_PRESSED.invoker().onKeyPressed(minecraft, event.key(), event.scancode(), action, event.modifiers()).cancelsEvent()) {
+    private void knot$onRawKeyPress(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo ci) {
+        if (windowPointer == this.minecraft.getWindow().getWindow()) {
+            if (ClientRawInputEvent.KEY_PRESSED.invoker().onKeyPressed(minecraft, key, scanCode, action, modifiers).cancelsEvent()) {
                 ci.cancel();
             }
         }
@@ -36,34 +34,34 @@ public abstract class KeyboardHandlerMixin {
     /**
      * Wraps the screen's key pressed logic.
      */
-    @WrapOperation(method = "keyPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;keyPressed(Lnet/minecraft/client/input/KeyEvent;)Z"))
-    private boolean knot$onScreenKeyPressed(Screen screen, KeyEvent event, Operation<Boolean> original) {
-        if (ClientScreenInputEvent.KEY_PRESSED_PRE.invoker().onKeyPressed(minecraft, screen, event.key(), event.scancode(), event.modifiers()).cancelsEvent()) return true;
-        boolean result = original.call(screen, event);
-        ClientScreenInputEvent.KEY_PRESSED_POST.invoker().onKeyPressed(minecraft, screen, event.key(), event.scancode(), event.modifiers());
+    @WrapOperation(method = "keyPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;keyPressed(III)Z"))
+    private boolean knot$onScreenKeyPressed(Screen screen, int keyCode, int scanCode, int modifiers, Operation<Boolean> original) {
+        if (ClientScreenInputEvent.KEY_PRESSED_PRE.invoker().onKeyPressed(minecraft, screen, keyCode, scanCode, modifiers).cancelsEvent()) return true;
+        boolean result = original.call(screen, keyCode, scanCode, modifiers);
+        ClientScreenInputEvent.KEY_PRESSED_POST.invoker().onKeyPressed(minecraft, screen, keyCode, scanCode, modifiers);
         return result;
     }
 
     /**
      * Wraps the screen's key released logic.
      */
-    @WrapOperation(method = "keyPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;keyReleased(Lnet/minecraft/client/input/KeyEvent;)Z"))
-    private boolean knot$onScreenKeyReleased(Screen screen, KeyEvent event, Operation<Boolean> original) {
-        if (ClientScreenInputEvent.KEY_RELEASED_PRE.invoker().onKeyReleased(minecraft, screen, event.key(), event.scancode(), event.modifiers()).cancelsEvent()) return true;
-        boolean result = original.call(screen, event);
-        ClientScreenInputEvent.KEY_RELEASED_POST.invoker().onKeyReleased(minecraft, screen, event.key(), event.scancode(), event.modifiers());
+    @WrapOperation(method = "keyPress", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;keyReleased(III)Z"))
+    private boolean knot$onScreenKeyReleased(Screen screen, int keyCode, int scanCode, int modifiers, Operation<Boolean> original) {
+        if (ClientScreenInputEvent.KEY_RELEASED_PRE.invoker().onKeyReleased(minecraft, screen, keyCode, scanCode, modifiers).cancelsEvent()) return true;
+        boolean result = original.call(screen, keyCode, scanCode, modifiers);
+        ClientScreenInputEvent.KEY_RELEASED_POST.invoker().onKeyReleased(minecraft, screen, keyCode, scanCode, modifiers);
         return result;
     }
 
     /**
      * Wraps the screen's char typed logic.
      */
-    @WrapOperation(method = "charTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;charTyped(Lnet/minecraft/client/input/CharacterEvent;)Z"))
-    private boolean knot$onScreenCharTyped(Screen screen, CharacterEvent event, Operation<Boolean> original) {
+    @WrapOperation(method = "charTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;charTyped(CI)Z"))
+    private boolean knot$onScreenCharTyped(Screen screen, char codepoint, int modifiers, Operation<Boolean> original) {
         // We cast codepoint to char to seamlessly support the KnotClientScreenInputEvent interface
-        if (ClientScreenInputEvent.CHAR_TYPED_PRE.invoker().onCharTyped(minecraft, screen, (char) event.codepoint(), event.modifiers()).cancelsEvent()) return true;
-        boolean result = original.call(screen, event);
-        ClientScreenInputEvent.CHAR_TYPED_POST.invoker().onCharTyped(minecraft, screen, (char) event.codepoint(), event.modifiers());
+        if (ClientScreenInputEvent.CHAR_TYPED_PRE.invoker().onCharTyped(minecraft, screen, codepoint, modifiers).cancelsEvent()) return true;
+        boolean result = original.call(screen, codepoint, modifiers);
+        ClientScreenInputEvent.CHAR_TYPED_POST.invoker().onCharTyped(minecraft, screen, codepoint, modifiers);
         return result;
     }
 }

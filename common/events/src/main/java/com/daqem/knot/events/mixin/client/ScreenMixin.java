@@ -24,14 +24,14 @@ public abstract class ScreenMixin {
         ClientScreenEvent.AFTER_INIT.invoker().onAfterInit((Screen) (Object) this);
     }
 
-    @Inject(method = "renderWithTooltipAndSubtitles", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderWithTooltip", at = @At("HEAD"), cancellable = true)
     private void knot$onBeforeRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (ClientScreenEvent.BEFORE_RENDER.invoker().onBeforeRender((Screen) (Object) this, graphics, mouseX, mouseY, partialTicks).cancelsEvent()) {
             ci.cancel();
         }
     }
 
-    @Inject(method = "renderWithTooltipAndSubtitles", at = @At("RETURN"))
+    @Inject(method = "renderWithTooltip", at = @At("RETURN"))
     private void knot$onAfterRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         ClientScreenEvent.AFTER_RENDER.invoker().onAfterRender((Screen) (Object) this, graphics, mouseX, mouseY, partialTicks);
     }

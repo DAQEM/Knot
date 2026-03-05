@@ -43,14 +43,14 @@ public class NeoForgePlatformInfo implements PlatformInfo {
 
     @Override
     public KnotEnvironment getEnvironment() {
-        return FMLEnvironment.getDist() == Dist.CLIENT
+        return FMLEnvironment.dist == Dist.CLIENT
                 ? KnotEnvironment.PHYSICAL_CLIENT
                 : KnotEnvironment.DEDICATED_SERVER;
     }
 
     @Override
     public boolean isDevelopmentEnvironment() {
-        return !FMLEnvironment.isProduction();
+        return !FMLEnvironment.production;
     }
 
     @Override

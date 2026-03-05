@@ -12,14 +12,15 @@
     "client.GuiGraphicsMixin",
     "client.GuiMixin",
     "client.IntegratedServerMixin",
+    "client.ItemStackMixin",
     "client.KeyboardHandlerMixin",
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
-    "client.ScreenMixin",
-    "client.ItemStackMixin"
+    "client.ScreenMixin"
   ],
   "mixins": [
+    "common.MinecraftServerMixin",
     "common.block.BlockStateBaseMixin",
     "common.block.FallingBlockEntityMixin",
     "common.block.FarmBlockMixin",
@@ -43,7 +44,6 @@
     "common.item.ResultSlotMixin",
     "common.item.SmithingMenuMixin",
     "server.ChunkMapMixin",
-    "server.DedicatedServerMixin",
     "server.LightningBoltMixin",
     "server.SerializableChunkDataMixin",
     "server.ServerExplosionMixin",

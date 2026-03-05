@@ -100,7 +100,7 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
 
     @Inject(
             method = "explode",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerExplosion;explode()I"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerExplosion;explode()V"),
             cancellable = true
     )
     private void knot$onExplodePre(CallbackInfo ci, @Local ServerExplosion explosion) {

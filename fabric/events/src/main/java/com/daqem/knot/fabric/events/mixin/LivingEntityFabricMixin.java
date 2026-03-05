@@ -68,7 +68,7 @@ public abstract class LivingEntityFabricMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void knot$onBlock(ServerLevel serverLevel, DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir, float blockedAmount, ItemStack itemStack) {
+    private void knot$onBlock(ServerLevel level, DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir, float blockedAmount) {
         if ((LivingEntity) (Object) this instanceof Player player && blockedAmount > 0.0F) {
             PlayerEvent.BLOCK_WITH_SHIELD.invoker().onBlockWithShield(player, damageSource, amount);
         }

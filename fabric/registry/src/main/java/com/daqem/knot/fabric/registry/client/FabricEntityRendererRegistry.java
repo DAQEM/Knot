@@ -12,6 +12,6 @@ public class FabricEntityRendererRegistry implements EntityRendererRegistry {
 
     @Override
     public <T extends Entity> void register(Supplier<? extends EntityType<? extends T>> type, EntityRendererProvider<T> provider) {
-        EntityRenderers.register(type.get(), provider);
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(type.get(), provider);
     }
 }
