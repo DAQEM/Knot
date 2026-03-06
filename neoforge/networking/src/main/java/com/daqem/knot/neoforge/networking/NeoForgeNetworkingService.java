@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-@EventBusSubscriber(modid = Constants.MOD_ID)
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class NeoForgeNetworkingService implements NetworkingService {
 
     private static final List<Consumer<RegisterPayloadHandlersEvent>> PENDING_REGISTRATIONS = new ArrayList<>();

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class NeoForgeScreenRegistry implements ScreenRegistry {
     private static final Map<Supplier<? extends MenuType<?>>, ScreenBinder<?, ?>> BINDINGS = new HashMap<>();
 

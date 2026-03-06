@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@EventBusSubscriber(modid = Constants.MOD_ID)
+@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class NeoForgeRegistrar implements Registrar {
 
     private static final List<NeoForgeRegistry<?>> REGISTRIES = new ArrayList<>();

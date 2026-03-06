@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class NeoForgeEntityRendererRegistry implements EntityRendererRegistry {
 
     private static final Map<Supplier<? extends EntityType<?>>, EntityRendererProvider<?>> RENDERERS = new ConcurrentHashMap<>();

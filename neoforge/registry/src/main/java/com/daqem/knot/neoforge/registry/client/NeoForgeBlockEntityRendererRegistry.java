@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class NeoForgeBlockEntityRendererRegistry implements BlockEntityRendererRegistry {
 
     private static final Map<Supplier<? extends BlockEntityType<?>>, BlockEntityRendererProvider<?>> PENDING_BINDINGS = new ConcurrentHashMap<>();
