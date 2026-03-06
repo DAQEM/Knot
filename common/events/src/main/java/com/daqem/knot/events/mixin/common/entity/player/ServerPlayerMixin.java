@@ -8,6 +8,7 @@ import com.daqem.knot.events.common.entity.player.MovementEvent;
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
 import com.daqem.knot.api.world.entity.player.KnotServerPlayer;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -39,8 +40,8 @@ public abstract class ServerPlayerMixin extends Player implements KnotServerPlay
     @Unique
     private double knot$totalHorseRideCm = 0;
 
-    public ServerPlayerMixin(Level level, GameProfile gameProfile) {
-        super(level, gameProfile);
+    public ServerPlayerMixin(Level level, BlockPos pos, float yRot, GameProfile gameProfile) {
+        super(level, pos, yRot, gameProfile);
     }
 
     @Override

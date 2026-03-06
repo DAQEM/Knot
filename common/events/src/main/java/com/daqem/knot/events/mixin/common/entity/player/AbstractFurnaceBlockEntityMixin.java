@@ -22,7 +22,7 @@ public abstract class AbstractFurnaceBlockEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "awardUsedRecipesAndPopExperience")
     private void awardUsedRecipesAndPopExperience(ServerPlayer serverPlayer, CallbackInfo ci) {
-        ServerLevel serverLevel = serverPlayer.level();
+        ServerLevel serverLevel = serverPlayer.serverLevel();
         this.recipesUsed.forEach((recipeId, recipeCount) -> serverLevel.recipeAccess().byKey(recipeId).ifPresent((recipe) -> {
             if (recipe.value() instanceof IAbstractCookingRecipe cookingRecipe) {
                 for (int i = 0; i < recipeCount; i++) {

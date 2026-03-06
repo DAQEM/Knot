@@ -75,7 +75,7 @@ public interface PlatformInfo {
      * @return The current Minecraft version string (e.g. "1.21.11").
      */
     default String getMinecraftVersion() {
-        return SharedConstants.getCurrentVersion().id();
+        return SharedConstants.getCurrentVersion().getId();
     }
 
     /**

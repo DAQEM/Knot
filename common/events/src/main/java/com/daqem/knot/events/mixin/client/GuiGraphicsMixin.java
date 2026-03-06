@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class GuiGraphicsMixin {
 
     @Inject(
-            method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/ResourceLocation;)V",
+            method = "renderTooltipInternal",
             at = @At("HEAD"),
             cancellable = true
     )

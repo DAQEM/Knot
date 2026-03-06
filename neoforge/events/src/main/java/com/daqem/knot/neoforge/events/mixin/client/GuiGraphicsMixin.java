@@ -19,7 +19,7 @@ public abstract class GuiGraphicsMixin {
      * and then pass the results back into the 'original' operation chain.
      */
     @WrapOperation(
-            method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/item/ItemStack;)V",
+            method = "renderTooltipInternal",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;positionTooltip(IIIIII)Lorg/joml/Vector2ic;")
     )
     private Vector2ic knot$wrapTooltipPositioning(

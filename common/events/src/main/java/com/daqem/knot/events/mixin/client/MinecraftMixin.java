@@ -80,7 +80,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
     }
 
     @Inject(
-            method = "disconnect",
+            method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/Gui;onDisconnected()V",
@@ -149,7 +149,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
         }
     }
 
-    @Inject(method = "disconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;clear()V"))
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;clear()V"))
     private void knot$onClientQuit(Screen nextScreen, boolean keepResourcePacks, CallbackInfo ci) {
         if (this.player != null) {
             ClientPlayerEvent.QUIT.invoker().onQuit(this.player);
