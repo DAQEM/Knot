@@ -44,9 +44,6 @@ public interface PlayerEvent {
 
     Event<Jump> JUMP = EventFactory.createLoop(Jump.class);
     Event<LandOnGround> LAND_ON_GROUND = EventFactory.createEventResult(LandOnGround.class);
-    /**
-     * Not cancellable on Minecraft Forge.
-     */
     Event<BlockWithShield> BLOCK_WITH_SHIELD = EventFactory.createLoop(BlockWithShield.class);
     Event<ChangeDimension> CHANGE_DIMENSION = EventFactory.createLoop(ChangeDimension.class);
 

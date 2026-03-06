@@ -18,12 +18,12 @@ import java.util.Map;
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class NeoForgeVillagerTradeRegistry implements VillagerTradeRegistry {
 
-    private static final Map<ResourceKey<VillagerProfession>, Map<Integer, List<VillagerTrades.ItemListing>>> VILLAGER_TRADES = new HashMap<>();
+    private static final Map<VillagerProfession, Map<Integer, List<VillagerTrades.ItemListing>>> VILLAGER_TRADES = new HashMap<>();
     private static final List<VillagerTrades.ItemListing> WANDERER_GENERIC_TRADES = new ArrayList<>();
     private static final List<VillagerTrades.ItemListing> WANDERER_RARE_TRADES = new ArrayList<>();
 
     @Override
-    public void registerVillagerTrade(ResourceKey<VillagerProfession> profession, int level, VillagerTrades.ItemListing... trades) {
+    public void registerVillagerTrade(VillagerProfession profession, int level, VillagerTrades.ItemListing... trades) {
         VILLAGER_TRADES.computeIfAbsent(profession, p -> new HashMap<>())
                 .computeIfAbsent(level, l -> new ArrayList<>())
                 .addAll(List.of(trades));

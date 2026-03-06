@@ -47,7 +47,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(at = @At("HEAD"), method = "causeFallDamage", cancellable = true)
-    private void knot$onLand(double d, float f, DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
+    private void knot$onLand(float fallDistance, float multiplier, DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof Player player) {
             EventResult eventResult = PlayerEvent.LAND_ON_GROUND.invoker().onLandOnGround(player, this.fallDistance);
             if (eventResult.cancelsEvent()) {

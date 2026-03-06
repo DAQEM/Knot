@@ -11,15 +11,13 @@ import java.util.Collections;
 public class FabricVillagerTradeRegistry implements VillagerTradeRegistry {
 
     @Override
-    public void registerVillagerTrade(ResourceKey<VillagerProfession> profession, int level, VillagerTrades.ItemListing... trades) {
+    public void registerVillagerTrade(VillagerProfession profession, int level, VillagerTrades.ItemListing... trades) {
         TradeOfferHelper.registerVillagerOffers(profession, level, allTrades -> Collections.addAll(allTrades, trades));
     }
 
     @Override
     public void registerWanderingTrader(boolean rare, VillagerTrades.ItemListing... trades) {
-        TradeOfferHelper.registerWanderingTraderOffers(pool -> {
-            if (rare) pool.addOffersToPool(TradeOfferHelper.WanderingTraderOffersBuilder.SELL_SPECIAL_ITEMS_POOL, trades);
-            else pool.addOffersToPool(TradeOfferHelper.WanderingTraderOffersBuilder.SELL_COMMON_ITEMS_POOL, trades);
-        });
+        int level = rare ? 5 : 1;
+        TradeOfferHelper.registerWanderingTraderOffers(level, allTrades -> Collections.addAll(allTrades, trades));
     }
 }

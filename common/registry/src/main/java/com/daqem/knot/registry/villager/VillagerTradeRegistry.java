@@ -6,7 +6,7 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 
 public interface VillagerTradeRegistry {
 
-    void registerVillagerTrade(ResourceKey<VillagerProfession> profession, int level, VillagerTrades.ItemListing... trades);
+    void registerVillagerTrade(VillagerProfession profession, int level, VillagerTrades.ItemListing... trades);
 
     void registerWanderingTrader(boolean rare, VillagerTrades.ItemListing... trades);
 
