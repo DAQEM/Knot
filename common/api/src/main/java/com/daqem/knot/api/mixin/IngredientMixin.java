@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Mixin(Ingredient.class)
-public abstract class IngredientMixin implements StackedContents.IngredientInfo<Holder<Item>>, Predicate<ItemStack>, IIngredient {
+public abstract class IngredientMixin implements Predicate<ItemStack>, IIngredient {
 
     @Shadow
     @Final

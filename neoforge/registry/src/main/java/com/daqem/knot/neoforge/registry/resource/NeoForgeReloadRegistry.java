@@ -7,8 +7,7 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
-import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -31,14 +30,10 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
     }
 
     @SubscribeEvent
-    public static void onAddReloadListeners(AddServerReloadListenersEvent event) {
+    public static void onAddReloadListeners(AddReloadListenerEvent event) {
         for (Map.Entry<ResourceLocation, ReloadListener> entry : DATA_LISTENERS.entrySet()) {
-            ResourceLocation id = entry.getKey();
             ReloadListener reloadListener = entry.getValue();
-            event.addListener(id, reloadListener.listener());
-            for (ResourceLocation dependency : reloadListener.dependencies()) {
-                event.addDependency(dependency, id);
-            }
+            event.addListener(reloadListener.listener());
         }
         DATA_LISTENERS.clear();
     }
@@ -46,14 +41,10 @@ public class NeoForgeReloadRegistry implements ReloadRegistry {
     @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
     public static class ClientEvents {
         @SubscribeEvent
-        public static void onRegisterClientReloadListeners(AddClientReloadListenersEvent event) {
+        public static void onRegisterClientReloadListeners(AddReloadListenerEvent event) {
             for (Map.Entry<ResourceLocation, ReloadListener> entry : ASSET_LISTENERS.entrySet()) {
-                ResourceLocation id = entry.getKey();
                 ReloadListener reloadListener = entry.getValue();
-                event.addListener(id, reloadListener.listener());
-                for (ResourceLocation dependency : reloadListener.dependencies()) {
-                    event.addDependency(dependency, id);
-                }
+                event.addListener(reloadListener.listener());
             }
             ASSET_LISTENERS.clear();
         }
