@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
+
 neoForge {
     neoFormVersion = neo_form_version
 
