@@ -6,7 +6,6 @@ import com.daqem.knot.fabric.registry.entity.FabricEntityAttributesRegistry;
 import com.daqem.knot.fabric.registry.fuel.FabricFuelRegistry;
 import com.daqem.knot.fabric.registry.menu.FabricMenuRegistry;
 import com.daqem.knot.fabric.registry.resource.FabricReloadRegistry;
-import com.daqem.knot.fabric.registry.villager.FabricVillagerTradeRegistry;
 import com.daqem.knot.registry.Registrar;
 import com.daqem.knot.registry.RegistryService;
 import com.daqem.knot.registry.client.*;
@@ -15,7 +14,6 @@ import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.fuel.FuelRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import com.daqem.knot.registry.resource.ReloadRegistry;
-import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 
 public class FabricRegistryService implements RegistryService {
 
@@ -29,12 +27,10 @@ public class FabricRegistryService implements RegistryService {
     public static final ReloadRegistry RELOAD_REGISTRY = new FabricReloadRegistry();
     public static final KeyMappingRegistry KEY_MAPPING_REGISTRY = new FabricKeyMappingRegistry();
     public static final ColorHandlerRegistry COLOR_HANDLER_REGISTRY = new FabricColorHandlerRegistry();
-    public static final RenderTypeRegistry RENDER_TYPE_REGISTRY = new FabricRenderTypeRegistry();
     public static final EntityModelLayerRegistry ENTITY_MODEL_LAYER_REGISTRY = new FabricEntityModelLayerRegistry();
     public static final ParticleProviderRegistry PARTICLE_PROVIDER_REGISTRY = new FabricParticleProviderRegistry();
     public static final ConfigScreenRegistry CONFIG_SCREEN_REGISTRY = new FabricConfigScreenRegistry();
     public static final FuelRegistry FUEL_REGISTRY = new FabricFuelRegistry();
-    public static final VillagerTradeRegistry VILLAGER_TRADE_REGISTRY = new FabricVillagerTradeRegistry();
 
     @Override
     public Registrar getRegistrar() {
@@ -87,11 +83,6 @@ public class FabricRegistryService implements RegistryService {
     }
 
     @Override
-    public RenderTypeRegistry getRenderTypeRegistry() {
-        return RENDER_TYPE_REGISTRY;
-    }
-
-    @Override
     public EntityModelLayerRegistry getEntityModelLayerRegistry() {
         return ENTITY_MODEL_LAYER_REGISTRY;
     }
@@ -109,10 +100,5 @@ public class FabricRegistryService implements RegistryService {
     @Override
     public FuelRegistry getFuelRegistry() {
         return FUEL_REGISTRY;
-    }
-
-    @Override
-    public VillagerTradeRegistry getVillagerTradeRegistry() {
-        return VILLAGER_TRADE_REGISTRY;
     }
 }

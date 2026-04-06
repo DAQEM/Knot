@@ -6,7 +6,6 @@ import com.daqem.knot.neoforge.registry.entity.NeoForgeEntityAttributesRegistry;
 import com.daqem.knot.neoforge.registry.fuel.NeoForgeFuelRegistry;
 import com.daqem.knot.neoforge.registry.menu.NeoForgeMenuRegistry;
 import com.daqem.knot.neoforge.registry.resource.NeoForgeReloadRegistry;
-import com.daqem.knot.neoforge.registry.villager.NeoForgeVillagerTradeRegistry;
 import com.daqem.knot.registry.Registrar;
 import com.daqem.knot.registry.RegistryService;
 import com.daqem.knot.registry.client.*;
@@ -15,7 +14,6 @@ import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.fuel.FuelRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import com.daqem.knot.registry.resource.ReloadRegistry;
-import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 
 public class NeoForgeRegistryService implements RegistryService {
 
@@ -29,12 +27,10 @@ public class NeoForgeRegistryService implements RegistryService {
     public static final ReloadRegistry RELOAD_REGISTRY = new NeoForgeReloadRegistry();
     public static final KeyMappingRegistry KEY_MAPPING_REGISTRY = new NeoForgeKeyMappingRegistry();
     public static final ColorHandlerRegistry COLOR_HANDLER_REGISTRY = new NeoForgeColorHandlerRegistry();
-    public static final RenderTypeRegistry RENDER_TYPE_REGISTRY = new NeoForgeRenderTypeRegistry();
     public static final EntityModelLayerRegistry ENTITY_MODEL_LAYER_REGISTRY = new NeoForgeEntityModelLayerRegistry();
     public static final ParticleProviderRegistry PARTICLE_PROVIDER_REGISTRY = new NeoForgeParticleProviderRegistry();
     public static final ConfigScreenRegistry CONFIG_SCREEN_REGISTRY = new NeoForgeConfigScreenRegistry();
     public static final FuelRegistry FUEL_REGISTRY = new NeoForgeFuelRegistry();
-    public static final VillagerTradeRegistry VILLAGER_TRADE_REGISTRY = new NeoForgeVillagerTradeRegistry();
     
     @Override
     public Registrar getRegistrar() {
@@ -87,11 +83,6 @@ public class NeoForgeRegistryService implements RegistryService {
     }
 
     @Override
-    public RenderTypeRegistry getRenderTypeRegistry() {
-        return RENDER_TYPE_REGISTRY;
-    }
-
-    @Override
     public EntityModelLayerRegistry getEntityModelLayerRegistry() {
         return ENTITY_MODEL_LAYER_REGISTRY;
     }
@@ -109,10 +100,5 @@ public class NeoForgeRegistryService implements RegistryService {
     @Override
     public FuelRegistry getFuelRegistry() {
         return FUEL_REGISTRY;
-    }
-
-    @Override
-    public VillagerTradeRegistry getVillagerTradeRegistry() {
-        return VILLAGER_TRADE_REGISTRY;
     }
 }

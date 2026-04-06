@@ -3,7 +3,7 @@ package com.daqem.knot.events.client;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface ClientHudEvent {
          * @param graphics     The graphics context used for drawing.
          * @param deltaTracker Tracker for partial ticks and frame time.
          */
-        void onRenderHud(GuiGraphics graphics, DeltaTracker deltaTracker);
+        void onRenderHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker);
     }
 
     interface DebugText {

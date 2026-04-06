@@ -40,3 +40,6 @@ config = "knot-registry.mixins.json"
 
 [[mixins]]
 config = "knot-events-neoforge.mixins.json"
+
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"

@@ -3,7 +3,7 @@ package com.daqem.knot.events.client;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import com.daqem.knot.events.EventResult;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -51,14 +51,14 @@ public interface ClientScreenEvent {
         /**
          * Fired right before the screen draws its background and widgets.
          */
-        EventResult onBeforeRender(Screen screen, GuiGraphics graphics, int mouseX, int mouseY, float partialTicks);
+        EventResult onBeforeRender(Screen screen, GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks);
     }
 
     interface AfterRender {
         /**
          * Fired after the screen finishes drawing.
          */
-        void onAfterRender(Screen screen, GuiGraphics graphics, int mouseX, int mouseY, float partialTicks);
+        void onAfterRender(Screen screen, GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks);
     }
 
     interface RenderContainerForeground {
@@ -66,6 +66,6 @@ public interface ClientScreenEvent {
          * Fired when a container screen (like a Chest or Inventory) draws its foreground layer (items, local text).
          * The graphics context is already translated to the top-left corner of the GUI background.
          */
-        void onRenderForeground(AbstractContainerScreen<?> screen, GuiGraphics graphics, int mouseX, int mouseY);
+        void onRenderForeground(AbstractContainerScreen<?> screen, GuiGraphicsExtractor graphics, int mouseX, int mouseY);
     }
 }

@@ -1,21 +1,70 @@
-architectury {
-    platformSetupLoomIde()
-    neoForge {
-        platformPackage = "neoforge"
+plugins {
+    id 'multiloader-common'
+    id 'net.neoforged.moddev'
+}
+
+configurations {
+    moduleJava { canBeResolved = true }
+    moduleResources { canBeResolved = true }
+}
+
+neoForge {
+    version = neoforge_version
+
+    // Pass the main mod's AT into the test environment so things compile and run smoothly
+    def at = project(':common-core').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', "knot_test")
+            ideName = "NeoForge Test ${it.name.capitalize()}"
+        }
+        client {
+            client()
+            gameDirectory = this.mkdir(this.file("runs/client"))
+        }
+        server {
+            server()
+            this.file("runs/server").createParentDirectories()
+            gameDirectory = this.mkdir(this.file("runs/server"))
+        }
+    }
+    mods {
+        "knot_test" {
+            sourceSet sourceSets.main
+        }
     }
 }
 
-loom {
-    accessWidenerPath = rootProject.project(":common-core").file("src/main/resources/${rootProject.mod_id}.accesswidener")
+dependencies {
+    implementation project(':neoforge-core')
+
+    compileOnly(project(':testmod-common')) {
+        attributes { attribute(Attribute.of('io.github.mcgradleconventions.loader', String), 'common') }
+    }
+    moduleJava project(path: ':testmod-common', configuration: 'moduleJava')
+    moduleResources project(path: ':testmod-common', configuration: 'moduleResources')
 }
 
-apply from: rootProject.file("gradle/scripts/platform.gradle")
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(configurations.moduleJava)
+    source(configurations.moduleJava)
+}
 
-dependencies {
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+processResources {
+    dependsOn(configurations.moduleResources)
+    from(configurations.moduleResources)
+}
 
-    implementation(files(project(":neoforge-core").tasks.named("shadowJar")))
-
-    common(project(path: ":testmod-common", configuration: "namedElements")) { transitive = false }
-    shadowBundle project(path: ":testmod-common", configuration: "transformProductionNeoForge")
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements'].each { variant ->
+    configurations.named("$variant") { attributes { attribute(loaderAttribute, 'neoforge') } }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant ->
+        configurations.named("$variant") { attributes { attribute(loaderAttribute, 'neoforge') } }
+    }
 }

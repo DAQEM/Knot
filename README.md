@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     // Replace with the latest version
-    modImplementation "com.daqem.knot:knot-common:<version>"
+    implementation "com.daqem.knot:knot-common:<version>"
 }
 
 ```

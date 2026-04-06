@@ -1,15 +1,27 @@
 pluginManagement {
     repositories {
-        maven { url "https://maven.fabricmc.net/" }
-        maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.minecraftforge.net/" }
         maven { url "https://maven.neoforged.net/releases/" }
         maven { url "https://maven.shedaniel.me/" }
         gradlePluginPortal()
+        mavenCentral()
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'Fabric'
+                    url = uri('https://maven.fabricmc.net')
+                }
+            }
+            filter {
+                includeGroupAndSubgroups('net.fabricmc')
+            }
+        }
     }
 }
 
-rootProject.name = "Knot 1.21.11"
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
 
 include("common-api")
 project(":common-api").projectDir = file("common/api")
@@ -53,3 +65,5 @@ project(":neoforge-registry").projectDir = file("neoforge/registry")
 include("testmod-common")
 include("testmod-fabric")
 include("testmod-neoforge")
+
+rootProject.name = "Knot 26.1.1"

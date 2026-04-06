@@ -1,6 +1,6 @@
 package com.daqem.knot.fabric.registry.client;
 
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 
@@ -10,6 +10,6 @@ public class FabricEntityModelLayerRegistry implements com.daqem.knot.registry.c
 
     @Override
     public void register(ModelLayerLocation location, Supplier<LayerDefinition> definition) {
-        EntityModelLayerRegistry.registerModelLayer(location, definition::get);
+        ModelLayerRegistry.registerModelLayer(location, definition::get);
     }
 }

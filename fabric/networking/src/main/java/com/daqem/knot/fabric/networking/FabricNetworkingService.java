@@ -20,14 +20,14 @@ public class FabricNetworkingService implements NetworkingService {
 
     @Override
     public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ServerboundContext> handler) {
-        PayloadTypeRegistry.playC2S().register(type, codec);
+        PayloadTypeRegistry.serverboundPlay().register(type, codec);
         ServerPlayNetworking.registerGlobalReceiver(type, (payload, context) ->
                 context.server().execute(() -> handler.accept(payload, context::player)));
     }
 
     @Override
     public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ClientboundContext> handler) {
-        PayloadTypeRegistry.playS2C().register(type, codec);
+        PayloadTypeRegistry.clientboundPlay().register(type, codec);
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             ClientHandlerIsolator.register(type, handler);

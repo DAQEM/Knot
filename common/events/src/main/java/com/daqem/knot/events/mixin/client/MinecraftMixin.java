@@ -18,7 +18,6 @@ import net.minecraft.world.phys.HitResult;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -49,8 +48,8 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
     @Unique
     private boolean knot$cancelScreenSwap = false;
 
-    public MinecraftMixin(String string) {
-        super(string);
+    public MinecraftMixin(String name, boolean propagatesCrashes) {
+        super(name, propagatesCrashes);
     }
 
     @Inject(
@@ -93,7 +92,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
         }
     }
 
-    @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gameThread:Ljava/lang/Thread;", shift = At.Shift.AFTER, ordinal = 0, opcode = Opcodes.PUTFIELD), method = "run")
+    @Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;gameThread:Ljava/lang/Thread;", shift = At.Shift.AFTER, ordinal = 0, opcode = 181), method = "run")
     private void knot$onClientStarted(CallbackInfo ci) {
         // This triggers when the client initialization is finished and the loop begins.
         ClientLifecycleEvent.STARTED.invoker().onClientStarted((Minecraft) (Object) this);
@@ -107,7 +106,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
 
     @WrapOperation(
             method = "setScreen",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", opcode = Opcodes.PUTFIELD)
+            at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", opcode = 181)
     )
     private void knot$wrapScreenChange(Minecraft instance, Screen newScreen, Operation<Void> original) {
         MutableObject<Screen> screenWrapper = new MutableObject<>(newScreen);

@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+}
+
+configurations {
+    moduleJava { canBeResolved = false; canBeConsumed = true }
+    moduleResources { canBeResolved = false; canBeConsumed = true }
+}
+
+artifacts {
+    moduleJava sourceSets.main.java.sourceDirectories.singleFile
+    moduleResources sourceSets.main.resources.sourceDirectories.singleFile
+}
+
+repositories {
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+}

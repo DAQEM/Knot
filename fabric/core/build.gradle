@@ -1,41 +1,80 @@
-architectury {
-    platformSetupLoomIde()
-    fabric()
+plugins {
+    id 'multiloader-common'
+    id 'net.fabricmc.fabric-loom'
 }
 
-apply from: rootProject.file("gradle/scripts/platform.gradle")
 apply from: rootProject.file("gradle/scripts/publishing.gradle")
 apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
 
-base {
-    archivesName = rootProject.archives_base_name
+configurations {
+    moduleJava { canBeResolved = true }
+    moduleResources { canBeResolved = true }
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    compileOnly "com.terraformersmc:modmenu:${rootProject.modmenu_version}"
 
-    common(project(path: ':common-api', configuration: 'namedElements')) { transitive = false }
-    shadowBundle project(path: ':common-api', configuration: 'transformProductionFabric')
+    def submodules = [
+            ':common-api', ':common-core', ':common-networking', ':common-events', ':common-registry',
+            ':fabric-networking', ':fabric-events', ':fabric-registry'
+    ]
 
-    common(project(path: ':common-core', configuration: 'namedElements')) { transitive = false }
-    shadowBundle project(path: ':common-core', configuration: 'transformProductionFabric')
+    submodules.each { proj ->
+        compileOnly(project(proj)) {
+            attributes { attribute(Attribute.of('io.github.mcgradleconventions.loader', String), proj.startsWith(':common') ? 'common' : 'fabric') }
+        }
+        moduleJava project(path: proj, configuration: 'moduleJava')
+        moduleResources project(path: proj, configuration: 'moduleResources')
+    }
+}
 
-    common(project(path: ':common-networking', configuration: 'namedElements')) { transitive = false }
-    shadowBundle project(path: ':common-networking', configuration: 'transformProductionFabric')
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(configurations.moduleJava)
+    source(configurations.moduleJava)
+}
 
-    common(project(path: ':common-events', configuration: 'namedElements')) { transitive = false }
-    shadowBundle project(path: ':common-events', configuration: 'transformProductionFabric')
+processResources {
+    dependsOn(configurations.moduleResources)
+    from(configurations.moduleResources)
+}
 
-    common(project(path: ':common-registry', configuration: 'namedElements')) { transitive = false }
-    shadowBundle project(path: ':common-registry', configuration: 'transformProductionFabric')
+tasks.named('sourcesJar', Jar) {
+    dependsOn(configurations.moduleJava)
+    from(configurations.moduleJava)
+    dependsOn(configurations.moduleResources)
+    from(configurations.moduleResources)
+}
 
-    common(project(path: ':fabric-networking', configuration: 'namedElements')) { transitive = false }
-    shadowBundle(project(path: ':fabric-networking', configuration: 'namedElements')) { transitive = false }
+loom {
+    def aw = project(':common-core').file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+    }
+}
 
-    common(project(path: ':fabric-events', configuration: 'namedElements')) { transitive = false }
-    shadowBundle(project(path: ':fabric-events', configuration: 'namedElements')) { transitive = false }
-
-    common(project(path: ':fabric-registry', configuration: 'namedElements')) { transitive = false }
-    shadowBundle(project(path: ':fabric-registry', configuration: 'namedElements')) { transitive = false }
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'includeInternal', 'modCompileClasspath'].each { variant ->
+    configurations.named("$variant") { attributes { attribute(loaderAttribute, 'fabric') } }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant->
+        configurations.named("$variant") { attributes { attribute(loaderAttribute, 'fabric') } }
+    }
 }

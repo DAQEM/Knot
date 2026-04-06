@@ -7,7 +7,6 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.EntityInLevelCallback;
 import org.jetbrains.annotations.NotNull;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -19,7 +18,7 @@ public abstract class EntityMixin {
             at = @At(
                     value = "FIELD",
                     target = "Lnet/minecraft/world/entity/Entity;levelCallback:Lnet/minecraft/world/level/entity/EntityInLevelCallback;",
-                    opcode = Opcodes.PUTFIELD
+                    opcode = 181
             )
     )
     private void knot$wrapLevelCallback(Entity instance, EntityInLevelCallback callback, Operation<Void> original) {

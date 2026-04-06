@@ -1,6 +1,7 @@
 package com.daqem.knot.fabric.registry.resource;
 
 import com.daqem.knot.registry.resource.ReloadRegistry;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.fabricmc.fabric.impl.resource.ResourceLoaderImpl;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
@@ -11,17 +12,17 @@ public class FabricReloadRegistry implements ReloadRegistry {
 
     @Override
     public void registerData(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies) {
-        ResourceLoaderImpl.get(PackType.SERVER_DATA).registerReloader(id, listener);
+        ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id, listener);
         for (Identifier dependency : dependencies) {
-            ResourceLoaderImpl.get(PackType.SERVER_DATA).addReloaderOrdering(dependency, id);
+            ResourceLoader.get(PackType.SERVER_DATA).addListenerOrdering(dependency, id);
         }
     }
 
     @Override
     public void registerAssets(@NotNull Identifier id, @NotNull PreparableReloadListener listener, @NotNull Identifier... dependencies) {
-        ResourceLoaderImpl.get(PackType.CLIENT_RESOURCES).registerReloader(id, listener);
+        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(id, listener);
         for (Identifier dependency : dependencies) {
-            ResourceLoaderImpl.get(PackType.CLIENT_RESOURCES).addReloaderOrdering(dependency, id);
+            ResourceLoader.get(PackType.CLIENT_RESOURCES).addListenerOrdering(dependency, id);
         }
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,8 +42,8 @@ public abstract class PlayerMixin extends LivingEntity {
         }
     }
 
-    @Inject(method = "interactOn", at = @At("HEAD"), cancellable = true)
-    private void knot$onInteractOn(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    @Inject(method = "interactOn(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/InteractionResult;", at = @At("HEAD"), cancellable = true)
+    private void knot$onInteractOn(Entity entity, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
         EventResult result = EntityEvent.INTERACT_WITH_ENTITY.invoker().onInteractWithEntity((Player) (Object) this, entity, hand);
         if (result.cancelsEvent()) {
             cir.setReturnValue(InteractionResult.FAIL);

@@ -3,8 +3,8 @@ package com.daqem.knot.fabric.registry.menu;
 import com.daqem.knot.registry.menu.MenuConstructor;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -23,7 +23,7 @@ public class FabricMenuRegistry implements MenuRegistry {
 
     @Override
     public <T extends AbstractContainerMenu> MenuType<@NotNull T> create(MenuConstructor<T> constructor) {
-        return new ExtendedScreenHandlerType<>((syncId, inventory, data) -> {
+        return new ExtendedMenuType<>((syncId, inventory, data) -> {
             RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.wrappedBuffer(data), inventory.player.registryAccess());
             return constructor.create(syncId, inventory, buf);
         }, ByteBufCodecs.BYTE_ARRAY);
@@ -31,7 +31,7 @@ public class FabricMenuRegistry implements MenuRegistry {
 
     @Override
     public void open(ServerPlayer player, MenuProvider provider, Consumer<RegistryFriendlyByteBuf> extraDataWriter) {
-        player.openMenu(new ExtendedScreenHandlerFactory<byte[]>() {
+        player.openMenu(new ExtendedMenuProvider<byte[]>() {
             @Override
             public byte @NotNull [] getScreenOpeningData(@NotNull ServerPlayer player) {
                 RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), player.registryAccess());

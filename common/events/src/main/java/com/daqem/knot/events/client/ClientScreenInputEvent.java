@@ -50,6 +50,6 @@ public interface ClientScreenInputEvent {
     interface KeyReleased { EventResult onKeyReleased(Minecraft client, Screen screen, int keyCode, int scanCode, int modifiers); }
     interface KeyReleasedPost { void onKeyReleased(Minecraft client, Screen screen, int keyCode, int scanCode, int modifiers); }
 
-    interface CharTyped { EventResult onCharTyped(Minecraft client, Screen screen, char codePoint, int modifiers); }
-    interface CharTypedPost { void onCharTyped(Minecraft client, Screen screen, char codePoint, int modifiers); }
+    interface CharTyped { EventResult onCharTyped(Minecraft client, Screen screen, char codePoint); }
+    interface CharTypedPost { void onCharTyped(Minecraft client, Screen screen, char codePoint); }
 }

@@ -3,6 +3,7 @@ package com.daqem.knot.test.registry;
 import com.daqem.knot.Knot;
 import com.daqem.knot.registry.Registry;
 import com.daqem.knot.registry.RegistryEntry;
+import com.daqem.knot.registry.creativetab.KnotItemProperties;
 import com.daqem.knot.test.Test;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundSource;
@@ -24,7 +25,7 @@ public interface TestItems {
     Registry<Item> ITEMS = Knot.REGISTRAR.createRegistry(BuiltInRegistries.ITEM, Test.MOD_ID);
 
     RegistryEntry<Item> TEST_ITEM = ITEMS.register("test_item",
-            key -> new Item(new Item.Properties().setId(key).knot$tab(TestCreativeTabs.TEST_TAB.getKey()))
+            key -> new Item(KnotItemProperties.setTab(new Item.Properties().setId(key), TestCreativeTabs.TEST_TAB.getKey()))
     );
 
     RegistryEntry<Item> TEST_BLOCK_ITEM = ITEMS.register("test_block",

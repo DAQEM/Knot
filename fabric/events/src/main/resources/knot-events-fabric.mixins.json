@@ -1,9 +1,9 @@
 {
   "required": true,
   "package": "com.daqem.knot.fabric.events.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
-    "client.GuiGraphicsMixin"
+    "client.GuiGraphicsExtractorMixin"
   ],
   "mixins": [
     "BucketItemMixin",

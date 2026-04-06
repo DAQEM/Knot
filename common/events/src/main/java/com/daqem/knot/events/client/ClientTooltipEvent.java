@@ -3,7 +3,7 @@ package com.daqem.knot.events.client;
 import com.daqem.knot.events.Event;
 import com.daqem.knot.events.EventFactory;
 import com.daqem.knot.events.EventResult;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -35,10 +35,10 @@ public interface ClientTooltipEvent {
     }
 
     interface BeforeRender {
-        EventResult onBeforeRenderTooltip(GuiGraphics graphics, List<ClientTooltipComponent> components, int x, int y);
+        EventResult onBeforeRenderTooltip(GuiGraphicsExtractor graphics, List<ClientTooltipComponent> components, int x, int y);
     }
 
     interface AdjustPosition {
-        void onAdjustTooltipPosition(GuiGraphics graphics, int mouseX, int mouseY, MutableInt targetX, MutableInt targetY);
+        void onAdjustTooltipPosition(GuiGraphicsExtractor graphics, int mouseX, int mouseY, MutableInt targetX, MutableInt targetY);
     }
 }

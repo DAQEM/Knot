@@ -61,9 +61,9 @@ public abstract class KeyboardHandlerMixin {
     @WrapOperation(method = "charTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;charTyped(Lnet/minecraft/client/input/CharacterEvent;)Z"))
     private boolean knot$onScreenCharTyped(Screen screen, CharacterEvent event, Operation<Boolean> original) {
         // We cast codepoint to char to seamlessly support the KnotClientScreenInputEvent interface
-        if (ClientScreenInputEvent.CHAR_TYPED_PRE.invoker().onCharTyped(minecraft, screen, (char) event.codepoint(), event.modifiers()).cancelsEvent()) return true;
+        if (ClientScreenInputEvent.CHAR_TYPED_PRE.invoker().onCharTyped(minecraft, screen, (char) event.codepoint()).cancelsEvent()) return true;
         boolean result = original.call(screen, event);
-        ClientScreenInputEvent.CHAR_TYPED_POST.invoker().onCharTyped(minecraft, screen, (char) event.codepoint(), event.modifiers());
+        ClientScreenInputEvent.CHAR_TYPED_POST.invoker().onCharTyped(minecraft, screen, (char) event.codepoint());
         return result;
     }
 }

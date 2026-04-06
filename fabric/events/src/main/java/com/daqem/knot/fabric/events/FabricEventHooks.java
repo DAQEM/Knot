@@ -9,8 +9,8 @@ import com.daqem.knot.events.server.ServerCommandEvent;
 import com.daqem.knot.events.server.ServerLifecycleEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
@@ -38,9 +38,9 @@ public final class FabricEventHooks {
                 ServerLifecycleEvent.STOPPED.invoker().onServerStopped(server));
 
         // Server World State
-        ServerWorldEvents.LOAD.register((server, world) ->
+        ServerLevelEvents.LOAD.register((server, world) ->
                 LevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(world));
-        ServerWorldEvents.UNLOAD.register((server, world) ->
+        ServerLevelEvents.UNLOAD.register((server, world) ->
                 LevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(world));
 
         // Chat Decoration and Reception

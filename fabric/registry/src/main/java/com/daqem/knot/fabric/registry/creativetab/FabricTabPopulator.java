@@ -1,7 +1,7 @@
 package com.daqem.knot.fabric.registry.creativetab;
 
 import com.daqem.knot.registry.creativetab.TabPopulator;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 public class FabricTabPopulator implements TabPopulator {
 
-    private final FabricItemGroupEntries entries;
+    private final FabricCreativeModeTabOutput entries;
 
-    public FabricTabPopulator(FabricItemGroupEntries entries) {
+    public FabricTabPopulator(FabricCreativeModeTabOutput entries) {
         this.entries = entries;
     }
 
@@ -31,21 +31,21 @@ public class FabricTabPopulator implements TabPopulator {
 
     @Override
     public void addAfter(ItemLike target, ItemLike... items) {
-        entries.addAfter(target, items);
+        entries.insertAfter(target, items);
     }
 
     @Override
     public void addAfter(ItemStack target, ItemStack... stacks) {
-        entries.addAfter(target, List.of(stacks));
+        entries.insertAfter(target, List.of(stacks));
     }
 
     @Override
     public void addBefore(ItemLike target, ItemLike... items) {
-        entries.addBefore(target, items);
+        entries.insertBefore(target, items);
     }
 
     @Override
     public void addBefore(ItemStack target, ItemStack... stacks) {
-        entries.addBefore(target, List.of(stacks));
+        entries.insertBefore(target, List.of(stacks));
     }
 }

@@ -3,15 +3,15 @@ package com.daqem.knot.neoforge.events.mixin.client;
 import com.daqem.knot.events.client.ClientTooltipEvent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.joml.Vector2ic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(GuiGraphics.class)
-public abstract class GuiGraphicsMixin {
+@Mixin(GuiGraphicsExtractor.class)
+public abstract class GuiGraphicsExtractorMixin {
 
     /**
      * Wrap the positioner call. This is highly compatible with other mods.
@@ -19,7 +19,7 @@ public abstract class GuiGraphicsMixin {
      * and then pass the results back into the 'original' operation chain.
      */
     @WrapOperation(
-            method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;Lnet/minecraft/world/item/ItemStack;)V",
+            method = "tooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;Lnet/minecraft/resources/Identifier;Lnet/minecraft/world/item/ItemStack;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;positionTooltip(IIIIII)Lorg/joml/Vector2ic;")
     )
     private Vector2ic knot$wrapTooltipPositioning(
@@ -33,7 +33,7 @@ public abstract class GuiGraphicsMixin {
 
         // Fire the Knot position adjustment event
         ClientTooltipEvent.ADJUST_POSITION.invoker().onAdjustTooltipPosition(
-                (GuiGraphics) (Object) this,
+                (GuiGraphicsExtractor) (Object) this,
                 mouseX,
                 mouseY,
                 targetX,

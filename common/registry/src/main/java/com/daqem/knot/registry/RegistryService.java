@@ -6,7 +6,6 @@ import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.fuel.FuelRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import com.daqem.knot.registry.resource.ReloadRegistry;
-import com.daqem.knot.registry.villager.VillagerTradeRegistry;
 
 public interface RegistryService {
 
@@ -30,8 +29,6 @@ public interface RegistryService {
 
     ColorHandlerRegistry getColorHandlerRegistry();
 
-    RenderTypeRegistry getRenderTypeRegistry();
-
     EntityModelLayerRegistry getEntityModelLayerRegistry();
 
     ParticleProviderRegistry getParticleProviderRegistry();
@@ -39,6 +36,4 @@ public interface RegistryService {
     ConfigScreenRegistry getConfigScreenRegistry();
 
     FuelRegistry getFuelRegistry();
-
-    VillagerTradeRegistry getVillagerTradeRegistry();
 }

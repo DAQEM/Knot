@@ -1,7 +1,7 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.client.ClientScreenEvent;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,15 +23,15 @@ public abstract class ScreenMixin {
         ClientScreenEvent.AFTER_INIT.invoker().onAfterInit((Screen) (Object) this);
     }
 
-    @Inject(method = "renderWithTooltipAndSubtitles", at = @At("HEAD"), cancellable = true)
-    private void knot$onBeforeRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    @Inject(method = "extractRenderStateWithTooltipAndSubtitles", at = @At("HEAD"), cancellable = true)
+    private void knot$onBeforeRender(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         if (ClientScreenEvent.BEFORE_RENDER.invoker().onBeforeRender((Screen) (Object) this, graphics, mouseX, mouseY, partialTicks).cancelsEvent()) {
             ci.cancel();
         }
     }
 
-    @Inject(method = "renderWithTooltipAndSubtitles", at = @At("RETURN"))
-    private void knot$onAfterRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+    @Inject(method = "extractRenderStateWithTooltipAndSubtitles", at = @At("RETURN"))
+    private void knot$onAfterRender(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         ClientScreenEvent.AFTER_RENDER.invoker().onAfterRender((Screen) (Object) this, graphics, mouseX, mouseY, partialTicks);
     }
 }
