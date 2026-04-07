@@ -32,6 +32,14 @@ processResources {
     from(configurations.moduleResources)
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir project(':common-core').file('src/main/resources')
+        }
+    }
+}
+
 loom {
     // Utilize the main mod's access widener for the test environment
     def aw = project(':common-core').file("src/main/resources/${mod_id}.accesswidener")

@@ -84,3 +84,7 @@ processResources {
 
     inputs.properties(expandProps)
 }
+
+tasks.withType(AbstractCopyTask).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

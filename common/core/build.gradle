@@ -14,15 +14,45 @@ neoForge {
     }
 }
 
+configurations {
+    aggregateJava { canBeResolved = true; canBeConsumed = false }
+    aggregateResources { canBeResolved = true; canBeConsumed = false }
+}
+
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
-    compileOnly project(':common-api')
-    compileOnly project(':common-events')
-    compileOnly project(':common-networking')
-    compileOnly project(':common-registry')
+    def commonSubmodules = [
+            ':common-api', ':common-networking', ':common-events', ':common-registry'
+    ]
+
+    commonSubmodules.each { proj ->
+        compileOnly(project(proj)) {
+            attributes { attribute(Attribute.of('io.github.mcgradleconventions.loader', String), 'common') }
+        }
+
+        aggregateJava project(path: proj, configuration: 'moduleJava')
+        aggregateResources project(path: proj, configuration: 'moduleResources')
+    }
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(configurations.aggregateJava)
+    source(configurations.aggregateJava)
+}
+
+processResources {
+    dependsOn(configurations.aggregateResources)
+    from(configurations.aggregateResources)
+}
+
+tasks.named('sourcesJar', Jar) {
+    dependsOn(configurations.aggregateJava)
+    from(configurations.aggregateJava)
+    dependsOn(configurations.aggregateResources)
+    from(configurations.aggregateResources)
 }
 
 def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)

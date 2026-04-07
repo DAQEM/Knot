@@ -48,6 +48,14 @@ tasks.named('sourcesJar', Jar) {
     from(configurations.moduleResources)
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir project(':common-core').file('src/main/resources')
+        }
+    }
+}
+
 loom {
     def aw = project(':common-core').file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) {
