@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class NeoForgeNetworkingService implements NetworkingService {
@@ -33,17 +34,17 @@ public class NeoForgeNetworkingService implements NetworkingService {
     }
 
     @Override
-    public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ServerboundContext> handler) {
+    public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, Supplier<BiConsumer<T, ServerboundContext>> handler) {
         PENDING_REGISTRATIONS.add(event ->
                 event.registrar(type.id().getNamespace()).playToServer(type, codec, (payload, context) ->
-                        context.enqueueWork(() -> handler.accept(payload, () -> (ServerPlayer) context.player()))));
+                        context.enqueueWork(() -> handler.get().accept(payload, () -> (ServerPlayer) context.player()))));
     }
 
     @Override
-    public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ClientboundContext> handler) {
+    public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, Supplier<BiConsumer<T, ClientboundContext>> handler) {
         PENDING_REGISTRATIONS.add(event ->
                 event.registrar(type.id().getNamespace()).playToClient(type, codec, (payload, context) ->
-                        context.enqueueWork(() -> handler.accept(payload, () -> (LocalPlayer) context.player()))));
+                        context.enqueueWork(() -> handler.get().accept(payload, () -> (LocalPlayer) context.player()))));
     }
 
     @Override

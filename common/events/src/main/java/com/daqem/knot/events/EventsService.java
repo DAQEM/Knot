@@ -1,7 +1,7 @@
 package com.daqem.knot.events;
 
 import com.daqem.knot.events.client.*;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
+import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.common.TickEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
@@ -116,6 +116,20 @@ public interface EventsService {
         Event<ClientPlayerEvent.Quit> PLAYER_QUIT = ClientPlayerEvent.QUIT;
         Event<ClientPlayerEvent.Respawn> PLAYER_RESPAWN = ClientPlayerEvent.RESPAWN;
         Event<ClientCommandEvent.Register> COMMAND_REGISTER = ClientCommandEvent.REGISTER;
+
+        interface Tick {
+            Event<ClientTickEvent.Client> CLIENT_PRE = ClientTickEvent.CLIENT_PRE;
+            Event<ClientTickEvent.Client> CLIENT_POST = ClientTickEvent.CLIENT_POST;
+            Event<ClientTickEvent.ClientLevel> CLIENT_LEVEL_PRE = ClientTickEvent.CLIENT_LEVEL_PRE;
+            Event<ClientTickEvent.ClientLevel> CLIENT_LEVEL_POST = ClientTickEvent.CLIENT_LEVEL_POST;
+            Event<ClientTickEvent.ClientPlayer> CLIENT_PLAYER_PRE = ClientTickEvent.CLIENT_PLAYER_PRE;
+            Event<ClientTickEvent.ClientPlayer> CLIENT_PLAYER_POST = ClientTickEvent.CLIENT_PLAYER_POST;
+        }
+
+        interface LevelLifecycle {
+            Event<ClientLevelLifecycleEvent.ClientLevelLoad> CLIENT_LEVEL_LOAD = ClientLevelLifecycleEvent.CLIENT_LEVEL_LOAD;
+            Event<ClientLevelLifecycleEvent.ClientLevelUnload> CLIENT_LEVEL_UNLOAD = ClientLevelLifecycleEvent.CLIENT_LEVEL_UNLOAD;
+        }
     }
 
     interface Server {
@@ -133,6 +147,21 @@ public interface EventsService {
         Event<ServerLifecycleEvent.ServerStopping> LIFECYCLE_STOPPING = ServerLifecycleEvent.STOPPING;
         Event<ServerLifecycleEvent.ServerStopped> LIFECYCLE_STOPPED = ServerLifecycleEvent.STOPPED;
         Event<ServerLightningEvent.Strike> LIGHTNING_STRIKE = ServerLightningEvent.STRIKE;
+
+        interface Tick {
+            Event<ServerTickEvent.Server> DEDICATED_SERVER_PRE = ServerTickEvent.DEDICATED_SERVER_PRE;
+            Event<ServerTickEvent.Server> DEDICATED_SERVER_POST = ServerTickEvent.DEDICATED_SERVER_POST;
+            Event<ServerTickEvent.ServerLevel> SERVER_LEVEL_PRE = ServerTickEvent.SERVER_LEVEL_PRE;
+            Event<ServerTickEvent.ServerLevel> SERVER_LEVEL_POST = ServerTickEvent.SERVER_LEVEL_POST;
+            Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_PRE = ServerTickEvent.SERVER_PLAYER_PRE;
+            Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_POST = ServerTickEvent.SERVER_PLAYER_POST;
+        }
+
+        interface LevelLifecycle {
+            Event<ServerLevelLifecycleEvent.ServerLevelLoad> SERVER_LEVEL_LOAD = ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD;
+            Event<ServerLevelLifecycleEvent.ServerLevelUnload> SERVER_LEVEL_UNLOAD = ServerLevelLifecycleEvent.SERVER_LEVEL_UNLOAD;
+            Event<ServerLevelLifecycleEvent.ServerLevelSave> SERVER_LEVEL_SAVE = ServerLevelLifecycleEvent.SERVER_LEVEL_SAVE;
+        }
     }
 
     interface Loot {
@@ -146,28 +175,6 @@ public interface EventsService {
         Event<TickEvent.Level> LEVEL_POST = TickEvent.LEVEL_POST;
         Event<TickEvent.Player> PLAYER_PRE = TickEvent.PLAYER_PRE;
         Event<TickEvent.Player> PLAYER_POST = TickEvent.PLAYER_POST;
-
-        Event<ClientTickEvent.Client> CLIENT_PRE = ClientTickEvent.CLIENT_PRE;
-        Event<ClientTickEvent.Client> CLIENT_POST = ClientTickEvent.CLIENT_POST;
-        Event<ClientTickEvent.ClientLevel> CLIENT_LEVEL_PRE = ClientTickEvent.CLIENT_LEVEL_PRE;
-        Event<ClientTickEvent.ClientLevel> CLIENT_LEVEL_POST = ClientTickEvent.CLIENT_LEVEL_POST;
-        Event<ClientTickEvent.ClientPlayer> CLIENT_PLAYER_PRE = ClientTickEvent.CLIENT_PLAYER_PRE;
-        Event<ClientTickEvent.ClientPlayer> CLIENT_PLAYER_POST = ClientTickEvent.CLIENT_PLAYER_POST;
-
-        Event<ServerTickEvent.Server> DEDICATED_SERVER_PRE = ServerTickEvent.DEDICATED_SERVER_PRE;
-        Event<ServerTickEvent.Server> DEDICATED_SERVER_POST = ServerTickEvent.DEDICATED_SERVER_POST;
-        Event<ServerTickEvent.ServerLevel> SERVER_LEVEL_PRE = ServerTickEvent.SERVER_LEVEL_PRE;
-        Event<ServerTickEvent.ServerLevel> SERVER_LEVEL_POST = ServerTickEvent.SERVER_LEVEL_POST;
-        Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_PRE = ServerTickEvent.SERVER_PLAYER_PRE;
-        Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_POST = ServerTickEvent.SERVER_PLAYER_POST;
-    }
-
-    interface LevelLifecycle {
-        Event<LevelLifecycleEvent.ServerLevelLoad> SERVER_LEVEL_LOAD = LevelLifecycleEvent.SERVER_LEVEL_LOAD;
-        Event<LevelLifecycleEvent.ServerLevelUnload> SERVER_LEVEL_UNLOAD = LevelLifecycleEvent.SERVER_LEVEL_UNLOAD;
-        Event<LevelLifecycleEvent.ServerLevelSave> SERVER_LEVEL_SAVE = LevelLifecycleEvent.SERVER_LEVEL_SAVE;
-        Event<LevelLifecycleEvent.ClientLevelLoad> CLIENT_LEVEL_LOAD = LevelLifecycleEvent.CLIENT_LEVEL_LOAD;
-        Event<LevelLifecycleEvent.ClientLevelUnload> CLIENT_LEVEL_UNLOAD = LevelLifecycleEvent.CLIENT_LEVEL_UNLOAD;
     }
 
     interface Movement {

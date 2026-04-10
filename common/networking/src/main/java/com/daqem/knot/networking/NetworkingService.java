@@ -7,19 +7,20 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public interface NetworkingService {
 
     <T extends CustomPacketPayload> void registerServerbound(
             CustomPacketPayload.Type<@NotNull T> type,
             StreamCodec<? super RegistryFriendlyByteBuf, T> codec,
-            BiConsumer<T, ServerboundContext> handler
+            Supplier<BiConsumer<T, ServerboundContext>> handler
     );
 
     <T extends CustomPacketPayload> void registerClientbound(
             CustomPacketPayload.Type<@NotNull T> type,
             StreamCodec<? super RegistryFriendlyByteBuf, T> codec,
-            BiConsumer<T, ClientboundContext> handler
+            Supplier<BiConsumer<T, ClientboundContext>> handler
     );
 
     void sendToServer(CustomPacketPayload payload);

@@ -1,7 +1,7 @@
 package com.daqem.knot.fabric.events;
 
 import com.daqem.knot.events.EventResult;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
+import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
 import com.daqem.knot.events.common.loot.LootEvent;
 import com.daqem.knot.events.server.ServerChatEvent;
@@ -39,9 +39,9 @@ public final class FabricEventHooks {
 
         // Server World State
         ServerLevelEvents.LOAD.register((server, world) ->
-                LevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(world));
+                ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(world));
         ServerLevelEvents.UNLOAD.register((server, world) ->
-                LevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(world));
+                ServerLevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(world));
 
         // Chat Decoration and Reception
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.CONTENT_PHASE, (sender, message) -> {

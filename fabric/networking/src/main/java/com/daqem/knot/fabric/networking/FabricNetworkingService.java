@@ -15,22 +15,23 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 public class FabricNetworkingService implements NetworkingService {
 
     @Override
-    public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ServerboundContext> handler) {
+    public <T extends CustomPacketPayload> void registerServerbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, Supplier<BiConsumer<T, ServerboundContext>> handler) {
         PayloadTypeRegistry.serverboundPlay().register(type, codec);
         ServerPlayNetworking.registerGlobalReceiver(type, (payload, context) ->
-                context.server().execute(() -> handler.accept(payload, context::player)));
+                context.server().execute(() -> handler.get().accept(payload, context::player)));
     }
 
     @Override
-    public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, BiConsumer<T, ClientboundContext> handler) {
+    public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, Supplier<BiConsumer<T, ClientboundContext>> handler) {
         PayloadTypeRegistry.clientboundPlay().register(type, codec);
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            ClientHandlerIsolator.register(type, handler);
+            ClientHandlerIsolator.register(type, handler.get());
         }
     }
 
