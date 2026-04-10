@@ -1,9 +1,9 @@
 package com.daqem.knot.events.mixin.client;
 
+import com.daqem.knot.events.client.ClientLevelLifecycleEvent;
 import com.daqem.knot.events.client.ClientTickEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.common.TickEvent;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.daqem.knot.api.world.level.IClientLevel;
 import net.minecraft.client.multiplayer.CacheSlot;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -32,7 +32,7 @@ public abstract class ClientLevelMixin extends Level implements CacheSlot.Cleane
             at = @At("RETURN")
     )
     private void knot$onInit(CallbackInfo ci) {
-        LevelLifecycleEvent.CLIENT_LEVEL_LOAD.invoker().onClientLevelLoad((ClientLevel) (Object) this);
+        ClientLevelLifecycleEvent.CLIENT_LEVEL_LOAD.invoker().onClientLevelLoad((ClientLevel) (Object) this);
     }
 
     @Inject(

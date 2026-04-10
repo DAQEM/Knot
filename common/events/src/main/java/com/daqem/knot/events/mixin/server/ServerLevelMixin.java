@@ -1,10 +1,10 @@
 package com.daqem.knot.events.mixin.server;
 
 import com.daqem.knot.api.Logger;
+import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.server.ServerExplosionEvent;
 import com.daqem.knot.events.common.TickEvent;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.daqem.knot.api.world.level.IServerLevel;
 import com.daqem.knot.api.world.level.KnotScheduledTask;
 import com.daqem.knot.events.server.ServerTickEvent;
@@ -95,7 +95,7 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
 
     @Inject(method = "save", at = @At("HEAD"))
     private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean skipSave, CallbackInfo ci) {
-        LevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
+        ServerLevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
     }
 
     @Inject(

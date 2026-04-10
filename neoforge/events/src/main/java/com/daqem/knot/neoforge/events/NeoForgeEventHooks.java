@@ -3,7 +3,7 @@ package com.daqem.knot.neoforge.events;
 import com.daqem.knot.api.Constants;
 import com.daqem.knot.api.Logger;
 import com.daqem.knot.events.EventResult;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
+import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
@@ -75,14 +75,14 @@ public class NeoForgeEventHooks {
     @SubscribeEvent
     public static void onLevelLoad(LevelEvent.Load event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
-            LevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(serverLevel);
+            ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(serverLevel);
         }
     }
 
     @SubscribeEvent
     public static void onLevelUnload(LevelEvent.Unload event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
-            LevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(serverLevel);
+            ServerLevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(serverLevel);
         }
     }
 
