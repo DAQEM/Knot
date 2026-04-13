@@ -4,16 +4,17 @@ import com.daqem.knot.api.Constants;
 import com.daqem.knot.networking.ClientboundContext;
 import com.daqem.knot.networking.NetworkingService;
 import com.daqem.knot.networking.ServerboundContext;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -44,12 +45,14 @@ public class NeoForgeNetworkingService implements NetworkingService {
     public <T extends CustomPacketPayload> void registerClientbound(CustomPacketPayload.Type<@NotNull T> type, StreamCodec<? super RegistryFriendlyByteBuf, T> codec, Supplier<BiConsumer<T, ClientboundContext>> handler) {
         PENDING_REGISTRATIONS.add(event ->
                 event.registrar(type.id().getNamespace()).playToClient(type, codec, (payload, context) ->
-                        context.enqueueWork(() -> handler.get().accept(payload, () -> (LocalPlayer) context.player()))));
+                        context.enqueueWork(() -> ClientHandlerIsolator.handle(handler.get(), payload, context))));
     }
 
     @Override
     public void sendToServer(CustomPacketPayload payload) {
-        ClientPacketDistributor.sendToServer(payload);
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
+            ClientHandlerIsolator.sendToServer(payload);
+        }
     }
 
     @Override
@@ -71,7 +74,24 @@ public class NeoForgeNetworkingService implements NetworkingService {
 
     @Override
     public boolean canSendToServer(CustomPacketPayload.Type<?> type) {
-        var connection = net.minecraft.client.Minecraft.getInstance().getConnection();
-        return connection != null && connection.hasChannel(type.id());
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
+            return ClientHandlerIsolator.canSendToServer(type);
+        }
+        return false;
+    }
+
+    private static class ClientHandlerIsolator {
+        static <T extends CustomPacketPayload> void handle(BiConsumer<T, ClientboundContext> handler, T payload, IPayloadContext context) {
+            handler.accept(payload, () -> (net.minecraft.client.player.LocalPlayer) context.player());
+        }
+
+        static void sendToServer(CustomPacketPayload payload) {
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload);
+        }
+
+        static boolean canSendToServer(CustomPacketPayload.Type<?> type) {
+            var connection = net.minecraft.client.Minecraft.getInstance().getConnection();
+            return connection != null && connection.hasChannel(type.id());
+        }
     }
 }
