@@ -46,7 +46,6 @@
     "server.DedicatedServerMixin",
     "server.LightningBoltMixin",
     "server.SerializableChunkDataMixin",
-    "server.ServerExplosionMixin",
     "server.ServerLevelMixin"
   ],
   "injectors": {

@@ -17,7 +17,8 @@
     "PlayerAdvancementsMixin",
     "ServerPlayerGameModeMixin",
     "MixinMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "ServerExplosionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

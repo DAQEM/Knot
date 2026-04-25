@@ -10,10 +10,11 @@
     "client.GuiGraphicsExtractorMixin"
   ],
   "mixins": [
-    "BucketItemMixin",
-    "ItemStackMixin",
     "AxeItemMixin",
     "BlockBehaviourMixin",
-    "HoeItemMixin"
+    "BucketItemMixin",
+    "HoeItemMixin",
+    "ItemStackMixin",
+    "ServerExplosionMixin"
   ]
 }
