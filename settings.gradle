@@ -66,4 +66,4 @@ include("testmod-common")
 include("testmod-fabric")
 include("testmod-neoforge")
 
-rootProject.name = "Knot 26.1.1"
+rootProject.name = "Knot 26.1.2"

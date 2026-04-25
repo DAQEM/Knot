@@ -3,7 +3,6 @@ package com.daqem.knot.neoforge.events;
 import com.daqem.knot.api.Constants;
 import com.daqem.knot.api.Logger;
 import com.daqem.knot.events.EventResult;
-import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
@@ -11,6 +10,7 @@ import com.daqem.knot.events.common.item.ItemEvent;
 import com.daqem.knot.events.common.loot.LootEvent;
 import com.daqem.knot.events.server.ServerChatEvent;
 import com.daqem.knot.events.server.ServerCommandEvent;
+import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
 import com.daqem.knot.events.server.ServerLifecycleEvent;
 import com.mojang.brigadier.ParseResults;
 import net.minecraft.commands.CommandSourceStack;
@@ -37,6 +37,7 @@ import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerDestroyItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.server.*;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -200,7 +201,7 @@ public class NeoForgeEventHooks {
     }
 
     @SubscribeEvent
-    public static void onBlockBreak(net.neoforged.neoforge.event.level.BlockEvent.BreakEvent event) {
+    public static void onBlockBreak(BreakBlockEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer && event.getLevel() instanceof ServerLevel serverLevel) {
             EventResult result = BlockEvent.BREAK_BLOCK.invoker().onBreakBlock(
                     serverLevel,
