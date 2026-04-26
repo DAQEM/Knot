@@ -58,17 +58,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "die", at = @At("HEAD"), cancellable = true)
     private void knot$onDie(DamageSource source, CallbackInfo ci) {
-        LivingEntity entity = (LivingEntity) (Object) this;
-
-        if (entity instanceof ServerPlayer player) {
-            EventResult result = EntityEvent.PLAYER_DEATH.invoker().onPlayerDeath(player, source);
-            if (result.cancelsEvent()) {
-                ci.cancel();
-                return;
-            }
-        }
-
         if (source.getEntity() instanceof ServerPlayer player) {
+            LivingEntity entity = (LivingEntity) (Object) this;
             EventResult result = EntityEvent.PLAYER_KILL_ENTITY.invoker().onPlayerKillEntity(player, entity, source);
             if (result.cancelsEvent()) {
                 ci.cancel();
