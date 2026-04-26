@@ -1,15 +1,18 @@
 package com.daqem.knot.events.mixin.common.entity.player;
 
-import com.daqem.knot.events.common.TickEvent;
-import com.daqem.knot.events.server.ServerTickEvent;
 import com.daqem.knot.api.world.entity.MovementType;
-import com.daqem.knot.events.common.item.ItemEvent;
+import com.daqem.knot.api.world.entity.player.KnotServerPlayer;
+import com.daqem.knot.events.EventResult;
+import com.daqem.knot.events.common.TickEvent;
+import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.common.entity.player.MovementEvent;
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
-import com.daqem.knot.api.world.entity.player.KnotServerPlayer;
+import com.daqem.knot.events.common.item.ItemEvent;
+import com.daqem.knot.events.server.ServerTickEvent;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -215,7 +218,7 @@ public abstract class ServerPlayerMixin extends Player implements KnotServerPlay
     private void knot$onItemPickup(ItemEntity itemEntity, CallbackInfo ci) {
         ItemEvent.PICKUP_ITEM.invoker().onPickupItem(this, itemEntity);
     }
-    
+
     @Inject(
             method = "tick",
             at = @At("HEAD")
@@ -238,5 +241,14 @@ public abstract class ServerPlayerMixin extends Player implements KnotServerPlay
     private void knot$onChangeDimension(ServerLevel origin, CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         PlayerEvent.CHANGE_DIMENSION.invoker().onChangeDimension(player, origin.dimension(), player.level().dimension());
+    }
+
+    @Inject(method = "die", at = @At("HEAD"), cancellable = true)
+    private void knot$onDie(DamageSource source, CallbackInfo ci) {
+        ServerPlayer player = (ServerPlayer) (Object) this;
+        EventResult result = EntityEvent.PLAYER_DEATH.invoker().onPlayerDeath(player, source);
+        if (result.cancelsEvent()) {
+            ci.cancel();
+        }
     }
 }
