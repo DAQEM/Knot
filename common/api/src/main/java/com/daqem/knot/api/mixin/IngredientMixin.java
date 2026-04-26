@@ -11,19 +11,24 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @Mixin(Ingredient.class)
 public abstract class IngredientMixin implements Predicate<ItemStack>, IIngredient {
 
     @Shadow
     @Final
-    private HolderSet<Item> values;
+    private Ingredient.Value[] values;
 
     @Override
     public List<Item> knot$getItems() {
-        return this.values.stream().map(Holder::value).toList();
+        return Stream.of(this.values)
+                .flatMap(value -> value.getItems().stream())
+                .map(ItemStack::getItem)
+                .toList();
     }
 
     @Override

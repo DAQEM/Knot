@@ -121,8 +121,6 @@ public interface EventsService {
     interface Server {
         Event<ServerChatEvent.Decorate> CHAT_DECORATE = ServerChatEvent.DECORATE;
         Event<ServerChatEvent.Received> CHAT_RECEIVED = ServerChatEvent.RECEIVED;
-        Event<ServerChunkEvent.SaveData> CHUNK_SAVE_DATA = ServerChunkEvent.SAVE_DATA;
-        Event<ServerChunkEvent.LoadData> CHUNK_LOAD_DATA = ServerChunkEvent.LOAD_DATA;
         Event<ServerCommandEvent.Register> COMMAND_REGISTER = ServerCommandEvent.REGISTER;
         Event<ServerCommandEvent.Perform> COMMAND_PERFORM = ServerCommandEvent.PERFORM;
         Event<ServerExplosionEvent.Pre> EXPLOSION_PRE = ServerExplosionEvent.PRE;

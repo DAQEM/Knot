@@ -9,7 +9,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Knot 1.21.2"
+rootProject.name = "Knot 1.21.1"
 
 include("common-api")
 project(":common-api").projectDir = file("common/api")

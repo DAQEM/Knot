@@ -57,13 +57,13 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(
-            method = "applyDamage",
+            method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"
             )
     )
-    private void knot$onItemBreak(int i, ServerPlayer serverPlayer, Consumer<Item> consumer, CallbackInfo ci) {
-        ItemEvent.ITEM_BREAK.invoker().onItemBreak(serverPlayer, (ItemStack) (Object) this);
+    private void knot$onItemBreak(int damage, ServerLevel level, ServerPlayer player, Consumer<Item> onBreak, CallbackInfo ci) {
+        ItemEvent.ITEM_BREAK.invoker().onItemBreak(player, (ItemStack) (Object) this);
     }
 }

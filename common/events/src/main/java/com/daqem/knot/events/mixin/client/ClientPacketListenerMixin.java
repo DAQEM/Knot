@@ -1,6 +1,7 @@
 package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.commons.lang3.mutable.MutableObject;
 import com.daqem.knot.events.client.ClientChatEvent;
 import com.daqem.knot.events.client.ClientPlayerEvent;
@@ -10,7 +11,6 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundLoginPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
-import net.minecraft.world.item.crafting.RecipeAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPacketListener.class)
 public abstract class ClientPacketListenerMixin extends ClientCommonPacketListenerImpl {
 
-    @Shadow public abstract RecipeAccess recipes();
+
+    @Shadow public abstract RecipeManager getRecipeManager();
 
     protected ClientPacketListenerMixin(net.minecraft.client.Minecraft minecraft, net.minecraft.network.Connection connection, net.minecraft.client.multiplayer.CommonListenerCookie commonListenerCookie) {
         super(minecraft, connection, commonListenerCookie);
@@ -51,7 +52,7 @@ public abstract class ClientPacketListenerMixin extends ClientCommonPacketListen
 
     @Inject(method = "handleUpdateRecipes", at = @At("RETURN"))
     private void knot$onUpdateRecipes(ClientboundUpdateRecipesPacket packet, CallbackInfo ci) {
-        ClientRecipeEvent.UPDATE.invoker().onRecipeUpdate(this.recipes());
+        ClientRecipeEvent.UPDATE.invoker().onRecipeUpdate(this.getRecipeManager().getRecipes());
     }
 
     @Inject(method = "handleLogin", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;setServerRenderDistance(I)V", shift = At.Shift.AFTER))

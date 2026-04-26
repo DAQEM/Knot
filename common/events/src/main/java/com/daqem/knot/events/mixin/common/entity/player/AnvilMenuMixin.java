@@ -18,8 +18,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @Shadow @Final private DataSlot cost;
 
-    public AnvilMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory, ContainerLevelAccess containerLevelAccess, ItemCombinerMenuSlotDefinition itemCombinerMenuSlotDefinition) {
-        super(menuType, i, inventory, containerLevelAccess, itemCombinerMenuSlotDefinition);
+    public AnvilMenuMixin(@Nullable MenuType<?> type, int containerId, Inventory playerInventory, ContainerLevelAccess access) {
+        super(type, containerId, playerInventory, access);
     }
 
     @Inject(method = "onTake", at = @At("HEAD"))

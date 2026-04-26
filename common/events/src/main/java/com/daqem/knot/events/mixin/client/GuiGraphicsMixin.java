@@ -22,8 +22,8 @@ public abstract class GuiGraphicsMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void knot$onRenderTooltipHead(Font font, List<ClientTooltipComponent> components, int x, int y, ClientTooltipPositioner positioner, @Nullable ResourceLocation background, CallbackInfo ci) {
-        if (ClientTooltipEvent.BEFORE_RENDER.invoker().onBeforeRenderTooltip((GuiGraphics) (Object) this, components, x, y).cancelsEvent()) {
+    private void knot$onRenderTooltipHead(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner, CallbackInfo ci) {
+        if (ClientTooltipEvent.BEFORE_RENDER.invoker().onBeforeRenderTooltip((GuiGraphics) (Object) this, components, mouseX, mouseY).cancelsEvent()) {
             ci.cancel();
         }
     }

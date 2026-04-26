@@ -13,10 +13,10 @@ public interface TestBlocks {
     Registry<Block> BLOCKS = Knot.REGISTRAR.createRegistry(BuiltInRegistries.BLOCK, Test.MOD_ID);
 
     RegistryEntry<Block> TEST_BLOCK = BLOCKS.register("test_block",
-            key -> new Block(BlockBehaviour.Properties.of().setId(key).strength(2.0f))
+            key -> new Block(BlockBehaviour.Properties.of().strength(2.0f))
     );
     RegistryEntry<BoxOfSecretsBlock> BOX_OF_SECRETS = BLOCKS.register("box_of_secrets",
-            key -> new BoxOfSecretsBlock(BlockBehaviour.Properties.of().setId(key).strength(3.0f))
+            key -> new BoxOfSecretsBlock(BlockBehaviour.Properties.of().strength(3.0f))
     );
 
     static void register() {

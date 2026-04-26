@@ -18,7 +18,7 @@ public interface TestEntityTypes {
             key -> EntityType.Builder.of(Pig::new, MobCategory.CREATURE)
                     .sized(0.9F, 0.9F)
                     .clientTrackingRange(10)
-                    .build(key)
+                    .build(key.location().toString())
     );
 
     static void register() {

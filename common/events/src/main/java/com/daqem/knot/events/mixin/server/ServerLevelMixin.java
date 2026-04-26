@@ -11,13 +11,17 @@ import com.daqem.knot.events.server.ServerTickEvent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerEntityGetter;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.ProgressListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerExplosion;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
@@ -32,9 +36,10 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
-public abstract class ServerLevelMixin extends Level implements ServerEntityGetter, WorldGenLevel, IServerLevel {
+public abstract class ServerLevelMixin extends Level implements WorldGenLevel, IServerLevel {
 
     @Unique
     private final Queue<KnotScheduledTask> knot$taskInbox = new ConcurrentLinkedQueue<>();
@@ -42,8 +47,8 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
     @Unique
     private final PriorityQueue<KnotScheduledTask> knot$scheduledTasks = new PriorityQueue<>(Comparator.comparingLong(KnotScheduledTask::executionTime));
 
-    protected ServerLevelMixin(WritableLevelData levelData, ResourceKey<Level> dimension, RegistryAccess registryAccess, Holder<DimensionType> dimensionTypeRegistration, boolean isClientSide, boolean isDebug, long biomeZoomSeed, int maxChainedNeighborUpdates) {
-        super(levelData, dimension, registryAccess, dimensionTypeRegistration, isClientSide, isDebug, biomeZoomSeed, maxChainedNeighborUpdates);
+    public ServerLevelMixin(WritableLevelData levelData, ResourceKey<Level> dimension, RegistryAccess registryAccess, Holder<DimensionType> dimensionTypeRegistration, Supplier<ProfilerFiller> profiler, boolean isClientSide, boolean isDebug, long biomeZoomSeed, int maxChainedNeighborUpdates) {
+        super(levelData, dimension, registryAccess, dimensionTypeRegistration, profiler, isClientSide, isDebug, biomeZoomSeed, maxChainedNeighborUpdates);
     }
 
     @Unique
@@ -96,17 +101,6 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
     @Inject(method = "save", at = @At("HEAD"))
     private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean skipSave, CallbackInfo ci) {
         LevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
-    }
-
-    @Inject(
-            method = "explode",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerExplosion;explode()V"),
-            cancellable = true
-    )
-    private void knot$onExplodePre(CallbackInfo ci, @Local ServerExplosion explosion) {
-        if (ServerExplosionEvent.PRE.invoker().onPreExplosion((ServerLevel) (Object) this, explosion).cancelsEvent()) {
-            ci.cancel();
-        }
     }
 
     @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
