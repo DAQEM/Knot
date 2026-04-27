@@ -75,7 +75,7 @@ public interface PlayerEvent {
     }
 
     interface EnchantItem {
-        void onEnchantItem(ServerPlayer serverPlayer, ItemStack stack, int level);
+        void onEnchantItem(ServerPlayer serverPlayer, ItemStack stack, int enchantmentCost);
     }
 
     interface FishUpItem {
