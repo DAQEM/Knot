@@ -2,12 +2,21 @@ architectury {
     common(rootProject.enabled_platforms.split(","))
 }
 
+apply from: rootProject.file("gradle/scripts/platform.gradle")
 apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    implementation project(path: ":common-api", configuration: "namedElements")
-    implementation project(path: ":common-networking", configuration: "namedElements")
-    implementation project(path: ":common-events", configuration: "namedElements")
-    implementation project(path: ":common-registry", configuration: "namedElements")
+    modCompileOnly "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+    common(project(path: ":common-api", configuration: "namedElements")) { transitive = false }
+    shadowBundle(project(path: ":common-api", configuration: "namedElements")) { transitive = false }
+
+    common(project(path: ":common-networking", configuration: "namedElements")) { transitive = false }
+    shadowBundle(project(path: ":common-networking", configuration: "namedElements")) { transitive = false }
+
+    common(project(path: ":common-events", configuration: "namedElements")) { transitive = false }
+    shadowBundle(project(path: ":common-events", configuration: "namedElements")) { transitive = false }
+
+    common(project(path: ":common-registry", configuration: "namedElements")) { transitive = false }
+    shadowBundle(project(path: ":common-registry", configuration: "namedElements")) { transitive = false }
 }

@@ -44,10 +44,13 @@ processResources {
 }
 
 shadowJar {
-    exclude "architectury.common.json"
+    if (project.name != "common-core") {
+        exclude "architectury.common.json"
+    }
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = platform + "-dev-shadow"
 }
+
 
 remapJar {
     injectAccessWidener = true
@@ -57,9 +60,22 @@ remapJar {
 }
 
 sourcesJar {
-    def commonSources = project(":common-core").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
+    if (project.name != "common-core") {
+        def commonSources = project(":common-core").sourcesJar
+        dependsOn commonSources
+        from commonSources.archiveFile.map { zipTree(it) }
+    } else {
+        def apiSources = project(":common-api").sourcesJar
+        def networkingSources = project(":common-networking").sourcesJar
+        def eventsSources = project(":common-events").sourcesJar
+        def registrySources = project(":common-registry").sourcesJar
+
+        dependsOn apiSources, networkingSources, eventsSources, registrySources
+        from apiSources.archiveFile.map { zipTree(it) }
+        from networkingSources.archiveFile.map { zipTree(it) }
+        from eventsSources.archiveFile.map { zipTree(it) }
+        from registrySources.archiveFile.map { zipTree(it) }
+    }
 }
 
 // Automatically uses "fabric-sources" or "neoforge-sources"
