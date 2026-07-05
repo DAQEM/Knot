@@ -11,6 +11,8 @@ public interface ServerChunkEvent {
 
     Event<SaveData> SAVE_DATA = EventFactory.createLoop(SaveData.class);
     Event<LoadData> LOAD_DATA = EventFactory.createLoop(LoadData.class);
+    Event<Load> LOAD = EventFactory.createLoop(Load.class);
+    Event<Unload> UNLOAD = EventFactory.createLoop(Unload.class);
 
     interface SaveData {
         /**
@@ -26,5 +28,19 @@ public interface ServerChunkEvent {
          * You can read out your custom NBT data from here.
          */
         void onLoadData(ChunkAccess chunk, @Nullable ServerLevel level, SerializableChunkData data);
+    }
+
+    interface Load {
+        /**
+         * Fired when a chunk is logically loaded into the world.
+         */
+        void onChunkLoad(ServerLevel level, ChunkAccess chunk, boolean isNewChunk);
+    }
+
+    interface Unload {
+        /**
+         * Fired when a chunk is logically unloaded from the world.
+         */
+        void onChunkUnload(ServerLevel level, ChunkAccess chunk);
     }
 }

@@ -50,6 +50,11 @@ public interface PlayerEvent {
     Event<BlockWithShield> BLOCK_WITH_SHIELD = EventFactory.createLoop(BlockWithShield.class);
     Event<ChangeDimension> CHANGE_DIMENSION = EventFactory.createLoop(ChangeDimension.class);
 
+    Event<PlayerJoin> PLAYER_JOIN = EventFactory.createLoop(PlayerJoin.class);
+    Event<PlayerQuit> PLAYER_QUIT = EventFactory.createLoop(PlayerQuit.class);
+    Event<PlayerRespawn> PLAYER_RESPAWN = EventFactory.createLoop(PlayerRespawn.class);
+    Event<PlayerClone> PLAYER_CLONE = EventFactory.createLoop(PlayerClone.class);
+
     interface EntityHurtPlayer {
         EventResult onEntityHurtPlayer(ServerPlayer serverPlayer, DamageSource damageSource, MutableFloat damage);
     }
@@ -124,5 +129,21 @@ public interface PlayerEvent {
 
     interface ChangeDimension {
         void onChangeDimension(ServerPlayer player, ResourceKey<Level> from, ResourceKey<Level> to);
+    }
+
+    interface PlayerJoin {
+        void onPlayerJoin(ServerPlayer player);
+    }
+
+    interface PlayerQuit {
+        void onPlayerQuit(ServerPlayer player);
+    }
+
+    interface PlayerRespawn {
+        void onPlayerRespawn(ServerPlayer player, boolean conqueredEnd);
+    }
+
+    interface PlayerClone {
+        void onPlayerClone(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean wasDeath);
     }
 }
