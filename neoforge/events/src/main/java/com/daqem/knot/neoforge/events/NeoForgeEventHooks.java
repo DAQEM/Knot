@@ -8,9 +8,7 @@ import com.daqem.knot.events.common.entity.EntityEvent;
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
 import com.daqem.knot.events.common.item.ItemEvent;
 import com.daqem.knot.events.common.loot.LootEvent;
-import com.daqem.knot.events.server.ServerChatEvent;
-import com.daqem.knot.events.server.ServerCommandEvent;
-import com.daqem.knot.events.server.ServerLevelLifecycleEvent;
+import com.daqem.knot.events.server.*;
 import com.daqem.knot.events.server.ServerLifecycleEvent;
 import com.mojang.brigadier.ParseResults;
 import net.minecraft.commands.CommandSourceStack;
@@ -36,6 +34,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerDestroyItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.server.*;
@@ -77,6 +76,48 @@ public class NeoForgeEventHooks {
     public static void onLevelLoad(LevelEvent.Load event) {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
             ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(serverLevel);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoin(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            PlayerEvent.PLAYER_JOIN.invoker().onPlayerJoin(serverPlayer);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerQuit(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            PlayerEvent.PLAYER_QUIT.invoker().onPlayerQuit(serverPlayer);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+            PlayerEvent.PLAYER_RESPAWN.invoker().onPlayerRespawn(serverPlayer, event.isEndConquered());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerClone(net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone event) {
+        if (event.getOriginal() instanceof ServerPlayer oldPlayer && event.getEntity() instanceof ServerPlayer newPlayer) {
+            PlayerEvent.PLAYER_CLONE.invoker().onPlayerClone(oldPlayer, newPlayer, event.isWasDeath());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onChunkLoad(ChunkEvent.Load event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
+            ServerChunkEvent.LOAD.invoker().onChunkLoad(serverLevel, event.getChunk(), event.isNewChunk());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onChunkUnload(ChunkEvent.Unload event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
+            ServerChunkEvent.UNLOAD.invoker().onChunkUnload(serverLevel, event.getChunk());
         }
     }
 

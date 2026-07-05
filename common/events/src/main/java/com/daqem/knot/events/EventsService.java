@@ -47,6 +47,10 @@ public interface EventsService {
         Event<PlayerEvent.LandOnGround> LAND_ON_GROUND = PlayerEvent.LAND_ON_GROUND;
         Event<PlayerEvent.BlockWithShield> BLOCK_WITH_SHIELD = PlayerEvent.BLOCK_WITH_SHIELD;
         Event<PlayerEvent.ChangeDimension> CHANGE_DIMENSION = PlayerEvent.CHANGE_DIMENSION;
+        Event<PlayerEvent.PlayerJoin> PLAYER_JOIN = PlayerEvent.PLAYER_JOIN;
+        Event<PlayerEvent.PlayerQuit> PLAYER_QUIT = PlayerEvent.PLAYER_QUIT;
+        Event<PlayerEvent.PlayerRespawn> PLAYER_RESPAWN = PlayerEvent.PLAYER_RESPAWN;
+        Event<PlayerEvent.PlayerClone> PLAYER_CLONE = PlayerEvent.PLAYER_CLONE;
     }
 
     interface Item {
@@ -137,6 +141,8 @@ public interface EventsService {
         Event<ServerChatEvent.Received> CHAT_RECEIVED = ServerChatEvent.RECEIVED;
         Event<ServerChunkEvent.SaveData> CHUNK_SAVE_DATA = ServerChunkEvent.SAVE_DATA;
         Event<ServerChunkEvent.LoadData> CHUNK_LOAD_DATA = ServerChunkEvent.LOAD_DATA;
+        Event<ServerChunkEvent.Load> CHUNK_LOAD = ServerChunkEvent.LOAD;
+        Event<ServerChunkEvent.Unload> CHUNK_UNLOAD = ServerChunkEvent.UNLOAD;
         Event<ServerCommandEvent.Register> COMMAND_REGISTER = ServerCommandEvent.REGISTER;
         Event<ServerCommandEvent.Perform> COMMAND_PERFORM = ServerCommandEvent.PERFORM;
         Event<ServerExplosionEvent.Pre> EXPLOSION_PRE = ServerExplosionEvent.PRE;
