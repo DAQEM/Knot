@@ -2,6 +2,7 @@ package com.daqem.knot;
 
 import com.daqem.knot.events.EventsService;
 import com.daqem.knot.networking.NetworkingService;
+import com.daqem.knot.permissions.PermissionsService;
 import com.daqem.knot.registry.Registrar;
 import com.daqem.knot.registry.client.*;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
@@ -9,9 +10,12 @@ import com.daqem.knot.registry.entity.EntityAttributesRegistry;
 import com.daqem.knot.registry.fuel.FuelRegistry;
 import com.daqem.knot.registry.menu.MenuRegistry;
 import com.daqem.knot.registry.resource.ReloadRegistry;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.PermissionLevel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +55,7 @@ public class Knot {
     public static final ParticleProviderRegistry PARTICLE_PROVIDER_REGISTRY = SERVICES.getRegistry().getParticleProviderRegistry();
     public static final ConfigScreenRegistry CONFIG_SCREEN_REGISTRY = SERVICES.getRegistry().getConfigScreenRegistry();
     public static final FuelRegistry FUEL_REGISTRY = SERVICES.getRegistry().getFuelRegistry();
+    public static final PermissionsService PERMISSIONS = SERVICES.getPermissions();
 
     private final String modId;
     public final Logger LOGGER;
@@ -106,5 +111,21 @@ public class Knot {
 
     public void error(String message, Throwable t) {
         LOGGER.error(message, t);
+    }
+
+    public boolean hasPermission(CommandSourceStack source, String permissionNode) {
+        return PERMISSIONS.check(source, this.modId + "." + permissionNode);
+    }
+
+    public boolean hasPermission(CommandSourceStack source, String permissionNode, PermissionLevel fallbackLevel) {
+        return PERMISSIONS.check(source, this.modId + "." + permissionNode, fallbackLevel);
+    }
+
+    public boolean hasPermission(ServerPlayer player, String permissionNode) {
+        return PERMISSIONS.check(player, this.modId + "." + permissionNode);
+    }
+
+    public boolean hasPermission(ServerPlayer player, String permissionNode, PermissionLevel fallbackLevel) {
+        return PERMISSIONS.check(player, this.modId + "." + permissionNode, fallbackLevel);
     }
 }
