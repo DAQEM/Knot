@@ -1,5 +1,7 @@
 package com.daqem.knot;
 
+import com.daqem.knot.api.world.entity.player.FakePlayerService;
+import com.daqem.knot.api.world.item.ItemTransferService;
 import com.daqem.knot.events.EventsService;
 import com.daqem.knot.networking.NetworkingService;
 import com.daqem.knot.permissions.PermissionsService;
@@ -56,6 +58,8 @@ public class Knot {
     public static final ConfigScreenRegistry CONFIG_SCREEN_REGISTRY = SERVICES.getRegistry().getConfigScreenRegistry();
     public static final FuelRegistry FUEL_REGISTRY = SERVICES.getRegistry().getFuelRegistry();
     public static final PermissionsService PERMISSIONS = SERVICES.getPermissions();
+    public static final FakePlayerService FAKE_PLAYER = SERVICES.getFakePlayer();
+    public static final ItemTransferService ITEM_TRANSFER = SERVICES.getItemTransfer();
 
     private final String modId;
     public final Logger LOGGER;
