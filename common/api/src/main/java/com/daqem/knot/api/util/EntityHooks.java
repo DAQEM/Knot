@@ -11,6 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -62,7 +63,7 @@ public interface EntityHooks {
 
         // Emulate player holding the weapon
         ItemStack previousMainHand = player.getMainHandItem();
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, simulatedWeapon);
+        player.setItemInHand(InteractionHand.MAIN_HAND, simulatedWeapon);
 
         Holder<DamageType> damageTypeHolder = level.registryAccess()
                 .lookupOrThrow(Registries.DAMAGE_TYPE)
@@ -71,19 +72,18 @@ public interface EntityHooks {
         DamageSource damageSource = new DamageSource(damageTypeHolder, player);
 
         LootParams lootParams = new LootParams.Builder(level)
+                .withParameter(LootContextParams.ORIGIN, entity.position())
+                .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
                 .withParameter(LootContextParams.ATTACKING_ENTITY, player)
                 .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, player)
                 .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
                 .withParameter(LootContextParams.THIS_ENTITY, entity)
-                .withParameter(LootContextParams.ORIGIN, entity.position())
-                .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
-                .withParameter(LootContextParams.TOOL, simulatedWeapon)
                 .create(LootContextParamSets.ENTITY);
 
         List<ItemStack> loot = lootTable.getRandomItems(lootParams);
 
         // Restore player's original item
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, previousMainHand);
+        player.setItemInHand(InteractionHand.MAIN_HAND, previousMainHand);
 
         return loot;
     }
