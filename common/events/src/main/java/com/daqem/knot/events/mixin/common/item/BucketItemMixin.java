@@ -30,7 +30,7 @@ public abstract class BucketItemMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void knot$onFillBucket(Level level, Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir, ItemStack itemStack, BlockHitResult blockHitResult, BlockPos blockPos, Direction direction, BlockPos blockPos2, BlockState blockState, BucketPickup bucketPickup, ItemStack itemStack2) {
-        ItemEvent.FILL_BUCKET.invoker().onFillBucket(player, itemStack2, level, blockPos, blockState);
+    private void knot$onFillBucket(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir, ItemStack itemStack, BlockHitResult hitResult, BlockPos pos, Direction direction, BlockPos directionOffsetPos, BlockState clicked, BlockPos placePos, BlockState blockState, BucketPickup bucketPickupBlock, ItemStack taken, ItemStack result) {
+        ItemEvent.FILL_BUCKET.invoker().onFillBucket(player, taken, level, pos, blockState);
     }
 }

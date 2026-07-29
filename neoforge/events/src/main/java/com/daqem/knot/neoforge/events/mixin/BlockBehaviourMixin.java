@@ -22,7 +22,7 @@ public abstract class BlockBehaviourMixin {
                     target = "Lnet/minecraft/world/level/block/state/BlockState;getDestroySpeed(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F"
             )
     )
-    private float onGetDestroyProgress(float original, BlockState blockState, Player player, BlockGetter blockGetter, BlockPos blockPos) {
+    private float onGetDestroyProgress(float original, BlockState state, Player player, BlockGetter level, BlockPos pos) {
         // 1. Wrap the original speed (e.g., 1.0 for hand, 6.0 for iron tool)
         MutableFloat speed = new MutableFloat(original);
 
@@ -30,8 +30,8 @@ public abstract class BlockBehaviourMixin {
         // Note: 'view' is likely your BlockGetter/Level
         EventResult eventResult = BlockEvent.GET_DESTROY_SPEED.invoker().onGetDestroySpeed(
                 player,
-                blockState,
-                blockPos,
+                state,
+                pos,
                 player.getMainHandItem(),
                 speed
         );

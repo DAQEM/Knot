@@ -11,13 +11,14 @@
     "client.DebugScreenOverlayMixin",
     "client.GuiGraphicsExtractorMixin",
     "client.GuiMixin",
+    "client.HudMixin",
     "client.IntegratedServerMixin",
+    "client.ItemStackMixin",
     "client.KeyboardHandlerMixin",
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
-    "client.ScreenMixin",
-    "client.ItemStackMixin"
+    "client.ScreenMixin"
   ],
   "mixins": [
     "common.block.BlockStateBaseMixin",

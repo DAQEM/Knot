@@ -24,7 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(BucketItem.class)
 public abstract class BucketItemMixin {
 
-    @Shadow @Final private Fluid content;
+    @Shadow @Final
+    protected Fluid content;
 
     @Inject(
             method = "use",

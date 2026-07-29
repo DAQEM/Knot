@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ServerPlayerMixin {
 
     @Inject(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At("RETURN"), cancellable = true)
-    private void dropItem(ItemStack itemStack, boolean bl, boolean bl2, CallbackInfoReturnable<ItemEntity> cir) {
+    private void dropItem(ItemStack itemStack, boolean randomly, boolean thrownFromHand, CallbackInfoReturnable<ItemEntity> cir) {
         if (cir.getReturnValue() != null && ItemEvent.DROP_ITEM.invoker().onDropItem((ServerPlayer) (Object) this, cir.getReturnValue()).cancelsEvent()) {
             cir.setReturnValue(null);
         }

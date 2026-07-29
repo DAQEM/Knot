@@ -34,25 +34,25 @@ public abstract class LivingEntityFabricMixin {
             order = 900,
             cancellable = true
     )
-    private void onHurtServer(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+    private void onHurtServer(ServerLevel level, DamageSource source, float f, CallbackInfoReturnable<Boolean> cir) {
         this.knot$damage = new MutableFloat(f);
         final LivingEntity self = (LivingEntity) (Object) this;
         if (self instanceof ServerPlayer serverPlayer) {
-            EventResult eventResult = PlayerEvent.ENTITY_HURT_PLAYER.invoker().onEntityHurtPlayer(serverPlayer, damageSource, this.knot$damage);
+            EventResult eventResult = PlayerEvent.ENTITY_HURT_PLAYER.invoker().onEntityHurtPlayer(serverPlayer, source, this.knot$damage);
             if (eventResult.cancelsEvent()) {
                 cir.setReturnValue(false);
                 return;
             }
         }
-        if (damageSource.getEntity() instanceof ServerPlayer serverPlayer) {
-            EventResult eventResult = EntityEvent.PLAYER_HURT_ENTITY.invoker().onPlayerHurtEntity(serverPlayer, self, damageSource, this.knot$damage);
+        if (source.getEntity() instanceof ServerPlayer serverPlayer) {
+            EventResult eventResult = EntityEvent.PLAYER_HURT_ENTITY.invoker().onPlayerHurtEntity(serverPlayer, self, source, this.knot$damage);
             if (eventResult.cancelsEvent()) {
                 cir.setReturnValue(false);
                 return;
             }
         }
-        if (self instanceof ServerPlayer defender && damageSource.getEntity() instanceof ServerPlayer attacker) {
-            EventResult eventResult = PlayerEvent.PLAYER_HURT_PLAYER.invoker().onPlayerHurtPlayer(attacker, defender, damageSource, this.knot$damage);
+        if (self instanceof ServerPlayer defender && source.getEntity() instanceof ServerPlayer attacker) {
+            EventResult eventResult = PlayerEvent.PLAYER_HURT_PLAYER.invoker().onPlayerHurtPlayer(attacker, defender, source, this.knot$damage);
             if (eventResult.cancelsEvent()) {
                 cir.setReturnValue(false);
             }
@@ -68,9 +68,9 @@ public abstract class LivingEntityFabricMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void knot$onBlock(ServerLevel serverLevel, DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir, float blockedAmount, ItemStack itemStack) {
+    private void knot$onBlock(ServerLevel level, DamageSource source, float damage, CallbackInfoReturnable<Boolean> cir, float blockedAmount, ItemStack itemStack) {
         if ((LivingEntity) (Object) this instanceof Player player && blockedAmount > 0.0F) {
-            PlayerEvent.BLOCK_WITH_SHIELD.invoker().onBlockWithShield(player, damageSource, amount);
+            PlayerEvent.BLOCK_WITH_SHIELD.invoker().onBlockWithShield(player, source, damage);
         }
     }
 
@@ -84,10 +84,10 @@ public abstract class LivingEntityFabricMixin {
             order = 1100,
             argsOnly = true
     )
-    private float modifyDamage(float f) {
+    private float modifyDamage(float damage) {
         if (this.knot$damage != null) {
-            return this.knot$damage.getValue();
+            return this.knot$damage.intValue();
         }
-        return f;
+        return damage;
     }
 }

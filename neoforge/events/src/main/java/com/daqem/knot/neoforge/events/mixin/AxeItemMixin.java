@@ -32,14 +32,14 @@ public abstract class AxeItemMixin extends Item {
             ),
             cancellable = true
     )
-    private void onEvaluateLogStrip(Level level, BlockPos blockPos, Player player, BlockState blockState, UseOnContext context, CallbackInfoReturnable<Optional<BlockState>> cir) {
+    private void onEvaluateLogStrip(Level level, BlockPos pos, Player player, BlockState oldState, UseOnContext context, CallbackInfoReturnable<Optional<BlockState>> cir) {
         if (player != null) {
             EventResult eventResult = PlayerEvent.STRIP_LOG.invoker().onStripLog(
                     player,
                     context.getHand(),
                     context.getItemInHand(),
-                    blockPos,
-                    blockState,
+                    pos,
+                    oldState,
                     level
             );
 

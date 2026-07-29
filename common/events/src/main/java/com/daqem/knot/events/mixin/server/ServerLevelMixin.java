@@ -94,7 +94,7 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
     }
 
     @Inject(method = "save", at = @At("HEAD"))
-    private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean skipSave, CallbackInfo ci) {
+    private void knot$onServerLevelSave(ProgressListener progressListener, boolean flush, boolean noSave, CallbackInfo ci) {
         ServerLevelLifecycleEvent.SERVER_LEVEL_SAVE.invoker().onServerLevelSave((ServerLevel) (Object) this);
     }
 
@@ -103,7 +103,7 @@ public abstract class ServerLevelMixin extends Level implements ServerEntityGett
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerExplosion;explode()I"),
             cancellable = true
     )
-    private void knot$onExplodePre(CallbackInfo ci, @Local ServerExplosion explosion) {
+    private void knot$onExplodePre(CallbackInfo ci, @Local(name = "explosion") ServerExplosion explosion) {
         if (ServerExplosionEvent.PRE.invoker().onPreExplosion((ServerLevel) (Object) this, explosion).cancelsEvent()) {
             ci.cancel();
         }

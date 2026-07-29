@@ -23,11 +23,11 @@ public abstract class ResultSlotMixin {
     private Player player;
 
     @Inject(method = "checkTakeAchievements", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/RecipeCraftingHolder;awardUsedRecipes(Lnet/minecraft/world/entity/player/Player;Ljava/util/List;)V"))
-    public void knot$onRecipeCrafted(ItemStack itemStack, CallbackInfo ci) {
+    public void knot$onRecipeCrafted(ItemStack carried, CallbackInfo ci) {
         if (this.player instanceof ServerPlayer serverPlayer) {
             if (((Slot) (Object) this).container instanceof RecipeCraftingHolder recipeCraftingHolder) {
                 if (recipeCraftingHolder.getRecipeUsed() instanceof RecipeHolder<?> recipeHolder) {
-                    ItemEvent.CRAFT_ITEM.invoker().onCraftItem(serverPlayer, recipeHolder.value(), itemStack);
+                    ItemEvent.CRAFT_ITEM.invoker().onCraftItem(serverPlayer, recipeHolder.value(), carried);
                 }
             }
         }

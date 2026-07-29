@@ -21,10 +21,10 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
     }
 
     @Inject( method = "onTake", at = @At("HEAD"))
-    private void knot$onRecipeCrafted(Player player, ItemStack itemStack, CallbackInfo ci) {
+    private void knot$onRecipeCrafted(Player player, ItemStack carried, CallbackInfo ci) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (this.resultSlots.getRecipeUsed() instanceof RecipeHolder<?> recipeHolder) {
-                ItemEvent.CRAFT_ITEM.invoker().onCraftItem(serverPlayer, recipeHolder.value(), itemStack);
+                ItemEvent.CRAFT_ITEM.invoker().onCraftItem(serverPlayer, recipeHolder.value(), carried);
             }
         }
     }

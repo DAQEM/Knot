@@ -17,6 +17,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntitySpawnRequest;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -126,6 +127,6 @@ public interface EntityHooks {
         dataCopy.put("Pos", mobPos);
         dataCopy.putString("id", entityId.toString());
 
-        return EntityType.loadEntityRecursive(dataCopy, level, EntitySpawnReason.MOB_SUMMONED, e -> e);
+        return EntityType.loadEntityRecursive(dataCopy, level, new EntitySpawnRequest(EntitySpawnReason.MOB_SUMMONED, true), e -> e);
     }
 }

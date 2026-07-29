@@ -22,8 +22,8 @@ public abstract class ProjectileMixin extends Entity {
     }
 
     @Inject(at = @At("HEAD"), method = "shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V")
-    private void shootFromRotation(Entity entity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (entity instanceof ServerPlayer serverPlayer) {
+    private void shootFromRotation(Entity source, float xRot, float yRot, float yOffset, float pow, float uncertainty, CallbackInfo ci) {
+        if (source instanceof ServerPlayer serverPlayer) {
             Projectile projectile = (Projectile) (Object) this;
             if (projectile instanceof ThrowableItemProjectile throwableItemProjectile) {
                 ItemEvent.THROW_ITEM.invoker().onThrowItem(serverPlayer, throwableItemProjectile);

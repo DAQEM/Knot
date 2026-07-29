@@ -26,14 +26,14 @@ public abstract class ServerPlayerGameModeMixin {
     protected ServerLevel level;
 
     @Inject(at = @At("HEAD"), method = "destroyBlock", cancellable = true)
-    private void knot$onDestroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
-        BlockState state = this.level.getBlockState(blockPos);
-        EventResult result = BlockEvent.BREAK_BLOCK.invoker().onBreakBlock(this.level, blockPos, state, this.player);
+    private void knot$onDestroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+        BlockState state = this.level.getBlockState(pos);
+        EventResult result = BlockEvent.BREAK_BLOCK.invoker().onBreakBlock(this.level, pos, state, this.player);
         if (result.cancelsEvent()) {
             cir.setReturnValue(false);
         } else {
             if (state.getBlock() instanceof CropBlock) {
-                EventResult result1 = BlockEvent.HARVEST_CROP.invoker().onHarvestCrop(this.level, blockPos, state, this.player);
+                EventResult result1 = BlockEvent.HARVEST_CROP.invoker().onHarvestCrop(this.level, pos, state, this.player);
                 if (result1.cancelsEvent()) {
                     cir.setReturnValue(false);
                 }

@@ -20,13 +20,13 @@ public abstract class MixinBuiltInPackSource {
     @Shadow @Final private PackType packType;
 
     @Inject(method = "loadPacks", at = @At("RETURN"))
-    private void knot$loadGlobalResourcePacks(Consumer<Pack> consumer, CallbackInfo ci) {
+    private void knot$loadGlobalResourcePacks(Consumer<Pack> result, CallbackInfo ci) {
         if (this.packType == PackType.CLIENT_RESOURCES) {
             new GlobalPackRepository(
                     GlobalPackPaths.RESOURCE_PACKS,
                     PackType.CLIENT_RESOURCES,
                     GlobalPackPaths.KNOT_PACK_SOURCE
-            ).loadPacks(consumer);
+            ).loadPacks(result);
         }
     }
 }

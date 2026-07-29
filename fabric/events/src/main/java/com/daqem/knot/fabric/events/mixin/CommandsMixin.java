@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CommandsMixin {
 
     @Inject(method = "performCommand", at = @At("HEAD"), cancellable = true)
-    private void knot$onPerformCommand(ParseResults<CommandSourceStack> parseResults, String command, CallbackInfo ci) {
-        MutableObject<ParseResults<CommandSourceStack>> resultsRef = new MutableObject<>(parseResults);
+    private void knot$onPerformCommand(ParseResults<CommandSourceStack> command, String commandString, CallbackInfo ci) {
+        MutableObject<ParseResults<CommandSourceStack>> resultsRef = new MutableObject<>(command);
         MutableObject<Throwable> exceptionRef = new MutableObject<>(null);
 
         EventResult result = ServerCommandEvent.PERFORM.invoker().onPerform(resultsRef, exceptionRef);

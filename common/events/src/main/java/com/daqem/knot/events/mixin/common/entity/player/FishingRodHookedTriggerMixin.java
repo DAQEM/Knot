@@ -1,7 +1,7 @@
 package com.daqem.knot.events.mixin.common.entity.player;
 
 import com.daqem.knot.events.common.entity.player.PlayerEvent;
-import net.minecraft.advancements.criterion.FishingRodHookedTrigger;
+import net.minecraft.advancements.triggers.FishingRodHookedTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
@@ -16,9 +16,9 @@ import java.util.Collection;
 public abstract class FishingRodHookedTriggerMixin {
 
     @Inject(method = "trigger", at = @At("HEAD"))
-    private void trigger(ServerPlayer serverPlayer, ItemStack itemStack, FishingHook fishingHook, Collection<ItemStack> collection, CallbackInfo ci) {
-        for (ItemStack stack : collection) {
-            PlayerEvent.FISH_UP_ITEM.invoker().onFishUpItem(serverPlayer, stack);
+    private void trigger(ServerPlayer player, ItemStack rod, FishingHook hook, Collection<ItemStack> items, CallbackInfo ci) {
+        for (ItemStack stack : items) {
+            PlayerEvent.FISH_UP_ITEM.invoker().onFishUpItem(player, stack);
         }
     }
 }

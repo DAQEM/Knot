@@ -27,14 +27,14 @@ public abstract class ItemStackMixin {
             at = @At("HEAD"),
             order = 900,
             cancellable = true)
-    private void onHurtAndBreak(int damage, ServerLevel serverLevel, ServerPlayer serverPlayer, Consumer<Item> consumer, CallbackInfo ci) {
-        MutableInt mutableDamage = new MutableInt(damage);
-        EventResult eventResult = ItemEvent.HURT_ITEM.invoker().onHurtItem(serverPlayer, (ItemStack) (Object) this, mutableDamage);
+    private void onHurtAndBreak(int amount, ServerLevel level, ServerPlayer player, Consumer<Item> onBreak, CallbackInfo ci) {
+        MutableInt mutableDamage = new MutableInt(amount);
+        EventResult eventResult = ItemEvent.HURT_ITEM.invoker().onHurtItem(player, (ItemStack) (Object) this, mutableDamage);
         if (eventResult.cancelsEvent()) {
             ci.cancel();
             return;
         }
-        if (mutableDamage.getValue() != damage) {
+        if (mutableDamage.intValue() != amount) {
             this.knot$damage = mutableDamage;
         }
     }
@@ -45,12 +45,12 @@ public abstract class ItemStackMixin {
             argsOnly = true,
             order = 1100
     )
-    private int modifyDamage(int i) {
+    private int modifyDamage(int amount) {
         try {
             if (this.knot$damage != null) {
-                return this.knot$damage.getValue();
+                return this.knot$damage.intValue();
             }
-            return i;
+            return amount;
         } finally {
             this.knot$damage = null;
         }
@@ -63,7 +63,7 @@ public abstract class ItemStackMixin {
                     target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"
             )
     )
-    private void knot$onItemBreak(int i, ServerPlayer serverPlayer, Consumer<Item> consumer, CallbackInfo ci) {
-        ItemEvent.ITEM_BREAK.invoker().onItemBreak(serverPlayer, (ItemStack) (Object) this);
+    private void knot$onItemBreak(int newDamage, ServerPlayer player, Consumer<Item> onBreak, CallbackInfo ci) {
+        ItemEvent.ITEM_BREAK.invoker().onItemBreak(player, (ItemStack) (Object) this);
     }
 }

@@ -25,7 +25,7 @@ public abstract class HoeItemMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void knot$onTillSoil(UseOnContext useOnContext, CallbackInfoReturnable<InteractionResult> cir, Level level, BlockPos blockPos, Pair<?, ?> pair, Predicate<?> predicate, Consumer<?> consumer, Player player) {
-        BlockEvent.TILL_SOIL.invoker().onTillSoil(level, blockPos, level.getBlockState(blockPos), player, useOnContext.getItemInHand());
+    private void knot$onTillSoil(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir, Level level, BlockPos blockPos, Pair<?, ?> pair, Predicate<?> predicate, Consumer<?> consumer, Player player) {
+        BlockEvent.TILL_SOIL.invoker().onTillSoil(level, blockPos, level.getBlockState(blockPos), player, context.getItemInHand());
     }
 }

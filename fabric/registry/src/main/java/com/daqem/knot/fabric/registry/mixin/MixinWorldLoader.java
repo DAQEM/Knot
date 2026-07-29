@@ -19,14 +19,14 @@ public abstract class MixinWorldLoader {
 
     @Inject(method = "load", at = @At("HEAD"))
     private static <D, R> void knot$addGlobalDataPacks(
-            WorldLoader.InitConfig initConfig,
+            WorldLoader.InitConfig config,
             WorldLoader.WorldDataSupplier<D> worldDataSupplier,
             WorldLoader.ResultFactory<D, R> resultFactory,
             Executor backgroundExecutor,
-            Executor gameExecutor,
+            Executor mainThreadExecutor,
             CallbackInfoReturnable<CompletableFuture<R>> cir
     ) {
-        var repo = initConfig.packConfig().packRepository();
+        var repo = config.packConfig().packRepository();
         Set<RepositorySource> sources = ((MixinPackRepositoryAccessor) repo).knot$getSources();
         sources.add(new GlobalPackRepository(
                 GlobalPackPaths.DATA_PACKS,

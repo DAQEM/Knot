@@ -18,10 +18,10 @@ public abstract class ChunkMapMixin {
 
     @Shadow
     @Final
-    ServerLevel level;
+    private ServerLevel level;
 
     @Inject(method = "save", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ChunkMap;write(Lnet/minecraft/world/level/ChunkPos;Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture;", ordinal = 0))
-    private void knot$onChunkSave(ChunkAccess chunkAccess, CallbackInfoReturnable<Boolean> cir, @Local SerializableChunkData data) {
-        ServerChunkEvent.SAVE_DATA.invoker().onSaveData(chunkAccess, this.level, data);
+    private void knot$onChunkSave(ChunkAccess chunk, CallbackInfoReturnable<Boolean> cir, @Local(name = "data") SerializableChunkData data) {
+        ServerChunkEvent.SAVE_DATA.invoker().onSaveData(chunk, this.level, data);
     }
 }

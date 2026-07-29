@@ -23,7 +23,7 @@ public abstract class PlayerAdvancementsMixin {
                     shift = At.Shift.AFTER
             )
     )
-    private void knot$onAwardAdvancement(AdvancementHolder advancement, String criterionKey, CallbackInfoReturnable<Boolean> cir) {
-        AdvancementEvent.ADVANCEMENT.invoker().onAdvancement(this.player, advancement);
+    private void knot$onAwardAdvancement(AdvancementHolder holder, String criterion, CallbackInfoReturnable<Boolean> cir) {
+        AdvancementEvent.ADVANCEMENT.invoker().onAdvancement(this.player, holder);
     }
 }

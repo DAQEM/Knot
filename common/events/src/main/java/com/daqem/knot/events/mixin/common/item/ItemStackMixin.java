@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ItemStackMixin {
 
     @Inject(at = @At("HEAD"), method = "use", cancellable = true)
-    private void use(Level level, Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
-        EventResult eventResult = ItemEvent.USE_ITEM.invoker().onUseItem(level, player, interactionHand, (ItemStack) (Object) this);
+    private void use(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        EventResult eventResult = ItemEvent.USE_ITEM.invoker().onUseItem(level, player, hand, (ItemStack) (Object) this);
         if (eventResult.cancelsEvent()) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

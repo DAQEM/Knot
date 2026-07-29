@@ -32,8 +32,8 @@ public abstract class BucketItemMixin {
             ),
             cancellable = true
     )
-    private void knot$onEmptyBucket(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir, @Local(ordinal = 2) BlockPos blockPos3, @Local(ordinal = 0) ItemStack itemStack) {
-        EventResult result = ItemEvent.EMPTY_BUCKET.invoker().onEmptyBucket(player, itemStack, level, blockPos3, this.content.defaultFluidState().createLegacyBlock());
+    private void knot$onEmptyBucket(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "placePos") BlockPos placePos, @Local(name = "itemStack") ItemStack itemStack) {
+        EventResult result = ItemEvent.EMPTY_BUCKET.invoker().onEmptyBucket(player, itemStack, level, placePos, this.content.defaultFluidState().createLegacyBlock());
         if (result.cancelsEvent()) {
             cir.setReturnValue(InteractionResult.FAIL);
         }

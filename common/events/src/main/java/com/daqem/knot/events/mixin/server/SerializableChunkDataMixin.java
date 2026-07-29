@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class SerializableChunkDataMixin {
 
     @Inject(method = "read", at = @At("RETURN"))
-    private void knot$onChunkLoad(ServerLevel serverLevel, PoiManager poiManager, RegionStorageInfo regionStorageInfo, ChunkPos chunkPos, CallbackInfoReturnable<ProtoChunk> cir, @Local ChunkAccess chunkAccess) {
-        ServerChunkEvent.LOAD_DATA.invoker().onLoadData(chunkAccess, serverLevel, (SerializableChunkData) (Object) this);
+    private void knot$onChunkLoad(ServerLevel level, PoiManager poiManager, RegionStorageInfo regionInfo, ChunkPos pos, CallbackInfoReturnable<ProtoChunk> cir, @Local(name = "chunk") ChunkAccess chunk) {
+        ServerChunkEvent.LOAD_DATA.invoker().onLoadData(chunk, level, (SerializableChunkData) (Object) this);
     }
 }

@@ -19,10 +19,10 @@ public abstract class LightningBoltMixin {
             target = "Ljava/util/List;iterator()Ljava/util/Iterator;",
             ordinal = 1
     ))
-    public void knot$handleLightningStrike(CallbackInfo ci, @Local List<Entity> list) {
+    public void knot$handleLightningStrike(CallbackInfo ci, @Local(name = "entities") List<Entity> entities) {
         LightningBolt bolt = (LightningBolt) (Object) this;
         if (!bolt.isRemoved() && !bolt.level().isClientSide()) {
-            ServerLightningEvent.STRIKE.invoker().onStrike(bolt, bolt.level(), bolt.position(), list);
+            ServerLightningEvent.STRIKE.invoker().onStrike(bolt, bolt.level(), bolt.position(), entities);
         }
     }
 }

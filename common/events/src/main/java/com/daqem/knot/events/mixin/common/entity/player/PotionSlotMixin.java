@@ -21,12 +21,12 @@ public abstract class PotionSlotMixin extends Slot {
 
     @Inject(at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/advancements/criterion/BrewedPotionTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/Holder;)V",
+            target = "Lnet/minecraft/advancements/triggers/BrewedPotionTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/Holder;)V",
             shift = At.Shift.BEFORE
     ), method = "onTake")
-    private void onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
+    private void onTake(Player player, ItemStack carried, CallbackInfo ci) {
         if (this.container instanceof BrewingStandBlockEntity brewingStandBlockEntity) {
-            PlayerEvent.BREW_POTION.invoker().onBrewPotion(player, itemStack, brewingStandBlockEntity);
+            PlayerEvent.BREW_POTION.invoker().onBrewPotion(player, carried, brewingStandBlockEntity);
         }
     }
 }
