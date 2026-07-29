@@ -1,13 +1,14 @@
 apply plugin: "me.modmuss50.mod-publish-plugin"
 
 publishMods {
-    def capitalizedProjectName = project.name == "fabric" ? "Fabric" : "NeoForge"
+    def platformName = project.name.split('-')[0]
+    def capitalizedProjectName = platformName == "fabric" ? "Fabric" : "NeoForge"
     file = jar.archiveFile
     displayName = "${project.mod_name} ${capitalizedProjectName} ${project.minecraft_version} - ${project.version}"
     version = project.version
     changelog = rootProject.file("changelog.md").exists() ? rootProject.file("changelog.md").text : "No changelog provided."
     type = project.release_type == "release" ? STABLE : (project.release_type == "beta" ? BETA : ALPHA)
-    modLoaders.add(project.name.toLowerCase())
+    modLoaders.add(platformName)
 
     def cursetoken = System.getenv("CURSEFORGE_API_KEY")
     if (cursetoken != null) {
