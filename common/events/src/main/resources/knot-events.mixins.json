@@ -12,12 +12,12 @@
     "client.GuiGraphicsExtractorMixin",
     "client.GuiMixin",
     "client.IntegratedServerMixin",
+    "client.ItemStackMixin",
     "client.KeyboardHandlerMixin",
     "client.LocalPlayerMixin",
     "client.MinecraftMixin",
     "client.MouseHandlerMixin",
-    "client.ScreenMixin",
-    "client.ItemStackMixin"
+    "client.ScreenMixin"
   ],
   "mixins": [
     "common.block.BlockStateBaseMixin",
@@ -42,6 +42,7 @@
     "common.item.ItemStackMixin",
     "common.item.ResultSlotMixin",
     "common.item.SmithingMenuMixin",
+    "compat.apothic_enchanting.ApothEnchantmentMenuMixin",
     "server.ChunkMapMixin",
     "server.DedicatedServerMixin",
     "server.LightningBoltMixin",

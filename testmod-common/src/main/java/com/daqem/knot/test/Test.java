@@ -1,9 +1,11 @@
 package com.daqem.knot.test;
 
 import com.daqem.knot.Knot;
+import com.daqem.knot.events.EventsService;
 import com.daqem.knot.test.event.ServerTickEvent;
 import com.daqem.knot.test.network.TestNetworking;
 import com.daqem.knot.test.registry.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class Test {
 
@@ -15,5 +17,13 @@ public class Test {
         TestNetworking.init();
         ServerTickEvent.registerEvent();
         TestRegistries.init();
+        EventsService.Player.ENCHANT_ITEM.register((serverPlayer, stack, enchantmentCost) ->
+                API.LOGGER.info(
+                        "Player {} enchanted item {} with cost {}",
+                        serverPlayer.getName().getString(),
+                        BuiltInRegistries.ITEM.getKey(stack.getItem()),
+                        enchantmentCost
+                )
+        );
     }
 }
