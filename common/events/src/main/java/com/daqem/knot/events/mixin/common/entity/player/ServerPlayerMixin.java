@@ -2,6 +2,7 @@ package com.daqem.knot.events.mixin.common.entity.player;
 
 import com.daqem.knot.api.world.entity.MovementType;
 import com.daqem.knot.api.world.entity.player.KnotServerPlayer;
+import com.daqem.knot.events.compat.apothic_enchanting.ApothicEnchantingCompat;
 import com.daqem.knot.events.EventResult;
 import com.daqem.knot.events.common.TickEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
@@ -152,54 +153,34 @@ public abstract class ServerPlayerMixin extends Player implements KnotServerPlay
     @Unique
     private void knot$fireStartEvent(MovementType type, ServerPlayer player) {
         switch (type) {
-            case WALKING:
-                MovementEvent.START_WALK.invoker().onStartWalk(player);
-                break;
-            case SPRINTING:
-                MovementEvent.START_SPRINT.invoker().onStartSprint(player);
-                break;
-            case SWIMMING:
-                MovementEvent.START_SWIM.invoker().onStartSwim(player);
-                break;
-            case CROUCHING:
-                MovementEvent.START_CROUCH.invoker().onStartCrouch(player);
-                break;
-            case ELYTRA_FLYING:
-                MovementEvent.START_ELYTRA_FLY.invoker().onStartElytraFly(player);
-                break;
-            case HORSE_RIDING:
-                MovementEvent.START_HORSE_RIDE.invoker().onStartHorseRide(player);
-                break;
+            case WALKING -> MovementEvent.START_WALK.invoker().onStartWalk(player);
+            case SPRINTING -> MovementEvent.START_SPRINT.invoker().onStartSprint(player);
+            case SWIMMING -> MovementEvent.START_SWIM.invoker().onStartSwim(player);
+            case CROUCHING -> MovementEvent.START_CROUCH.invoker().onStartCrouch(player);
+            case ELYTRA_FLYING -> MovementEvent.START_ELYTRA_FLY.invoker().onStartElytraFly(player);
+            case HORSE_RIDING -> MovementEvent.START_HORSE_RIDE.invoker().onStartHorseRide(player);
         }
     }
 
     @Unique
     private void knot$fireStopEvent(MovementType type, ServerPlayer player) {
         switch (type) {
-            case WALKING:
-                MovementEvent.STOP_WALK.invoker().onStopWalk(player);
-                break;
-            case SPRINTING:
-                MovementEvent.STOP_SPRINT.invoker().onStopSprint(player);
-                break;
-            case SWIMMING:
-                MovementEvent.STOP_SWIM.invoker().onStopSwim(player);
-                break;
-            case CROUCHING:
-                MovementEvent.STOP_CROUCH.invoker().onStopCrouch(player);
-                break;
-            case ELYTRA_FLYING:
-                MovementEvent.STOP_ELYTRA_FLY.invoker().onStopElytraFly(player);
-                break;
-            case HORSE_RIDING:
-                MovementEvent.STOP_HORSE_RIDE.invoker().onStopHorseRide(player);
-                break;
+            case WALKING -> MovementEvent.STOP_WALK.invoker().onStopWalk(player);
+            case SPRINTING -> MovementEvent.STOP_SPRINT.invoker().onStopSprint(player);
+            case SWIMMING -> MovementEvent.STOP_SWIM.invoker().onStopSwim(player);
+            case CROUCHING -> MovementEvent.STOP_CROUCH.invoker().onStopCrouch(player);
+            case ELYTRA_FLYING -> MovementEvent.STOP_ELYTRA_FLY.invoker().onStopElytraFly(player);
+            case HORSE_RIDING -> MovementEvent.STOP_HORSE_RIDE.invoker().onStopHorseRide(player);
         }
     }
 
     @Inject(at = @At("TAIL"), method = "onEnchantmentPerformed(Lnet/minecraft/world/item/ItemStack;I)V")
     public void onEnchantmentPerformed(ItemStack itemStack, int enchantmentCost, CallbackInfo ci) {
-        PlayerEvent.ENCHANT_ITEM.invoker().onEnchantItem((ServerPlayer) (Object) this, itemStack, enchantmentCost);
+        int cost = enchantmentCost;
+        if (cost == 0) {
+            cost = ApothicEnchantingCompat.getInstance().getCapturedCost(cost);
+        }
+        PlayerEvent.ENCHANT_ITEM.invoker().onEnchantItem((ServerPlayer) (Object) this, itemStack, cost);
     }
 
     @Inject(at = @At("TAIL"), method = "restoreFrom(Lnet/minecraft/server/level/ServerPlayer;Z)V")
