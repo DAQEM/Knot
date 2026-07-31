@@ -43,6 +43,7 @@
     "common.item.ItemStackMixin",
     "common.item.ResultSlotMixin",
     "common.item.SmithingMenuMixin",
+    "compat.apothic_enchanting.ApothEnchantmentMenuMixin",
     "server.ChunkMapMixin",
     "server.DedicatedServerMixin",
     "server.LightningBoltMixin",
