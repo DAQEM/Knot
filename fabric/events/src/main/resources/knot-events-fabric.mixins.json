@@ -6,19 +6,20 @@
     "client.GuiGraphicsExtractorMixin"
   ],
   "mixins": [
-    "BucketItemMixin",
-    "ItemStackMixin",
-    "LivingEntityFabricMixin",
     "AxeItemMixin",
     "BlockBehaviourMixin",
     "BlockItemMixin",
+    "BucketItemMixin",
     "CommandsMixin",
     "HoeItemMixin",
-    "PlayerAdvancementsMixin",
-    "ServerPlayerGameModeMixin",
+    "ItemStackMixin",
+    "LivingEntityFabricMixin",
     "MixinMixin",
+    "PlayerAdvancementsMixin",
+    "ServerExplosionMixin",
+    "ServerPlayerGameModeMixin",
     "ServerPlayerMixin",
-    "ServerExplosionMixin"
+    "compat.rightclickharvest.RightClickHarvestPlatformImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1
