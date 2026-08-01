@@ -18,7 +18,8 @@
     "ServerPlayerGameModeMixin",
     "MixinMixin",
     "ServerPlayerMixin",
-    "ServerExplosionMixin"
+    "ServerExplosionMixin",
+    "compat.rightclickharvest.RightClickHarvestPlatformImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1
