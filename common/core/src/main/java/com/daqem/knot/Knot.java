@@ -6,6 +6,7 @@ import com.daqem.knot.events.EventsService;
 import com.daqem.knot.networking.NetworkingService;
 import com.daqem.knot.permissions.PermissionsService;
 import com.daqem.knot.registry.Registrar;
+import com.daqem.knot.registry.Registry;
 import com.daqem.knot.registry.client.*;
 import com.daqem.knot.registry.creativetab.CreativeTabsRegistry;
 import com.daqem.knot.registry.entity.EntityAttributesRegistry;
@@ -131,5 +132,9 @@ public class Knot {
 
     public boolean hasPermission(ServerPlayer player, String permissionNode, PermissionLevel fallbackLevel) {
         return PERMISSIONS.check(player, this.modId + "." + permissionNode, fallbackLevel);
+    }
+
+    public <T> Registry<T> createRegistry(net.minecraft.core.Registry<T> registry) {
+        return REGISTRAR.createRegistry(registry, this.modId);
     }
 }
