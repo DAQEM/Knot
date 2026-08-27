@@ -12,12 +12,24 @@ dependencies {
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
-    // Depend on your common modules to write test code against them
     compileOnly project(':common-api')
     compileOnly project(':common-core')
     compileOnly project(':common-events')
     compileOnly project(':common-networking')
     compileOnly project(':common-registry')
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/generated/resources'
+            exclude '.cache/**'
+        }
+    }
+}
+
+tasks.withType(AbstractCopyTask).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
@@ -27,13 +39,5 @@ def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', Strin
 sourceSets.configureEach {
     [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant ->
         configurations.named("$variant") { attributes { attribute(loaderAttribute, 'common') } }
-    }
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDir 'src/generated/resources'
-        }
     }
 }
