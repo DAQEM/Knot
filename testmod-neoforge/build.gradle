@@ -26,6 +26,16 @@ neoForge {
             client()
             gameDirectory = this.mkdir(this.file("runs/client"))
         }
+        data {
+            serverData()
+            gameDirectory = this.mkdir(this.file('runs/data'))
+            programArguments.addAll(
+                    '--mod', 'knot_test',
+                    '--all',
+                    '--output', rootProject.file('testmod-common/src/generated/resources').getAbsolutePath(),
+                    '--existing', rootProject.file('testmod-common/src/main/resources').getAbsolutePath()
+            )
+        }
         server {
             server()
             this.file("runs/server").createParentDirectories()
@@ -47,11 +57,22 @@ dependencies {
     }
     moduleJava project(path: ':testmod-common', configuration: 'moduleJava')
     moduleResources project(path: ':testmod-common', configuration: 'moduleResources')
+
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named('compileJava', JavaCompile) {
     dependsOn(configurations.moduleJava)
     source(configurations.moduleJava)
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir rootProject.file('testmod-common/src/main/resources')
+            srcDir rootProject.file('testmod-common/src/generated/resources')
+        }
+    }
 }
 
 processResources {

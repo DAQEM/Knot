@@ -20,6 +20,8 @@ dependencies {
     }
     moduleJava project(path: ':testmod-common', configuration: 'moduleJava')
     moduleResources project(path: ':testmod-common', configuration: 'moduleResources')
+
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
 }
 
 tasks.named('compileJava', JavaCompile) {
@@ -35,7 +37,8 @@ processResources {
 sourceSets {
     main {
         resources {
-            srcDir project(':common-core').file('src/main/resources')
+            srcDir rootProject.file('testmod-common/src/main/resources')
+            srcDir rootProject.file('testmod-common/src/generated/resources')
         }
     }
 }
