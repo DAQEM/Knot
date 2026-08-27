@@ -29,3 +29,11 @@ sourceSets.configureEach {
         configurations.named("$variant") { attributes { attribute(loaderAttribute, 'common') } }
     }
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/generated/resources'
+        }
+    }
+}

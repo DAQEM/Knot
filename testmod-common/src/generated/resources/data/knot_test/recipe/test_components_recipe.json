@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "knot:components",
+      "base": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:stored_enchantments": {
+          "minecraft:lure": 1
+        }
+      },
+      "fabric:type": "knot:components"
+    },
+    "minecraft:lapis_lazuli"
+  ],
+  "result": {
+    "id": "knot_test:test_item"
+  }
+}
