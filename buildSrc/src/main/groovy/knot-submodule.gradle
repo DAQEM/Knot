@@ -18,12 +18,7 @@ configurations {
 
 artifacts {
     moduleJava sourceSets.main.java.sourceDirectories.singleFile
-}
-
-afterEvaluate {
-    sourceSets.main.resources.srcDirs.each { dir ->
-        artifacts.add('moduleResources', dir)
-    }
+    moduleResources sourceSets.main.resources.sourceDirectories.singleFile
 }
 
 repositories {
