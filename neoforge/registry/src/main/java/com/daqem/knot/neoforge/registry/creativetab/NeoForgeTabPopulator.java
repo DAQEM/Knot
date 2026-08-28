@@ -1,6 +1,7 @@
 package com.daqem.knot.neoforge.registry.creativetab;
 
 import com.daqem.knot.registry.creativetab.TabPopulator;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -12,6 +13,11 @@ public class NeoForgeTabPopulator implements TabPopulator {
 
     public NeoForgeTabPopulator(BuildCreativeModeTabContentsEvent event) {
         this.event = event;
+    }
+
+    @Override
+    public HolderLookup.Provider getLookup() {
+        return event.getParameters().holders();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.daqem.knot.registry.creativetab;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -7,6 +8,11 @@ import net.minecraft.world.level.ItemLike;
  * A simplified, intuitive interface for adding items to a Creative Mode Tab.
  */
 public interface TabPopulator {
+
+    /**
+     * @return The HolderLookup Provider for accessing dynamic datapack registries (like Enchantments).
+     */
+    HolderLookup.Provider getLookup();
 
     /**
      * Appends the given items to the end of the tab.
