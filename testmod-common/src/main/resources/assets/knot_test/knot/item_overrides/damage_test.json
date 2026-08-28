@@ -1,0 +1,13 @@
+{
+  "items": [
+    "minecraft:wooden_pickaxe"
+  ],
+  "model": "minecraft:stick",
+  "conditions": [
+    {
+      "type": "knot:damage",
+      "min_percent": 50.0,
+      "max_percent": 100.0
+    }
+  ]
+}

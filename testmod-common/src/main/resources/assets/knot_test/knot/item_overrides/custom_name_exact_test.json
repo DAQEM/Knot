@@ -1,0 +1,12 @@
+{
+  "items": [
+    "minecraft:stick"
+  ],
+  "model": "minecraft:blaze_rod",
+  "conditions": [
+    {
+      "type": "knot:custom_name",
+      "name": "Wand"
+    }
+  ]
+}

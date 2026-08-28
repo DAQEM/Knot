@@ -1,0 +1,12 @@
+{
+  "items": [
+    "minecraft:diamond_chestplate"
+  ],
+  "model": "minecraft:netherite_chestplate",
+  "conditions": [
+    {
+      "type": "knot:component",
+      "component": "minecraft:unbreakable"
+    }
+  ]
+}
