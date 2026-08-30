@@ -12,7 +12,12 @@ import java.util.function.Consumer;
 public interface MenuRegistry {
 
     /**
-     * Creates and returns a new MenuType.
+     * Creates and returns a new MenuType without extra data.
+     */
+    <T extends AbstractContainerMenu> MenuType<@NotNull T> createSimple(SimpleMenuConstructor<T> constructor);
+
+    /**
+     * Creates and returns a new MenuType with extra data.
      */
     <T extends AbstractContainerMenu> MenuType<@NotNull T> create(MenuConstructor<T> constructor);
 
@@ -24,7 +29,7 @@ public interface MenuRegistry {
     /**
      * Opens a menu for a player without extra data.
      */
-    default void open(ServerPlayer player, MenuProvider provider) {
-        open(player, provider, buf -> {});
+    default void openSimple(ServerPlayer player, MenuProvider provider) {
+        player.openMenu(provider);
     }
 }
