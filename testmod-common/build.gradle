@@ -20,6 +20,19 @@ dependencies {
     compileOnly project(':common-registry')
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/generated/resources'
+            exclude '.cache/**'
+        }
+    }
+}
+
+tasks.withType(AbstractCopyTask).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
 ['apiElements', 'runtimeElements', 'sourcesElements'].each { variant ->
     configurations.named("$variant") { attributes { attribute(loaderAttribute, 'common') } }

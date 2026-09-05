@@ -10,6 +10,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,12 @@ public class NeoForgeParticleProviderRegistry implements ParticleProviderRegistr
 
     @Override
     public <T extends ParticleOptions> void register(ParticleType<@NotNull T> type, ParticleProvider<@NotNull T> provider) {
-        REGISTRATIONS.add(new Registration<>(type, provider));
+        REGISTRATIONS.add(new Registration<>(type, provider, null));
+    }
+
+    @Override
+    public <T extends ParticleOptions> void register(ParticleType<@NotNull T> type, SpriteParticleProvider<@NotNull T> provider) {
+        REGISTRATIONS.add(new Registration<>(type, null, provider));
     }
 
     @SubscribeEvent
@@ -32,12 +38,17 @@ public class NeoForgeParticleProviderRegistry implements ParticleProviderRegistr
     }
 
     private static <T extends ParticleOptions> void registerParticle(RegisterParticleProvidersEvent event, Registration<T> reg) {
-        event.registerSpecial(reg.type(), reg.provider());
+        if (reg.provider() != null) {
+            event.registerSpecial(reg.type(), reg.provider());
+        } else if (reg.spriteProvider() != null) {
+            event.registerSpriteSet(reg.type(), spriteSet -> reg.spriteProvider().create(spriteSet));
+        }
     }
 
     private record Registration<T extends ParticleOptions>(
             ParticleType<@NotNull T> type,
-            ParticleProvider<@NotNull T> provider
+            @Nullable ParticleProvider<@NotNull T> provider,
+            @Nullable SpriteParticleProvider<@NotNull T> spriteProvider
     ) {
     }
 }

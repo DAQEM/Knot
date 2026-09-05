@@ -2,6 +2,7 @@ package com.daqem.knot.fabric.registry.creativetab;
 
 import com.daqem.knot.registry.creativetab.TabPopulator;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -13,6 +14,11 @@ public class FabricTabPopulator implements TabPopulator {
 
     public FabricTabPopulator(FabricCreativeModeTabOutput entries) {
         this.entries = entries;
+    }
+
+    @Override
+    public HolderLookup.Provider getLookup() {
+        return entries.getContext().holders();
     }
 
     @Override

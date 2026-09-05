@@ -19,6 +19,7 @@
     "ServerExplosionMixin",
     "ServerPlayerGameModeMixin",
     "ServerPlayerMixin",
+    "compat.fallingtree.FallingTreeCommonsImplMixin",
     "compat.rightclickharvest.RightClickHarvestPlatformImplMixin"
   ],
   "injectors": {

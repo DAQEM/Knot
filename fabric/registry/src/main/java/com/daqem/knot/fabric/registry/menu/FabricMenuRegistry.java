@@ -2,6 +2,7 @@ package com.daqem.knot.fabric.registry.menu;
 
 import com.daqem.knot.registry.menu.MenuConstructor;
 import com.daqem.knot.registry.menu.MenuRegistry;
+import com.daqem.knot.registry.menu.SimpleMenuConstructor;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
@@ -12,6 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class FabricMenuRegistry implements MenuRegistry {
+
+    @Override
+    public <T extends AbstractContainerMenu> MenuType<@NotNull T> createSimple(SimpleMenuConstructor<T> constructor) {
+        return new MenuType<>(constructor::create, FeatureFlags.DEFAULT_FLAGS);
+    }
 
     @Override
     public <T extends AbstractContainerMenu> MenuType<@NotNull T> create(MenuConstructor<T> constructor) {

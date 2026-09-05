@@ -1,0 +1,13 @@
+{
+  "items": [
+    "minecraft:gold_nugget"
+  ],
+  "model": "minecraft:sunflower",
+  "conditions": [
+    {
+      "type": "knot:custom_name",
+      "name": ".*Coin$",
+      "regex": true
+    }
+  ]
+}

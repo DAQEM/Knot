@@ -1,0 +1,13 @@
+{
+  "items": [
+    "minecraft:potion"
+  ],
+  "model": "minecraft:glass_bottle",
+  "conditions": [
+    {
+      "type": "knot:component",
+      "component": "minecraft:potion_contents",
+      "value": "minecraft:invisibility"
+    }
+  ]
+}
