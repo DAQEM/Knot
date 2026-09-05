@@ -18,6 +18,9 @@
     "main": [
       "com.daqem.knot.fabric.FabricKnotMod"
     ],
+    "client": [
+      "com.daqem.knot.fabric.client.FabricKnotModClient"
+    ],
     "modmenu":[
       "com.daqem.knot.fabric.registry.compat.KnotModMenuCompat"
     ]

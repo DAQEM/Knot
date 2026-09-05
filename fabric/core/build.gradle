@@ -38,4 +38,6 @@ dependencies {
 
     common(project(path: ':fabric-registry', configuration: 'namedElements')) { transitive = false }
     shadowBundle(project(path: ':fabric-registry', configuration: 'namedElements')) { transitive = false }
+
+    modCompileOnly "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
 }
