@@ -6,19 +6,20 @@
     "client.GuiGraphicsExtractorMixin"
   ],
   "mixins": [
-    "BucketItemMixin",
-    "ItemStackMixin",
-    "LivingEntityFabricMixin",
     "AxeItemMixin",
     "BlockBehaviourMixin",
     "BlockItemMixin",
+    "BucketItemMixin",
     "CommandsMixin",
     "HoeItemMixin",
-    "PlayerAdvancementsMixin",
-    "ServerPlayerGameModeMixin",
+    "ItemStackMixin",
+    "LivingEntityFabricMixin",
     "MixinMixin",
-    "ServerPlayerMixin",
+    "PlayerAdvancementsMixin",
     "ServerExplosionMixin",
+    "ServerPlayerGameModeMixin",
+    "ServerPlayerMixin",
+    "compat.fallingtree.FallingTreeCommonsImplMixin",
     "compat.rightclickharvest.RightClickHarvestPlatformImplMixin"
   ],
   "injectors": {
