@@ -1,0 +1,12 @@
+{
+  "items": [
+    "minecraft:enchanted_book"
+  ],
+  "model": "minecraft:experience_bottle",
+  "conditions": [
+    {
+      "type": "knot:stored_enchantment",
+      "enchantment": "minecraft:mending"
+    }
+  ]
+}

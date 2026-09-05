@@ -1,10 +1,13 @@
 package com.daqem.knot.neoforge.registry;
 
 import com.daqem.knot.api.Constants;
+import com.daqem.knot.neoforge.registry.recipe.NeoForgeKnotComponentsIngredient;
 import com.daqem.knot.registry.Registrar;
 import com.daqem.knot.registry.Registry;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.ArrayList;
@@ -28,6 +31,11 @@ public class NeoForgeRegistrar implements Registrar {
             if (event.getRegistryKey().equals(registry.getRegistryKey())) {
                 registry.onRegisterEvent(event);
             }
+        }
+
+        if (event.getRegistryKey().equals(NeoForgeRegistries.Keys.INGREDIENT_TYPES)) {
+            event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES, helper ->
+                    helper.register(Identifier.fromNamespaceAndPath("knot", "components"), NeoForgeKnotComponentsIngredient.TYPE));
         }
     }
 }

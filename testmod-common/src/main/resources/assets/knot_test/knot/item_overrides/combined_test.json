@@ -1,0 +1,17 @@
+{
+  "items": [
+    "minecraft:slime_ball"
+  ],
+  "model": "minecraft:magma_cream",
+  "conditions": [
+    {
+      "type": "knot:stack_size",
+      "min": 32,
+      "max": 32
+    },
+    {
+      "type": "knot:custom_name",
+      "name": "Bouncy"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "items": [
+    "minecraft:iron_ingot"
+  ],
+  "model": "minecraft:emerald",
+  "conditions": [
+    {
+      "type": "knot:display_context",
+      "context": "gui"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "items": [
+    "minecraft:iron_sword"
+  ],
+  "model": "minecraft:diamond_sword",
+  "conditions": [
+    {
+      "type": "knot:enchantment",
+      "enchantment": "minecraft:sharpness",
+      "min_level": 1,
+      "max_level": 1
+    }
+  ]
+}
