@@ -7,15 +7,6 @@ architectury {
 
 loom {
     accessWidenerPath = rootProject.project(":common-core").file("src/main/resources/${rootProject.mod_id}.accesswidener")
-
-    runs {
-        data {
-            serverData()
-            programArgs "--all", "--mod", "knot_test"
-            programArgs "--output", project(":testmod-common").file("src/generated/resources").absolutePath
-            programArgs "--existing", project(":testmod-common").file("src/main/resources").absolutePath
-        }
-    }
 }
 
 sourceSets.main.resources { srcDir "src/generated/resources" }
