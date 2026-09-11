@@ -11,20 +11,22 @@ public interface ServerChunkEvent {
 
     Event<SaveData> SAVE_DATA = EventFactory.createLoop(SaveData.class);
     Event<LoadData> LOAD_DATA = EventFactory.createLoop(LoadData.class);
+    Event<Load> LOAD = EventFactory.createLoop(Load.class);
+    Event<Unload> UNLOAD = EventFactory.createLoop(Unload.class);
 
     interface SaveData {
-        /**
-         * Fired when a chunk's data is being written to disk.
-         * You can append your own NBT data to the SerializableChunkData.
-         */
         void onSaveData(ChunkAccess chunk, ServerLevel level, SerializableChunkData data);
     }
 
     interface LoadData {
-        /**
-         * Fired just before a chunk's data is fully read from disk.
-         * You can read out your custom NBT data from here.
-         */
         void onLoadData(ChunkAccess chunk, @Nullable ServerLevel level, SerializableChunkData data);
+    }
+
+    interface Load {
+        void onChunkLoad(ServerLevel level, ChunkAccess chunk, boolean isNewChunk);
+    }
+
+    interface Unload {
+        void onChunkUnload(ServerLevel level, ChunkAccess chunk);
     }
 }

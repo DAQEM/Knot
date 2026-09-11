@@ -2,7 +2,7 @@ package com.daqem.knot.neoforge.events.client;
 
 import com.daqem.knot.api.Constants;
 import com.daqem.knot.events.client.ClientCommandEvent;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
+import com.daqem.knot.events.client.ClientLevelLifecycleEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,16 +14,16 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 public class NeoForgeClientEventHooks {
 
     @SubscribeEvent
-    public static void onClientLevelLoad(LevelEvent.Load event) {
+    public static void onClientLevelLoad(net.neoforged.neoforge.event.level.LevelEvent.Load event) {
         if (event.getLevel() instanceof ClientLevel clientLevel) {
-            LevelLifecycleEvent.CLIENT_LEVEL_LOAD.invoker().onClientLevelLoad(clientLevel);
+            ClientLevelLifecycleEvent.CLIENT_LEVEL_LOAD.invoker().onClientLevelLoad(clientLevel);
         }
     }
 
     @SubscribeEvent
-    public static void onClientLevelUnload(LevelEvent.Unload event) {
+    public static void onClientLevelUnload(net.neoforged.neoforge.event.level.LevelEvent.Unload event) {
         if (event.getLevel() instanceof ClientLevel clientLevel) {
-            LevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(clientLevel);
+            ClientLevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(clientLevel);
         }
     }
 

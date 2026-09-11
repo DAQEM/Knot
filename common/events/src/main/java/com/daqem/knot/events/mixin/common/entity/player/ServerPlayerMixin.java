@@ -195,8 +195,12 @@ public abstract class ServerPlayerMixin extends Player implements KnotServerPlay
     }
 
     @Inject(at = @At("TAIL"), method = "onEnchantmentPerformed(Lnet/minecraft/world/item/ItemStack;I)V")
-    public void onEnchantmentPerformed(ItemStack itemStack, int level, CallbackInfo ci) {
-        PlayerEvent.ENCHANT_ITEM.invoker().onEnchantItem((ServerPlayer) (Object) this, itemStack, level);
+    public void onEnchantmentPerformed(ItemStack enchantedItem, int levelCost, CallbackInfo ci) {
+        int cost = levelCost;
+        if (cost == 0) {
+            cost = com.daqem.knot.events.compat.apothic_enchanting.ApothicEnchantingCompat.getInstance().getCapturedCost(cost);
+        }
+        PlayerEvent.ENCHANT_ITEM.invoker().onEnchantItem((ServerPlayer) (Object) this, enchantedItem, cost);
     }
 
     @Inject(at = @At("TAIL"), method = "restoreFrom(Lnet/minecraft/server/level/ServerPlayer;Z)V")
