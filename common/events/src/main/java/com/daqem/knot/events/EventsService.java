@@ -1,7 +1,6 @@
 package com.daqem.knot.events;
 
 import com.daqem.knot.events.client.*;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.daqem.knot.events.common.TickEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
 import com.daqem.knot.events.common.entity.EntityEvent;
@@ -47,6 +46,10 @@ public interface EventsService {
         Event<PlayerEvent.LandOnGround> LAND_ON_GROUND = PlayerEvent.LAND_ON_GROUND;
         Event<PlayerEvent.BlockWithShield> BLOCK_WITH_SHIELD = PlayerEvent.BLOCK_WITH_SHIELD;
         Event<PlayerEvent.ChangeDimension> CHANGE_DIMENSION = PlayerEvent.CHANGE_DIMENSION;
+        Event<PlayerEvent.PlayerJoin> PLAYER_JOIN = PlayerEvent.PLAYER_JOIN;
+        Event<PlayerEvent.PlayerQuit> PLAYER_QUIT = PlayerEvent.PLAYER_QUIT;
+        Event<PlayerEvent.PlayerRespawn> PLAYER_RESPAWN = PlayerEvent.PLAYER_RESPAWN;
+        Event<PlayerEvent.PlayerClone> PLAYER_CLONE = PlayerEvent.PLAYER_CLONE;
     }
 
     interface Item {
@@ -116,6 +119,11 @@ public interface EventsService {
         Event<ClientPlayerEvent.Quit> PLAYER_QUIT = ClientPlayerEvent.QUIT;
         Event<ClientPlayerEvent.Respawn> PLAYER_RESPAWN = ClientPlayerEvent.RESPAWN;
         Event<ClientCommandEvent.Register> COMMAND_REGISTER = ClientCommandEvent.REGISTER;
+
+        interface LevelLifecycle {
+            Event<ClientLevelLifecycleEvent.ClientLevelLoad> CLIENT_LEVEL_LOAD = ClientLevelLifecycleEvent.CLIENT_LEVEL_LOAD;
+            Event<ClientLevelLifecycleEvent.ClientLevelUnload> CLIENT_LEVEL_UNLOAD = ClientLevelLifecycleEvent.CLIENT_LEVEL_UNLOAD;
+        }
     }
 
     interface Server {
@@ -133,6 +141,14 @@ public interface EventsService {
         Event<ServerLifecycleEvent.ServerStopping> LIFECYCLE_STOPPING = ServerLifecycleEvent.STOPPING;
         Event<ServerLifecycleEvent.ServerStopped> LIFECYCLE_STOPPED = ServerLifecycleEvent.STOPPED;
         Event<ServerLightningEvent.Strike> LIGHTNING_STRIKE = ServerLightningEvent.STRIKE;
+        Event<ServerChunkEvent.Load> CHUNK_LOAD = ServerChunkEvent.LOAD;
+        Event<ServerChunkEvent.Unload> CHUNK_UNLOAD = ServerChunkEvent.UNLOAD;
+
+        interface LevelLifecycle {
+            Event<ServerLevelLifecycleEvent.ServerLevelLoad> SERVER_LEVEL_LOAD = ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD;
+            Event<ServerLevelLifecycleEvent.ServerLevelUnload> SERVER_LEVEL_UNLOAD = ServerLevelLifecycleEvent.SERVER_LEVEL_UNLOAD;
+            Event<ServerLevelLifecycleEvent.ServerLevelSave> SERVER_LEVEL_SAVE = ServerLevelLifecycleEvent.SERVER_LEVEL_SAVE;
+        }
     }
 
     interface Loot {
@@ -160,14 +176,6 @@ public interface EventsService {
         Event<ServerTickEvent.ServerLevel> SERVER_LEVEL_POST = ServerTickEvent.SERVER_LEVEL_POST;
         Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_PRE = ServerTickEvent.SERVER_PLAYER_PRE;
         Event<ServerTickEvent.ServerPlayer> SERVER_PLAYER_POST = ServerTickEvent.SERVER_PLAYER_POST;
-    }
-
-    interface LevelLifecycle {
-        Event<LevelLifecycleEvent.ServerLevelLoad> SERVER_LEVEL_LOAD = LevelLifecycleEvent.SERVER_LEVEL_LOAD;
-        Event<LevelLifecycleEvent.ServerLevelUnload> SERVER_LEVEL_UNLOAD = LevelLifecycleEvent.SERVER_LEVEL_UNLOAD;
-        Event<LevelLifecycleEvent.ServerLevelSave> SERVER_LEVEL_SAVE = LevelLifecycleEvent.SERVER_LEVEL_SAVE;
-        Event<LevelLifecycleEvent.ClientLevelLoad> CLIENT_LEVEL_LOAD = LevelLifecycleEvent.CLIENT_LEVEL_LOAD;
-        Event<LevelLifecycleEvent.ClientLevelUnload> CLIENT_LEVEL_UNLOAD = LevelLifecycleEvent.CLIENT_LEVEL_UNLOAD;
     }
 
     interface Movement {

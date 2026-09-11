@@ -6,18 +6,20 @@
     "client.GuiGraphicsMixin"
   ],
   "mixins": [
-    "BucketItemMixin",
-    "ItemStackMixin",
-    "LivingEntityFabricMixin",
     "AxeItemMixin",
     "BlockBehaviourMixin",
     "BlockItemMixin",
+    "BucketItemMixin",
     "CommandsMixin",
     "HoeItemMixin",
+    "ItemStackMixin",
+    "LivingEntityFabricMixin",
+    "MixinMixin",
     "PlayerAdvancementsMixin",
     "ServerPlayerGameModeMixin",
-    "MixinMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "compat.fallingtree.FallingTreeCommonsImplMixin",
+    "compat.rightclickharvest.RightClickHarvestPlatformImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1

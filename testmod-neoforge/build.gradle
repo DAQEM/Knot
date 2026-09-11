@@ -9,6 +9,8 @@ loom {
     accessWidenerPath = rootProject.project(":common-core").file("src/main/resources/${rootProject.mod_id}.accesswidener")
 }
 
+sourceSets.main.resources { srcDir "src/generated/resources" }
+
 apply from: rootProject.file("gradle/scripts/platform.gradle")
 
 dependencies {

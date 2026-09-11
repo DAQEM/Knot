@@ -1,12 +1,10 @@
 package com.daqem.knot.fabric.events;
 
 import com.daqem.knot.events.EventResult;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.daqem.knot.events.common.block.BlockEvent;
+import com.daqem.knot.events.common.entity.player.PlayerEvent;
 import com.daqem.knot.events.common.loot.LootEvent;
-import com.daqem.knot.events.server.ServerChatEvent;
-import com.daqem.knot.events.server.ServerCommandEvent;
-import com.daqem.knot.events.server.ServerLifecycleEvent;
+import com.daqem.knot.events.server.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -37,11 +35,28 @@ public final class FabricEventHooks {
         ServerLifecycleEvents.SERVER_STOPPED.register(server ->
                 ServerLifecycleEvent.STOPPED.invoker().onServerStopped(server));
 
-        // Server World State
-        ServerWorldEvents.LOAD.register((server, world) ->
-                LevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(world));
-        ServerWorldEvents.UNLOAD.register((server, world) ->
-                LevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(world));
+        net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            PlayerEvent.PLAYER_JOIN.invoker().onPlayerJoin(handler.player);
+        });
+        net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+            PlayerEvent.PLAYER_QUIT.invoker().onPlayerQuit(handler.player);
+        });
+        net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+            PlayerEvent.PLAYER_RESPAWN.invoker().onPlayerRespawn(newPlayer, alive);
+        });
+        net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+            PlayerEvent.PLAYER_CLONE.invoker().onPlayerClone(oldPlayer, newPlayer, !alive);
+        });
+
+        // Server World & Chunk Lifecycle
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.LOAD.register((server, world) ->
+                ServerLevelLifecycleEvent.SERVER_LEVEL_LOAD.invoker().onServerLevelLoad(world));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.UNLOAD.register((server, world) ->
+                ServerLevelLifecycleEvent.SERVER_LEVEL_UNLOAD.invoker().onServerLevelUnload(world));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents.CHUNK_LOAD.register((world, chunk) ->
+                ServerChunkEvent.LOAD.invoker().onChunkLoad(world, chunk, false));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) ->
+                ServerChunkEvent.UNLOAD.invoker().onChunkUnload(world, chunk));
 
         // Chat Decoration and Reception
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.CONTENT_PHASE, (sender, message) -> {

@@ -2,7 +2,6 @@ package com.daqem.knot.events.mixin.client;
 
 import com.daqem.knot.events.EventResult;
 import com.daqem.knot.events.client.*;
-import com.daqem.knot.events.common.LevelLifecycleEvent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -69,27 +68,20 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<@NotNul
         ClientTickEvent.CLIENT_POST.invoker().tick((Minecraft) (Object) this);
     }
 
-    @Inject(
-            method = "setLevel",
-            at = @At("HEAD")
-    )
+    @Inject(method = "setLevel", at = @At("HEAD"))
     private void knot$onSetLevel(CallbackInfo ci) {
         if (this.level != null) {
-            LevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(this.level);
+            ClientLevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(this.level);
         }
     }
 
     @Inject(
             method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Gui;onDisconnected()V",
-                    shift = At.Shift.AFTER
-            )
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;onDisconnected()V", shift = At.Shift.AFTER)
     )
     private void knot$onDisconnect(CallbackInfo ci) {
         if (this.level != null) {
-            LevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(this.level);
+            ClientLevelLifecycleEvent.CLIENT_LEVEL_UNLOAD.invoker().onClientLevelUnload(this.level);
         }
     }
 
