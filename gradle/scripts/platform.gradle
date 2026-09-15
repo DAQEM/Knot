@@ -47,6 +47,7 @@ shadowJar {
     exclude "architectury.common.json"
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = platform + "-dev-shadow"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 remapJar {

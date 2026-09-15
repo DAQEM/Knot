@@ -4,10 +4,41 @@ architectury {
 
 apply from: rootProject.file("gradle/scripts/maven-publishing.gradle")
 
+base {
+    archivesName = "${rootProject.archives_base_name}-common"
+}
+
+def commonProjects = [
+        project(":common-api"),
+        project(":common-networking"),
+        project(":common-events"),
+        project(":common-registry")
+]
+
+commonProjects.forEach { p ->
+    evaluationDependsOn(p.path)
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    implementation project(path: ":common-api", configuration: "namedElements")
-    implementation project(path: ":common-networking", configuration: "namedElements")
-    implementation project(path: ":common-events", configuration: "namedElements")
-    implementation project(path: ":common-registry", configuration: "namedElements")
+
+    commonProjects.forEach { p ->
+        compileOnly project(path: p.path, configuration: "namedElements")
+        testImplementation project(path: p.path, configuration: "namedElements")
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    commonProjects.forEach { p ->
+        dependsOn("${p.path}:classes")
+        from(p.sourceSets.main.output)
+    }
+}
+
+sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    commonProjects.forEach { p ->
+        from(p.sourceSets.main.allSource)
+    }
 }

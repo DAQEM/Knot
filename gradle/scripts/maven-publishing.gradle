@@ -6,6 +6,17 @@ publishing {
             groupId = rootProject.maven_group
             artifactId = "${rootProject.archives_base_name}-${platform}"
             from components.java
+
+            pom.withXml {
+                def dependenciesNode = asNode().dependencies[0]
+                if (dependenciesNode != null) {
+                    dependenciesNode.dependency.findAll { dep ->
+                        dep.groupId.text() == rootProject.maven_group && dep.artifactId.text().startsWith("common-")
+                    }.each { dep ->
+                        dependenciesNode.remove(dep)
+                    }
+                }
+            }
         }
     }
 
